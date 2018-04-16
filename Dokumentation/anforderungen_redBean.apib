@@ -4,6 +4,18 @@ FORMAT: 1A
 
 Quiz Api auf Basis von PHP RedBean, um Datenbankzugriffe zu ermöglichen
 
+## Erklärungen
+
+Requests: 
+
+- Header: Der Header beinhaltet Informationen für die Ausführung der Abfrage
+- Body: Der Body enthält Daten, welche eingetragen werden sollen
+- session Token (token): Der Token wird mitgegeben, wenn für die Ausführung der Aktion eine Anmeldung erforderlich ist. Aktuell angemeldete Nutzer sind in der sessions Tabelle hinterlegt
+
+Responses:
+
+- Response Code 200: Bedeutet, dass die Aktion erfolgreich durchgeführt worden ist und beinhaltet ggf. das Ergebnis der Abfrage
+- Response Code 400: Bedeutet, dass bei der Aktion ein Fehler aufgetreten ist
 
 # Group Quiz 
 
@@ -183,6 +195,12 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 			"quiz_id": 12
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Quiz aktualisieren (ändern) [PUT]
 
 + Request
@@ -208,7 +226,15 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 			"status": "ok"
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Quiz entfernen [DELETE]
+
+Ein Quiz darf nur dann entfernt werden, wenn keine Fragen anhängen. Oder alle Fragen und dazugehörigen Antworten mitgelöscht werden.
 
 + Request
 	
@@ -222,6 +248,12 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 
 		{
 			"status": "ok"
+		}
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
 		}
 
 # Group Frage
@@ -304,6 +336,12 @@ Alle Fragebezogenen Anfragen sind in dieser Gruppe
 			"question_id": 178
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Frage ändern [PUT]
 
 + Request
@@ -327,7 +365,15 @@ Alle Fragebezogenen Anfragen sind in dieser Gruppe
 			"status": "ok"
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Frage löschen [DELETE]
+
+Eine Frage darf nur dann gelöscht werden, wenn keine Antworten anhängend sind.
 
 + Request
 	
@@ -341,6 +387,12 @@ Alle Fragebezogenen Anfragen sind in dieser Gruppe
 
 		{
 			"status": "ok"
+		}
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
 		}
 
 # Group Antwort
@@ -428,6 +480,12 @@ Fasst Schnittstelle für Antworten zusammen
 			"status": "ok",
 			"answer_id": 546
 		}
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
 		
 ### Antwort anpassen [PUT]
 
@@ -453,6 +511,12 @@ Fasst Schnittstelle für Antworten zusammen
 			"status": "ok"
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Antwort löschen [DELETE]
 
 + Request
@@ -467,6 +531,12 @@ Fasst Schnittstelle für Antworten zusammen
 		
 		{
 			"status":"ok"
+		}
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
 		}
 
 # Group Nutzer
@@ -509,6 +579,12 @@ Nutzerbezogene Aktionen werden damit durchgeführt
 			"token" : "asdfghjiebweiselvs"
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Get User by Name [GET]
 
 + Request
@@ -549,7 +625,15 @@ Nutzerbezogene Aktionen werden damit durchgeführt
 			"id": 188
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Nutzer ändern [PUT]
+
+Für Änderungen beim Nutzer muss stets das Passwort neu eingetippt werden.
 
 + Request
 	
@@ -575,6 +659,8 @@ Nutzerbezogene Aktionen werden damit durchgeführt
 
 ### Nutzer löschen [DELETE]
 
+Ein Nutzer darf nur dann gelöscht werden, wenn er kein Quiz mehr besitzt.
+
 + Request
 	
 	+ Header
@@ -588,6 +674,12 @@ Nutzerbezogene Aktionen werden damit durchgeführt
 		
 		{
 			"status": "ok"
+		}
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
 		}
 
 # Group Kategorie
@@ -621,6 +713,12 @@ Kategorienbezogene Anfragen befinden sich hier
 			}
 		]
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Einzelne Kategorie by ID [GET]
 
 + Request 
@@ -635,6 +733,12 @@ Kategorienbezogene Anfragen befinden sich hier
 		{
 			"id": 27,
 			"name": "name der Kategorie"
+		}
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
 		}
 
 ### Kategorie anlegen [POST]
@@ -659,6 +763,12 @@ Kategorienbezogene Anfragen befinden sich hier
 			"id": 297
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Kategorie ändern [PUT]
 
 + Request
@@ -681,7 +791,15 @@ Kategorienbezogene Anfragen befinden sich hier
 			"status": "ok"
 		}
 
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
 ### Kategorie löschen [DELETE]
+
+Entfernt die Kategorie. Soll nur dann gehen, wenn die Kategorie nicht benutzt wird.<br>
 
 + Request
 		
@@ -696,3 +814,28 @@ Kategorienbezogene Anfragen befinden sich hier
 		{
 			"status": "ok"
 		} 
+
++ Response 400 (application/json)
+		
+		{
+			"status": "failed"
+		}
+
+# Group Sessions
+## Anfragen zu Nutzersessions [/sessions.php]
+### Ausloggen aus der aktuellen Session [DELETE]
+
+Beendet die aktuelle Session und entfernt den Token aus der Datenbank
+
++ Request
+	
+	+ Header
+
+			action: endSession
+			token: sessionToken
+
++ Response 200 (application/json)
+		
+		{
+			"status":"ok"
+		}

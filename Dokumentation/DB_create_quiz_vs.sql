@@ -103,6 +103,25 @@ CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`Answer` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `db_quiz_vs`.`sessions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `db_quiz_vs`.`sessions` ;
+
+CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`sessions` (
+  `idsessions` INT NOT NULL AUTO_INCREMENT,
+  `token` VARCHAR(200) NOT NULL COMMENT 'Token for User Identification.' /* comment truncated */ /*Maximal 200 Zeichen*/,
+  `user_iduser` INT NOT NULL,
+  PRIMARY KEY (`idsessions`),
+  INDEX `fk_sessions_user1_idx` (`user_iduser` ASC),
+  CONSTRAINT `fk_sessions_user1`
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `db_quiz_vs`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
