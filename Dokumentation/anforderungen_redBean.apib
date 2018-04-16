@@ -1,0 +1,698 @@
+FORMAT: 1A
+
+# Quiz
+
+Quiz Api auf Basis von PHP RedBean, um Datenbankzugriffe zu ermöglichen
+
+
+# Group Quiz 
+
+***DB Tabelle Quiz***<br>
+Anforderungen an die/ Funktion der Quiz Schnittstelle
+
+## Quiz Anfragen [/quiz.php]
+### Liste der Quizze [GET]
+
++ Request
+
+	+ Headers 
+			
+			action: list
+
++ Response 200 (application/json)
+
+		[
+			{
+				"id": 5,
+				"name":"Quiz name", 
+				"description": "Beschreibung des Quiz",
+				"user" : "Nutzername des Ersteller",
+				"user_description" : "Beschreibung des	Nutzers aus dem Profil",
+				"category" : "Kategorie des Quiz (String)"
+			},
+			{
+				"id": 6,
+				"name":"Quiz name 2", 
+				"description": "Beschreibung des Quiz",
+				"user" : "Nutzername des Ersteller",
+				"user_description" : "Beschreibung des Nutzers aus dem Profil",
+				"category" : "Kategorie des Quiz (String)"
+			},
+			{
+				"id": 7,
+				"name":"Quiz name 2", 
+				"description": "Beschreibung des Quiz",
+				"user" : "Nutzername des Ersteller",
+				"user_description" : "Beschreibung des	Nutzers aus dem Profil",
+				"category" : "Kategorie des Quiz (String)"
+			}
+		]
+
+### Quiz Eintrag anfordern [GET]
+
++ Request
+
+	+ Headers
+
+			action: entry
+			id: 1
+
++ Response 200 (application/json)
+		
+		{
+			"id": 1,
+			"name": "Name des Quiz",
+			"description": "Beschreibung des Quiz",
+			"user": "Nutzername des Ersteller",
+			"user_id": 12,
+			"user_description" : "Beschreibung des	Nutzers aus dem Profil",
+			"category" : "Kategorie des Quiz (String)"
+		}
+
+### Quiz vollständig anfordern [GET]
+
++ Request
+	
+	+ Headers
+
+			action: fullQuiz
+			id: 1
+
++ Response 200 (application/json)
+		
+		{
+			"id": 7,
+			"name":"Quiz name 2", 
+			"description": "Beschreibung des Quiz",
+			"user" : "Nutzername des Ersteller",
+			"user_description" : "Beschreibung des	Nutzers aus dem Profil",
+			"category" : "Kategorie des Quiz (String)",
+			"questions":
+				[
+					{
+						"text": "Der Inhalt der Frage",
+						"answers":
+							[
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": true
+								}
+							]
+					},
+					{
+						"text": "Der Inhalt der Frage",
+						"answers":
+							[
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": true
+								}
+							]
+					},
+					{
+						"text": "Der Inhalt der Frage",
+						"answers":
+							[
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": false
+								},
+								{
+									"text": "Der Inhalt einer Antwortmöglichkeit",
+									"isCorrect": true
+								}
+							]
+					}
+				]
+		}
+
+### Quiz hinzufügen [POST]
+
++ Request
+
+	+ Headers
+			
+			action: addQuiz
+			token: sessionToken
+
+	+ Body
+
+			{
+				"name": "Name des Quiz",
+				"description": "Beschreibung des Quiz",
+				"user_id": 12,
+				"category" : "Kategorie des Quiz (Id)"
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok",
+			"quiz_id": 12
+		}
+
+### Quiz aktualisieren (ändern) [PUT]
+
++ Request
+
+	+ Headers
+
+			action: updateQuiz
+			id: 12
+			token: sessionToken
+
+	+ Body
+			
+			{
+				"name": "Name des Quiz",
+				"description": "Beschreibung des Quiz",
+				"user_id": 12,
+				"category" : "Kategorie des Quiz (Id)"
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok"
+		}
+
+### Quiz entfernen [DELETE]
+
++ Request
+	
+	+ Headers
+
+			action: deleteQuiz
+			id: 12
+			token: sessionToken
+
++ Response 200 (application/json)
+
+		{
+			"status": "ok"
+		}
+
+# Group Frage
+
+***DB Tabelle Question***<br>
+Alle Fragebezogenen Anfragen sind in dieser Gruppe
+
+## Fragen Anfragen [/question.php]
+### Liste der zu einem Quiz zugehörigen Fragen [GET]
+
++ Request
+
+	+ Header
+
+			action: getQuestion
+			quiz_id: 15
+
++ Response 200 (application/json)
+
+		[
+			{
+				"id": 133,
+				"text": "Inhalt der Frage",
+				"quiz_id": 15
+			},
+			{
+				"id": 134,
+				"text": "Inhalt der Frage",
+				"quiz_id": 15
+			},
+			{
+				"id": 135,
+				"text": "Inhalt der Frage",
+				"quiz_id": 15
+			},
+			{
+				"id": 136,
+				"text": "Inhalt der Frage",
+				"quiz_id": 15
+			}
+		] 
+
+### Einzelne Frage anfordern [GET]
+
++ Request
+
+	+ Header
+
+			action: getSingleQuestion
+			id: 17
+
++ Response 200 (application/json)
+
+		{
+			"id": 17,
+			"text": "Inhalt der Frage",
+			"quiz_id": 15
+		}
+
+### Frage erstellen [POST]
+
++ Request
+	
+	+ Header
+
+			action: addQuestion
+			token: sessionToken
+
+	+ Body
+
+			{
+				"text": "Inhalt der Frage",
+				"quiz_id": 15
+			}
+
++ Response 200 (application/json)
+
+		{
+			"status":"ok",
+			"question_id": 178
+		}
+
+### Frage ändern [PUT]
+
++ Request
+	
+	+ Header
+
+			action: updateQuestion
+			id: 198
+			token: sessionToken
+
+	+ Body
+
+			{
+				"text": "Inhalt der Frage",
+				"quiz_id": 15
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok"
+		}
+
+### Frage löschen [DELETE]
+
++ Request
+	
+	+ Header
+
+			action: deleteQuestion
+			id: 166
+			token: sessionToken
+
++ Response 200 (application/json)
+
+		{
+			"status": "ok"
+		}
+
+# Group Antwort
+
+***DB Tabelle: Answer***<br>
+Fasst Schnittstelle für Antworten zusammen
+
+## Antworten Anfragen [/answer.php]
+### Liste von Antworten nach Frage ID [GET]
+
++ Request
+	
+	+ Header
+
+			action: getAnswer
+			question_id: 12
+
++ Response 200 (application/json)
+		
+		[
+			{
+			"id": 146,
+			"text": "Der Inhalt des Antwort Text",
+			"question_id": 12,
+			"isCorrect": false
+			},
+			{
+			"id": 147,
+			"text": "Der Inhalt des Antwort Text",
+			"question_id": 12,
+			"isCorrect": false
+			},
+			{
+			"id": 148,
+			"text": "Der Inhalt des Antwort Text",
+			"question_id": 12,
+			"isCorrect": true
+			},
+			{
+			"id": 149,
+			"text": "Der Inhalt des Antwort Text",
+			"question_id": 12,
+			"isCorrect": false
+			}
+		]
+
+### Einzelne Antwort nach ID [GET]
+
++ Request
+
+	+ Header
+
+			action: getSingleAnswer
+			id: 146
+
++ Response 200 (application/json)
+		
+		{
+			"id": 146,
+			"text": "Der Inhalt des Antwort Text",
+			"question_id": 12,
+			"isCorrect": false
+		}
+
+### Antwort erstellen [POST]
+
++ Request
+
+	+ Header
+
+			action: createAnswer
+			token: sessionToken
+
+	+ Body
+
+			{
+				"text": "Der Inhalt der Antwort",
+				"question_id": 7,
+				"isCorrect": true
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok",
+			"answer_id": 546
+		}
+		
+### Antwort anpassen [PUT]
+
++ Request
+	
+	+ Header
+
+			action: updateAnswer
+			id: 148
+			token: sessionToken
+
+	+ Body
+
+			{
+				"text": "Der Inhalt der Antwort",
+				"question_id": 9,
+				"isCorrect": true
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok"
+		}
+
+### Antwort löschen [DELETE]
+
++ Request
+	
+	+ Header
+
+			action: deleteAnswer
+			id: 144
+			token: sessionToken
+
++ Response 200 (application/json)
+		
+		{
+			"status":"ok"
+		}
+
+# Group Nutzer
+
+***DB Tabelle user***<br>
+Nutzerbezogene Aktionen werden damit durchgeführt
+
+## Nutzer Anfragen [/user.php]
+### Nutzer by ID [GET]
+
++ Request
+	
+	+ Header
+
+			action: getUserByID
+			id: 45
+
++ Response 200 (application/json)
+		
+		{
+			"id": 45,
+			"username": "Nutzername",
+			"description": "Beschreibung des Nutzers"
+		}
+
+### Nutzer LOGIN [GET]
+
++ Request
+
+	+ Header
+
+			action: getLogin
+			uname: username
+			pwd: encryptedPWD
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok",
+			"token" : "asdfghjiebweiselvs"
+		}
+
+### Get User by Name [GET]
+
++ Request
+	
+	+ Header
+
+			action: getUserByName
+			name: Nutzername
+
++ Response 200 (application/json)
+		
+		{
+			"id": 45,
+			"username": "Nutzername",
+			"description": "Beschreibung des Nutzers"
+		}
+
+### Nutzer erstellen [POST]
+
++ Request
+
+	+ Header
+
+			action: createUser
+
+	+ Body
+
+			{
+				"username": "Nutzername",
+				"pwd": "encryptedPasswordHash",
+				"description": "Beschreibung des Nutzers"
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status":"ok",
+			"id": 188
+		}
+
+### Nutzer ändern [PUT]
+
++ Request
+	
+	+ Header
+
+			action: updateUser
+			id: 12
+			pwd: encryptedHash
+			token: sessionToken
+
+	+ Body
+
+			{
+				"pwd": "encryptedPasswordHash",
+				"description": "Beschreibung des Nutzers"
+			}
+
++ Response 200 (application/json)
+
+		{
+			"status": "ok"
+		}
+
+### Nutzer löschen [DELETE]
+
++ Request
+	
+	+ Header
+
+			action: deleteUser
+			id: 145
+			pwd: encryptedHash
+			token: sessionToken
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok"
+		}
+
+# Group Kategorie
+
+***DB Tabelle category***<br>
+Kategorienbezogene Anfragen befinden sich hier
+
+## Anfragen Kategorien [/category.php]
+### Liste der Kategorien [GET]
+
++ Request
+		
+	+ Header
+	
+			action: getAllCategories
+
++ Response 200 (application/json)
+
+		[
+			{
+				"id": 27,
+				"name": "name der Kategorie"
+			},
+			{
+				"id": 28,
+				"name": "name der Kategorie"
+			},
+			{
+				"id": 29,
+				"name": "name der Kategorie"
+			}
+		]
+
+### Einzelne Kategorie by ID [GET]
+
++ Request 
+	
+	+ Header
+
+			action: getCategory
+			id: 27
+
++ Response 200 (application/json)
+		
+		{
+			"id": 27,
+			"name": "name der Kategorie"
+		}
+
+### Kategorie anlegen [POST]
+
++ Request
+	
+	+ Header
+
+			action: addCategory
+			token: sessionToken
+
+	+ Body
+
+			{
+				"name": "Name der neuen Kategorie"
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok",
+			"id": 297
+		}
+
+### Kategorie ändern [PUT]
+
++ Request
+		
+	+ Header
+
+			action: updateCategory
+			id: 15
+			token: sessionToken
+
+	+ Body
+
+			{
+				"name": "neuer Name"
+			}
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok"
+		}
+
+### Kategorie löschen [DELETE]
+
++ Request
+		
+	+ Header
+
+			action: deleteCategory
+			id: 146
+			token: sessionToken
+
++ Response 200 (application/json)
+		
+		{
+			"status": "ok"
+		} 
