@@ -10,3 +10,5 @@ Javascript logic on the client side
 #### Tier 3: Database
 Database model will be attached in the files.
 Redbean to be used to set up a REST compliant interface.
+
+ [Interface Definition](http://htmlpreview.github.com/?https://github.com/kuromogeko/dhbwvs-quiz-mtfrnn/blob/master/Dokumentation/schnittstellenDefinitionRedBean.html)
