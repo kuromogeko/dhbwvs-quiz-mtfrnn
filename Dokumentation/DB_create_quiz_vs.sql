@@ -110,7 +110,7 @@ DROP TABLE IF EXISTS `db_quiz_vs`.`sessions` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`sessions` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `token` VARCHAR(200) NOT NULL COMMENT 'Token for User Identification.' /* comment truncated */ /*Maximal 200 Zeichen*/,
+  `token` VARCHAR(64) NOT NULL COMMENT 'Token for User Identification.' /* comment truncated */ /*Maximal 200 Zeichen*/,
   `user_iduser` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_sessions_user1_idx` (`user_iduser` ASC),
