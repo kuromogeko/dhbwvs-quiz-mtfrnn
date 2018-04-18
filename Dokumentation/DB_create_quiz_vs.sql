@@ -15,12 +15,12 @@ USE `db_quiz_vs` ;
 DROP TABLE IF EXISTS `db_quiz_vs`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`user` (
-  `iduser` INT NOT NULL AUTO_INCREMENT COMMENT 'Id des User',
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Id des User',
   `uname` VARCHAR(70) NOT NULL COMMENT 'Nutzername. Jeder Nutzername darf nur einmal vergeben sein.' /* comment truncated */ /*Ein Nutzername hat max. 70 Zeichen*/,
   `pwd` VARCHAR(128) NOT NULL COMMENT 'Passwort.' /* comment truncated */ /*In verschlüsselter Form 128 Zeichen*/,
   `description` VARCHAR(500) NULL COMMENT 'Beschreibung des Nutzers.' /* comment truncated */ /*Diese soll bei der Quizanzeige zu sehen sein.
 Maximal 500 Zeichen*/,
-  PRIMARY KEY (`iduser`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `uname_UNIQUE` (`uname` ASC))
 ENGINE = InnoDB;
 
@@ -31,9 +31,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `db_quiz_vs`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`category` (
-  `idcategory` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NULL COMMENT 'Name einer Kategorie.' /* comment truncated */ /*Eine Kategorie hat maximal 100 Zeichen.*/,
-  PRIMARY KEY (`idcategory`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -43,22 +43,22 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `db_quiz_vs`.`Quiz` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`Quiz` (
-  `idQuiz` INT NOT NULL AUTO_INCREMENT COMMENT 'Id des Quiz',
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Id des Quiz',
   `name` VARCHAR(100) NOT NULL COMMENT 'Anzeigename vom Quiz.' /* comment truncated */ /*Maximal 100 Zeichen*/,
   `description` VARCHAR(500) NOT NULL COMMENT 'Beschreibung vom Quiz.' /* comment truncated */ /*Maximal 500 Zeichen*/,
   `user_iduser` INT NOT NULL,
   `category_idcategory` INT NOT NULL,
-  PRIMARY KEY (`idQuiz`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Quiz_user_idx` (`user_iduser` ASC),
   INDEX `fk_Quiz_category1_idx` (`category_idcategory` ASC),
   CONSTRAINT `fk_Quiz_user`
     FOREIGN KEY (`user_iduser`)
-    REFERENCES `db_quiz_vs`.`user` (`iduser`)
+    REFERENCES `db_quiz_vs`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Quiz_category1`
     FOREIGN KEY (`category_idcategory`)
-    REFERENCES `db_quiz_vs`.`category` (`idcategory`)
+    REFERENCES `db_quiz_vs`.`category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -70,14 +70,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `db_quiz_vs`.`Question` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`Question` (
-  `idQuestion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id der Frage',
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Id der Frage',
   `text` VARCHAR(500) NULL COMMENT 'Fragentext.' /* comment truncated */ /*Maximal 500 Zeichen*/,
   `Quiz_idQuiz` INT NOT NULL,
-  PRIMARY KEY (`idQuestion`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Question_Quiz1_idx` (`Quiz_idQuiz` ASC),
   CONSTRAINT `fk_Question_Quiz1`
     FOREIGN KEY (`Quiz_idQuiz`)
-    REFERENCES `db_quiz_vs`.`Quiz` (`idQuiz`)
+    REFERENCES `db_quiz_vs`.`Quiz` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -89,15 +89,15 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `db_quiz_vs`.`Answer` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`Answer` (
-  `idAnswer` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(100) NULL COMMENT 'Inhalt der Antwort. ' /* comment truncated */ /*Maximal 100 Zeichen*/,
   `Question_idQuestion` INT NOT NULL,
   `isCorrect` TINYINT(1) NOT NULL COMMENT 'Prüft ob Antwort korrekt ist',
-  PRIMARY KEY (`idAnswer`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Answer_Question1_idx` (`Question_idQuestion` ASC),
   CONSTRAINT `fk_Answer_Question1`
     FOREIGN KEY (`Question_idQuestion`)
-    REFERENCES `db_quiz_vs`.`Question` (`idQuestion`)
+    REFERENCES `db_quiz_vs`.`Question` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -109,14 +109,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `db_quiz_vs`.`sessions` ;
 
 CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`sessions` (
-  `idsessions` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `token` VARCHAR(200) NOT NULL COMMENT 'Token for User Identification.' /* comment truncated */ /*Maximal 200 Zeichen*/,
   `user_iduser` INT NOT NULL,
-  PRIMARY KEY (`idsessions`),
+  PRIMARY KEY (`id`),
   INDEX `fk_sessions_user1_idx` (`user_iduser` ASC),
   CONSTRAINT `fk_sessions_user1`
     FOREIGN KEY (`user_iduser`)
-    REFERENCES `db_quiz_vs`.`user` (`iduser`)
+    REFERENCES `db_quiz_vs`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
