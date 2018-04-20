@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/material.min.css">
+    <script src="js/material.min.js"></script>
+    <link rel="stylesheet" href="css/icon.css?family=Material+Icons">
+    <title>Hello World</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="js/index.js"></script>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <!--NAVIGATION-->
+        <!-- TOP BAR-->       
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Quiz</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <nav class="mdl-navigation">
+                        <a href="" class="mdl-navigation__link">Test 1</a><a href="" class="mdl-navigation__link">Test 2</a>
+                    </nav>
+                </div>
+            </header>
+        <!--ENDOF TOP BAR-->
+        <!--DRAWER-->
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Navigation</span>
+                <nav class="mdl-navigation">
+                    <a href="" class="mdl-navigation__link">Test</a>
+                    <a href="" class="mdl-navigation__link">Test</a>
+                </nav>
+            </div>
+        <!--ENDOF DRAWER-->
+    <!--ENDOF NAVIGATION-->
+    <!--PAGE CONTENT-->
+        <main class = "mdl-layout__content">
+           <div class="mdl-grid">
+               <div class = "mdl-cell mdl-cell--4-col graybox">
+                    <em>Titel</em><br>
+                    <p>Quiztext Lorem ipsum dolor sit.</p>
+               </div>
+               <div class = "mdl-cell mdl-cell--4-col graybox">
+                    <em>Titel</em><br>
+                    <p>Quiztext Lorem ipsum dolor sit.</p>
+               </div>
+               <div class = "mdl-cell mdl-cell--4-col graybox">
+                    <em>Titel</em><br>
+                    <p>Quiztext Lorem ipsum dolor sit.</p>
+               </div>
+           </div> 
+        </main>
+    <!--ENDOF PAGE CONTENT-->
+    </div>
+</body>
+
+</html>
