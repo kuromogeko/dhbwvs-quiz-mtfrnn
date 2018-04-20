@@ -21,6 +21,5 @@ The following folders are to be used with the following description:
 
 - Dokumentation: holding all the documentations and interface descriptions
 - Application: holds the application divided by the parts
-  - view: holds the pages and UI except for index.html which is located in Application
-  - logic: holds the js files which are used as controller layer
+  - cordova: contains the Apache Cordova web application structure. Entry point is {app-name}/www/index.html
   - php: holds the php files which are used as REST Client

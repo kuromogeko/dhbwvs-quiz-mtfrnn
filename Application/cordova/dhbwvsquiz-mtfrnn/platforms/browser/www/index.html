@@ -15,7 +15,8 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/material.min.css">
     <script src="js/material.min.js"></script>
@@ -24,20 +25,49 @@
 </head>
 
 <body>
-    <!-- Left aligned menu on top of button  -->
-    <button id="demo-menu-top-left" class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">more_vert</i>
-    </button>
-
-    <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect" data-mdl-for="demo-menu-top-left">
-        <li class="mdl-menu__item">Some Action</li>
-        <li class="mdl-menu__item">Another Action</li>
-        <li disabled class="mdl-menu__item">Disabled Action</li>
-        <li class="mdl-menu__item">Yet Another Action</li>
-    </ul>
-
-    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <!--NAVIGATION-->
+        <!-- TOP BAR-->       
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Quiz</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <nav class="mdl-navigation">
+                        <a href="" class="mdl-navigation__link">Test 1</a><a href="" class="mdl-navigation__link">Test 2</a>
+                    </nav>
+                </div>
+            </header>
+        <!--ENDOF TOP BAR-->
+        <!--DRAWER-->
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Navigation</span>
+                <nav class="mdl-navigation">
+                    <a href="" class="mdl-navigation__link">Test</a>
+                    <a href="" class="mdl-navigation__link">Test</a>
+                </nav>
+            </div>
+        <!--ENDOF DRAWER-->
+    <!--ENDOF NAVIGATION-->
+    <!--PAGE CONTENT-->
+        <main class = "mdl-layout__content">
+           <div class="mdl-grid">
+               <div class = "mdl-cell mdl-cell--4-col graybox">
+                    <em>Titel</em><br>
+                    <p>Quiztext Lorem ipsum dolor sit.</p>
+               </div>
+               <div class = "mdl-cell mdl-cell--4-col graybox">
+                    <em>Titel</em><br>
+                    <p>Quiztext Lorem ipsum dolor sit.</p>
+               </div>
+               <div class = "mdl-cell mdl-cell--4-col graybox">
+                    <em>Titel</em><br>
+                    <p>Quiztext Lorem ipsum dolor sit.</p>
+               </div>
+           </div> 
+        </main>
+    <!--ENDOF PAGE CONTENT-->
+    </div>
 </body>
 
 </html>
