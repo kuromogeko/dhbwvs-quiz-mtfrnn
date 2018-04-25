@@ -10,7 +10,7 @@
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
     //Find all the quiz entities and return them assort by ID
     if ($_SERVER['HTTP_ACTION'] == 'list') {
-        $quiz = R::findAll('quiz', 'order by id ASC');
+        $quiz = R::findAll('Quiz', 'order by id ASC');
         if (!empty($quiz) || !is_null($quiz)) {
             http_response_code(200);
             sendResponse($quiz);
@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
     } //Find a specific quiz by id
     else if ($_SERVER['HTTP_ACTION'] == 'entry') {
         $quizID = $_SERVER['HTTP_ID'];
-        $quiz = R::findOne('quiz', 'ID =?', [$quizID]);
+        $quiz = R::findOne('Quiz', 'ID =?', [$quizID]);
         if (!empty($quiz) || !is_null($quiz)) {
             http_response_code(200);
             sendResponse($quiz);
@@ -32,11 +32,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
         //Get Quiz ID for further use
         $quizID = $_SERVER['HTTP_ID'];
 
-        /*
-        *TODO: Unfinished
-        $quizData = R::findAll('quiz');
-        $questionData = R::findAll('question');
-        $answerData = R::findAll('qnswer', 'question_id = ?', []);
+        /*TODO: Unfinished
+        *$quizData = R::findAll('Quiz');
+        *$questionData = R::findAll('Question');
+        *$answerData = R::findAll('Answer', 'Question_id = ?', []);
+        *$allQuizEntries;
         */
     }
 }
@@ -45,14 +45,15 @@ else if($_SERVER['REQUEST_METHOD'] = 'POST') {
     //Add a new quiz and store it in the Quiz table.
     if($_SERVER['HTTP_ACTION'] = 'addQuiz' && checkSession($_SERVER['HTTP_TOKEN'])) {
         $req = json_decode(file_get_contents('php://input'));
-        $newQuiz = R::dispense('quiz');
+
+        $newQuiz = R::dispense('Quiz');
         $newQuiz->name = $req->name;
         $newQuiz->description = $req->description;
         $newQuiz->user_id = $req->user_id;
         $newQuiz->category = $req->category;
         $newID = R::store($newQuiz);
 
-        http_response_code(200)
+        http_response_code(200);
         sendResponse(array('status' => 'ok', 'id' => $newID));
     }
     else {
@@ -68,7 +69,7 @@ else if($_SERVER['REQUEST_METHOD'] == 'PUT') {
         //Assign ID to Quiz object
         $req->id = $_SERVER['HTTP_ID'];
         //Find Object by ID in database
-        $upObj = R::findOne('quiz', 'id = ?', [$req->id]);
+        $upObj = R::findOne('Quiz', 'id = ?', [$req->id]);
         //Change properties
         $upObj->name = $req->name;
         $upObj->description = $req->description;
@@ -86,9 +87,12 @@ else if($_SERVER['REQUEST_METHOD'] == 'PUT') {
 else if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if($_SERVER['HTTP_ACTION'] == 'deleteQuiz' && checkSession($_SERVER['HTTP_TOKEN'])) {
         $dID = $_SERVER['HTTP_ID'];
-        $delObj = R::findOne('question', 'id = ?',($dID));
+        $delObj = R::findOne('Question', 'id = ?', [$dID]);
+        //Find all answers for the selected Question ID, if any are present
+        $answer = R::findAll('Answer', 'Question_id = ?', [$dID]);
 
-        if(!empty($delObj) || !is_null($delObj)) {
+        if((!empty($delObj) || !is_null($delObj))
+            && (empty($answer) || is_null($answer))) {
             R::trash($delObj);
             http_response_code(200);
             sendResponse(array('status' => 'ok'));
