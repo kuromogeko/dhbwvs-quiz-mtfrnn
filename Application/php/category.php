@@ -36,6 +36,7 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
     }else{
         sendError();
     }
+    //PUT Methods
 }else if($_SERVER['REQUEST_METHOD']=='PUT'){
     //change a category
     if($_SERVER['HTTP_ACTION']=='updateCategory' && checkSession($_SERVER['HTTP_TOKEN'])){
