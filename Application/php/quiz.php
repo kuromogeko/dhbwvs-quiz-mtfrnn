@@ -87,15 +87,20 @@ else if($_SERVER['REQUEST_METHOD'] == 'PUT') {
 else if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if($_SERVER['HTTP_ACTION'] == 'deleteQuiz' && checkSession($_SERVER['HTTP_TOKEN'])) {
         $dID = $_SERVER['HTTP_ID'];
-        $delObj = R::findOne('Question', 'id = ?', [$dID]);
+        $delObj = R::findOne('Quiz', 'id = ?', [$dID]);
         //Find all answers for the selected Question ID, if any are present
-        $answer = R::findAll('Answer', 'Question_id = ?', [$dID]);
+        $question = R::findAll('Question', 'Quiz_idQuiz = ?', [$dID]);
 
-        if((!empty($delObj) || !is_null($delObj))
-            && (empty($answer) || is_null($answer))) {
-            R::trash($delObj);
-            http_response_code(200);
-            sendResponse(array('status' => 'ok'));
+        //$answer = R::findAll('Answer', 'Question_id = ?', [$dID]);
+
+        if(empty($question) || is_null($question)) {
+            if (!empty($delObj) || !is_null($delObj)) {
+                R::trash($delObj);
+                http_response_code(200);
+                sendResponse(array('status' => 'ok'));
+            } else {
+                sendError();
+            }
         }
         else {
             sendError();
