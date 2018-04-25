@@ -33,32 +33,22 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 
 + Response 200 (application/json)
 
-		[
-			{
-				"id": 5,
-				"name":"Quiz name", 
-				"description": "Beschreibung des Quiz",
-				"user" : "Nutzername des Ersteller",
-				"user_description" : "Beschreibung des	Nutzers aus dem Profil",
-				"category" : "Kategorie des Quiz (String)"
-			},
-			{
-				"id": 6,
-				"name":"Quiz name 2", 
-				"description": "Beschreibung des Quiz",
-				"user" : "Nutzername des Ersteller",
-				"user_description" : "Beschreibung des Nutzers aus dem Profil",
-				"category" : "Kategorie des Quiz (String)"
-			},
-			{
-				"id": 7,
-				"name":"Quiz name 2", 
-				"description": "Beschreibung des Quiz",
-				"user" : "Nutzername des Ersteller",
-				"user_description" : "Beschreibung des	Nutzers aus dem Profil",
-				"category" : "Kategorie des Quiz (String)"
-			}
-		]
+		{
+		    "1": {
+		        "id": "1",
+		        "name": "Quiz 1",
+		        "description": "Quiz 1 Beschreibung",
+		        "user_iduser": "1",
+		        "category_idcategory": "1"
+		    },
+		    "2": {
+		        "id": "2",
+		        "name": "Quiz 2",
+		        "description": "Quiz 2 Beschreibung",
+		        "user_iduser": "1",
+		        "category_idcategory": "1"
+		    }
+		}
 
 ### Quiz Eintrag anfordern [GET]
 
