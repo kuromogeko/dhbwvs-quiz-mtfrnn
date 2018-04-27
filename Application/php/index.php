@@ -56,7 +56,7 @@ $app->get('/category/{id}',function(Request $request, Response $response, array 
 
 //POST NEW CATEGORY
 $app->post('/category', function(Request $request, Response $response, array $args){
-    if(checkSession($request->getHeader('token')[0])){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
        $req = $request->getParsedBody();
        $newCategory = R::dispense('category');
        $newCategory->name = $req['name'];
@@ -69,7 +69,7 @@ $app->post('/category', function(Request $request, Response $response, array $ar
 
 //CHANGE CATEGORY PICK BY ID
 $app->put('/category/{id}', function(Request $request, Response $response, array $args){
-    if(checkSession($request->getHeader('token')[0])){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $req = $request->getParsedBody();
             //add id to object
         $req['id'] = $args['id'];
@@ -87,7 +87,7 @@ $app->put('/category/{id}', function(Request $request, Response $response, array
 
 //DELETE CATEGORY BY ID
 $app->delete('/category/{id}', function(Request $request, Response $response, array $args){
-    if(checkSession($request->getHeader('token')[0])){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $dId = $args['id'];
         //find object
         $delObj = R::findOne('category','id = ?',[$dId]);
@@ -123,6 +123,87 @@ $app->get('/login', function(Request $request, Response $response, array $args){
         sendError($response);
     }
 });
+
+//GET USER BY ID
+$app->get('/user/{id}', function(Request $request, Response $response, array $args){
+    $uid= $args['id'];
+    $res = R::findOne('user', 'id = ?',[$uid]);
+    if(!empty($res)|| !is_null($res)){
+        sendResponse($response, array("id"=>$uid,"uname"=>$res->uname,"description"=>$res->description));
+    }else{
+        sendError($response);
+    }  
+});
+
+//GET USER BY NAME
+$app->get('/user/name/{name}', function(Request $request, Response $response, array $args){
+    $uname = $args['name'];
+    $res = R::findOne('user', 'uname=?', [$uname]);
+    if(!empty($res)|| !is_null($res)){
+
+        sendResponse($response, array("id"=>$res->id,"uname"=>$res->uname,"description"=>$res->description));
+        }else{
+        sendError($response);
+        }
+    });
+
+    //TODO: STILL MISSING PAssword()
+$app->post('/user', function(Request $request, Response $response, array $args){
+    $input = $request->getParsedBody();
+    $newUser = R::dispense('user');
+    $newUser->uname=$input['uname'];
+    $newUser->pwd=$input['pwd'];
+    $newUser->description=$input['description'];
+    $res= R::store($newUser);
+    R::exec("UPDATE user set pwd = Password(?) WHERE ID = ?", [$input['pwd'],$res]);
+
+    if(!empty($res)||!is_null($res)){
+        sendResponse($response,array("status"=>"ok", 'id'=>$res));
+    }else{
+        sendError($response);
+    }
+});
+
+//CHANGE USER BY ID PUT
+$app->put('/user/{id}', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && $request->hasHeader('token') && checkSession($request->getHeader('token')[0]) && !empty(R::findOne('sessions', 'user_iduser = ? and token = ?',[$args['id'],$request->getHeader('token')[0]]))){
+        $uid = $args['id'];
+        $user = R::findOne('user','ID = ? and pwd=Password(?) ', [$uid,$request->getHeader('pwd')[0]]);
+        if(empty($user) || is_null($user)){
+            return sendError($response);
+        }
+        $input = $request->getParsedBody();
+        $user->description = $input['description'];
+        $user->pwd = $input['pwd'];
+
+        R::store($user);
+        R::exec("UPDATE user set pwd = Password(?) WHERE ID = ?", [$input['pwd'],$uid]);
+        sendResponse($response, array("status"=>"ok"));
+    }
+});
+
+//DELETE USER BY ID
+$app->delete('/user/{id}', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && $request->hasHeader('token') && checkSession($request->getHeader('token')[0]) && !empty(R::findOne('sessions', 'user_iduser = ? and token = ?',[$args['id'],$request->getHeader('token')[0]]))){
+        $uid = $args['id'];
+        $user = R::findOne('user','ID = ? and pwd=Password(?) ', [$uid,$request->getHeader('pwd')[0]]);
+        if(empty($user) || is_null($user)){
+            return sendError($response);
+        }
+        $quiz = R::findOne('quiz', 'user_iduser =  ?', [$uid]);
+        if(!empty($quiz) || !is_null($quiz)){
+            return sendError($response);
+        }
+        $session = R::findOne('sessions', 'user_iduser = ? and token = ?',[$args['id'],$request->getHeader('token')[0]]);
+        R::trash($session);
+        R::trash($user);
+        sendResponse($response, array("status"=>"ok"));
+    }else {
+        sendError($response);
+    }
+});
+
+
 
 //execute
 $app->run();
