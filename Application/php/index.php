@@ -16,11 +16,13 @@ $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 //ENDOF Necessities
 function sendError($response){
+    header('Content-Type: application/json');
     $response->withStatus(400);
     return $response->getBody()->write(json_encode(array("status"=>"failed")));
 }
 
 function sendResponse($response, $dat){
+    header('Content-Type: application/json');
     $response->withStatus(200);
     return $response->getBody()->write(json_encode($dat));
 }
@@ -147,7 +149,7 @@ $app->get('/user/name/{name}', function(Request $request, Response $response, ar
         }
     });
 
-    //TODO: STILL MISSING PAssword()
+    //Create NEW USER
 $app->post('/user', function(Request $request, Response $response, array $args){
     $input = $request->getParsedBody();
     $newUser = R::dispense('user');
@@ -203,7 +205,153 @@ $app->delete('/user/{id}', function(Request $request, Response $response, array 
     }
 });
 
+//QUESTION RELATED CATEGORIES
 
+//GET QUESTIONS FOR QUIZ
+$app->get('/question/quiz/{id}', function(Request $request, Response $response, array $args){
+    $qid = $args['id'];
+    $res = R::findAll('question', 'quiz_idquiz = ? ', [$qid]);
+
+    if(!empty($res)||!is_null($res)){
+        sendResponse($response, $res);
+    }else{
+        sendError($response);
+    }
+});
+
+//GET QUESTION BY ID
+$app->get('/question/{id}', function(Request $request, Response $response, array $args){
+
+    $quid = $args['id'];
+    $res = R::findOne('question', 'id = ?', [$quid]);
+
+    if(!empty($res)|| !is_null($res)){
+
+        sendResponse($response, $res);
+    }else{
+        sendError($response);
+    }
+});
+
+//POST QUESTION / CREATE
+$app->post('/question', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $body = $request->getParsedBody();
+        $newQuestion = R::dispense('question');
+        $newQuestion->text = $body['text'];
+        $newQuestion->quiz_idquiz = $body['quiz_idquiz'];
+        $nQId = R::store($newQuestion);
+        sendResponse($response,array("status"=>"ok", "id"=>$nQId));
+    }else{
+        sendError($response);
+    }
+});
+
+//CHANGE QUESTION / PUT
+$app->put('/question/{id}', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $qid = $args['id'];
+        $body = $request->getParsedBody();
+        $pq = R::findOne('question', 'id = ?',[$qid] );
+        $pq->text = $body['text'];
+        $pq->quiz_idquiz = $body['quiz_idquiz'];
+        R::store($pq);
+        sendResponse($response, array("status"=>"ok"));
+    }else{
+    sendError($response);
+    }
+});
+
+//TODO: EXTENDED PERMISSION CHECK
+//DELETE QUESTION BY ID
+$app->delete('/question/{id}', function(Request $request, Response $response, array $args){
+if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+    $qid = $args['id'];
+    $search = R::findOne ('answer', 'question_idquestion = ?', [$qid]);
+    if(!empty($search) || !is_null($search)){
+        sendError($response);
+        return;
+    }
+    $question = R::findOne('question', 'id=?', [$qid]);
+    R::trash($question);
+    sendResponse($response, array("status"=>"ok"));
+}else{
+    sendError($response);
+}
+});
+
+//ANSWER RELATED REQUESTS
+//GET ANSWERS RELATED TO QUESTION
+$app->get('/answer/question/{id}', function(Request $request, Response $response, array $args){
+
+    $qid = $args['id'];
+    $res = R::findAll('answer', 'question_idquestion = ?', [$qid]);
+    if(!empty($res) || !is_null($res)){
+
+        sendResponse($response, $res);
+    }else{
+        sendError($response);
+    }
+});
+
+//GET SINGLE ANSWER
+$app->get('/answer/{id}', function(Request $request, Response $response, array $args){
+
+    $aid = $args['id'];
+    $res = R::findOne('answer', 'id = ?', [$aid]);
+    if(!empty($res)|| !is_null($res)){
+
+    sendResponse($response, $res);
+    }else{
+    sendError($response);
+    }
+});
+
+//POST NEW ANSWER
+$app->post('/answer', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $body = $request->getParsedBody();
+        $newAnswer = R::dispense('answer');
+        $newAnswer->text = $body['text'];
+        $newAnswer->question_idquestion = $body['question_idquestion'];
+        $newAnswer->is_correct = $body['is_correct'];
+        $newID = R::store($newAnswer);
+        sendResponse($response, array("status"=>"ok", "id"=>$newID));
+    }else{
+    sendError($response);
+    }
+});
+
+//TODO: ENHANCE SECURITY
+//CHANGE ANSWER BASED ON ID / PUT
+$app->put('/answer/{id}', function(Request $request, Response $response, array $args){
+
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $aid = $args['id'];
+        $body = $request->getParsedBody();
+        $answer = R::findOne('answer', 'id = ?', [$aid]);
+        $answer->text = $body['text'];
+        $answer->question_idquestion = $body['question_idquestion'];
+        $answer->is_correct = $body['is_correct'];
+        R::store($answer);
+        sendResponse($response, array("status"=>"ok"));
+    }else{
+        sendError($response);
+    }
+});
+
+//TODO: ENHANCE SECURITY
+//DELETE ANSWER BASED ON ID
+$app->delete('/answer/{id}', function(Request $request, Response $response, array $args){
+if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+    $aid= $args['id'];
+    $dAnswer = R::findOne('answer','id=?', [$aid]);
+    R::trash($dAnswer);
+    sendResponse($response, array("status"=>"ok"));
+}else{
+    sendError($response);
+}
+});
 
 //execute
 $app->run();

@@ -32,14 +32,14 @@ CREATE TABLE `answer` (
   `id` int(11) NOT NULL,
   `text` varchar(100) DEFAULT NULL COMMENT 'Inhalt der Antwort. ',
   `Question_idQuestion` int(11) NOT NULL,
-  `isCorrect` tinyint(1) NOT NULL COMMENT 'Prüft ob Antwort korrekt ist'
+  `is_correct` tinyint(1) NOT NULL COMMENT 'Prüft ob Antwort korrekt ist'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `answer`
 --
 
-INSERT INTO `answer` (`id`, `text`, `Question_idQuestion`, `isCorrect`) VALUES
+INSERT INTO `answer` (`id`, `text`, `Question_idQuestion`, `is_correct`) VALUES
 (1, 'Duffel', 1, 0),
 (2, 'Tavistock', 2, 0),
 (3, 'North Cowichan', 3, 1),

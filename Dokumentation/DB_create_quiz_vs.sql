@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `db_quiz_vs`.`Answer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(100) NULL COMMENT 'Inhalt der Antwort. ' /* comment truncated */ /*Maximal 100 Zeichen*/,
   `Question_idQuestion` INT NOT NULL,
-  `isCorrect` TINYINT(1) NOT NULL COMMENT 'Prüft ob Antwort korrekt ist',
+  `is_correct` TINYINT(1) NOT NULL COMMENT 'Prüft ob Antwort korrekt ist',
   PRIMARY KEY (`id`),
   INDEX `fk_Answer_Question1_idx` (`Question_idQuestion` ASC),
   CONSTRAINT `fk_Answer_Question1`
