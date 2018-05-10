@@ -13,3 +13,8 @@
     linear-gradient(0deg,rgba(255,0,150,0.3),rgba(255,0,150,0.3)),url('../img/quiz.jpg') bottom right 15% no-repeat #2fa398;
     
   }
+
+.cyan-bg {
+    background-color: #00ffff52;
+    
+}
