@@ -345,23 +345,23 @@ $app->get('/quiz/{id}', function(Request $request, Response $response, array $ar
 });
 
 //GET LIST OF ALL QUIZZES WITH AFFILIATED QUESTIONS AND ALL AFFILIATED ANSWERS
-$app->get('/quiz', function(Request $request, Response $response, array $args) {
+$app->get('/quizFull', function(Request $request, Response $response, array $args) {
     $result = 0;
     $quizEntries = R::findAll('Quiz');
 
     if(!empty($quizEntries) || !is_null($quizEntries)) {
         foreach ($quizEntries as $quizEntry) {
-            $result = $result + R::findOne('Quiz', 'id = ?', [$quizEntry['id']]);
+            //$result = $result + R::findOne('Quiz', 'id = ?', [$quizEntry['id']]);
 
-            $questionEntries = R::findAll('Question', 'quiz_idquiz = ?', [$quizEntry['id']]);
-            foreach ($questionEntries as $questionEntry) {
-                $questionTemp = R::findOne('Question', 'id = ?', [$questionEntry['id']]);
-                $answerTemp = R::findAll('Answer', 'question_idquestion = ?', [$quizEntry['id']]);
-                $result = $result + $questionTemp + $answerTemp;
+            $quizEntry->questions = R::findAll('Question', 'quiz_idquiz = ?', [$quizEntry['id']]);
+            foreach ($quizEntry->questions as $questionEntry) {
+                //$questionTemp = R::findOne('Question', 'id = ?', [$questionEntry['id']]);
+                $questionEntry->answers = R::findAll('Answer', 'question_idquestion = ?', [$quizEntry['id']]);
+                //$result = $result + $questionTemp + $answerTemp;
             }
         }
 
-        return sendResponse($response,$result);
+        return sendResponse($response,$quizEntries);
     }
     else {
         return sendError($response);
