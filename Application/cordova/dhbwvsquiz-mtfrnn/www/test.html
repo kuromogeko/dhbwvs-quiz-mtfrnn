@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>TESTSEITE</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function(){
+            $('#click').click(function(){
+                $.ajax({
+                    type: 'GET',
+                    url: "http://localhost/php/category",
+                    headers: {
+                        "My-First-Header":"first value",
+                        "My-Second-Header":"second value"
+                    }
+                }).done(function(data) { 
+                    alert(data);
+                });
+            });
+        });
+
+    </script>
+    <button id="click">
+        HI
+    </button>
+</body>
+</html>

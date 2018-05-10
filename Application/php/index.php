@@ -5,6 +5,10 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once 'conn/connection.php';
 require './vendor/autoload.php';
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: *');
+
 
 $configuration = [
     'settings' => [

@@ -1,0 +1,15 @@
+.bordered-thin{
+    border-style: solid;
+    border-width: 1px;
+    /*border-radius: 5px;*/
+    border-color: darkgray;
+    padding: 0.5em;
+}
+
+/*NOT REALLY IN USE. THE COLOR IS RANDOMIZED VIA THE tmpl insert*/
+.mdl-card__title {
+    color: #fff;
+    background:
+    linear-gradient(0deg,rgba(255,0,150,0.3),rgba(255,0,150,0.3)),url('../img/quiz.jpg') bottom right 15% no-repeat #2fa398;
+    
+  }
