@@ -12,61 +12,126 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'self'   data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/material.min.css">
+    <link rel="stylesheet" href="css/custom.css">
     <script src="js/material.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/custom.js"></script>
     <link rel="stylesheet" href="css/icon.css?family=Material+Icons">
     <title>Hello World</title>
 </head>
 
 <body>
     <script type="text/javascript" src="js/index.js"></script>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    <!--NAVIGATION-->
-        <!-- TOP BAR-->       
-            <header class="mdl-layout__header">
-                <div class="mdl-layout__header-row">
-                    <span class="mdl-layout-title">Quiz</span>
-                    <div class="mdl-layout-spacer"></div>
-                    <nav class="mdl-navigation">
-                        <a href="" class="mdl-navigation__link">Test 1</a><a href="" class="mdl-navigation__link">Test 2</a>
-                    </nav>
-                </div>
-            </header>
-        <!--ENDOF TOP BAR-->
-        <!--DRAWER-->
-            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">Navigation</span>
+    <!--<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">-->
+    <div class="mdl-layout mdl-js-layout mdl-layout mdl-layout--fixed-header">
+        <!--NAVIGATION-->
+        <!-- TOP BAR-->
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title" name="Overview">Quiz</span>
+                <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <a href="" class="mdl-navigation__link">Test</a>
-                    <a href="" class="mdl-navigation__link">Test</a>
+                    <a class="mdl-navigation__link">
+                        <div id="barSearchInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display:none">
+                            <form action="javascript:void(0)">
+
+                                <input placeholder="Suchen (Enter)" class="mdl-textfield__input" type="text" name="barInput">
+                            </form>
+                        </div>
+                        <i class="material-icons" id="barSearch">search</i>
+                    </a>
+                    <a class="mdl-navigation__link" name="goToLogin">Anmelden</a>
+                    <a class="mdl-navigation__link" name="goToLogin">Registrieren </a>
                 </nav>
             </div>
+        </header>
+        <!--ENDOF TOP BAR-->
+        <!--DRAWER-->
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Navigation</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" name="Overview">
+                    Quiz Übersicht
+                </a>
+                <a class="mdl-navigation__link">
+                    Quiz erstellen
+                </a>
+                <a class="mdl-navigation__link">
+                    Quiz suchen
+                    <i class="material-icons" id="">search</i>
+                </a>
+                <a class="mdl-navigation__link" name="CategoryOverview">
+                    Quizze nach Kategorien
+                </a>
+                <a class="mdl-navigation__link">
+                    Meine Quizze
+                </a>
+            </nav>
+        </div>
         <!--ENDOF DRAWER-->
-    <!--ENDOF NAVIGATION-->
-    <!--PAGE CONTENT-->
-        <main class = "mdl-layout__content">
-           <div class="mdl-grid">
-               <div class = "mdl-cell mdl-cell--4-col graybox">
-                    <em>Titel</em><br>
-                    <p>Quiztext Lorem ipsum dolor sit.</p>
-               </div>
-               <div class = "mdl-cell mdl-cell--4-col graybox">
-                    <em>Titel</em><br>
-                    <p>Quiztext Lorem ipsum dolor sit.</p>
-               </div>
-               <div class = "mdl-cell mdl-cell--4-col graybox">
-                    <em>Titel</em><br>
-                    <p>Quiztext Lorem ipsum dolor sit.</p>
-               </div>
-           </div> 
+        <!--ENDOF NAVIGATION-->
+        <!--PAGE CONTENT-->
+        <main class="mdl-layout__content" id="inner">
+            <div class="mdl-grid" id="login" style="display:none">
+                <div class="mdl-layout-spacer"></div>
+                <div class=" mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                        <p class="mdl-card__title-text">Login</p>
+                    </div>
+
+
+                    <form action="javascript:void(0);">
+                        <div class="mdl-card__supporting-text">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="uname" name="uname">
+                                <label class="mdl-textfield__label" for="uname">Nutzername</label>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="password" id="pass" name="pass">
+                                <label class="mdl-textfield__label" for="pass">Passwort</label>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button class="mdl-button mdl-js-button mdl-button--raised" id="loginButton">
+                                Anmelden
+                            </button>
+
+                            <button class="mdl-button mdl-js-button mdl-button--raised" id="registerButton">
+                                Registrieren
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-layout-spacer"></div>
+            </div>
+            <div id="Oview">
+                <div class="mdl-grid">
+                    <br>
+                    <div class="mdl-cell mdl-cell--stretch">
+
+                        <button id="appbutton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                            Button
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class="mdl-grid" id="mainGrid">
+
+                </div>
+            </div>
         </main>
-    <!--ENDOF PAGE CONTENT-->
+        <!--ENDOF PAGE CONTENT-->
     </div>
 </body>
 

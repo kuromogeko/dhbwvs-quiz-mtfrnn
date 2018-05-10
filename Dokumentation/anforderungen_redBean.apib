@@ -22,7 +22,7 @@ Responses:
 ***DB Tabelle Quiz***<br>
 Anforderungen an die/ Funktion der Quiz Schnittstelle
 
-## Quiz Anfragen [/quiz.php]
+## Quiz Anfragen [/quiz]
 ### Liste der Quizze [GET]
 
 + Request
@@ -33,32 +33,22 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 
 + Response 200 (application/json)
 
-		[
-			{
-				"id": 5,
-				"name":"Quiz name", 
-				"description": "Beschreibung des Quiz",
-				"user" : "Nutzername des Ersteller",
-				"user_description" : "Beschreibung des	Nutzers aus dem Profil",
-				"category" : "Kategorie des Quiz (String)"
-			},
-			{
-				"id": 6,
-				"name":"Quiz name 2", 
-				"description": "Beschreibung des Quiz",
-				"user" : "Nutzername des Ersteller",
-				"user_description" : "Beschreibung des Nutzers aus dem Profil",
-				"category" : "Kategorie des Quiz (String)"
-			},
-			{
-				"id": 7,
-				"name":"Quiz name 2", 
-				"description": "Beschreibung des Quiz",
-				"user" : "Nutzername des Ersteller",
-				"user_description" : "Beschreibung des	Nutzers aus dem Profil",
-				"category" : "Kategorie des Quiz (String)"
-			}
-		]
+		{
+		    "1": {
+		        "id": "1",
+		        "name": "Quiz 1",
+		        "description": "Quiz 1 Beschreibung",
+		        "user_iduser": "1",
+		        "category_idcategory": "1"
+		    },
+		    "2": {
+		        "id": "2",
+		        "name": "Quiz 2",
+		        "description": "Quiz 2 Beschreibung",
+		        "user_iduser": "1",
+		        "category_idcategory": "1"
+		    }
+		}
 
 ### Quiz Eintrag anfordern [GET]
 
@@ -107,19 +97,19 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 							[
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": true
+									"is_correct": true
 								}
 							]
 					},
@@ -129,19 +119,19 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 							[
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": true
+									"is_correct": true
 								}
 							]
 					},
@@ -151,19 +141,19 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 							[
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": false
+									"is_correct": false
 								},
 								{
 									"text": "Der Inhalt einer Antwortmöglichkeit",
-									"isCorrect": true
+									"is_correct": true
 								}
 							]
 					}
@@ -182,10 +172,10 @@ Anforderungen an die/ Funktion der Quiz Schnittstelle
 	+ Body
 
 			{
-				"name": "Name des Quiz",
-				"description": "Beschreibung des Quiz",
-				"user_id": 12,
-				"category" : "Kategorie des Quiz (Id)"
+			  "name": "Name des Quiz",
+			  "description": "Beschreibung des Quiz",
+			  "user_iduser": 1,
+			  "category_idcategory": 1
 			}
 
 + Response 200 (application/json)
@@ -261,56 +251,59 @@ Ein Quiz darf nur dann entfernt werden, wenn keine Fragen anhängen. Oder alle F
 ***DB Tabelle Question***<br>
 Alle Fragebezogenen Anfragen sind in dieser Gruppe
 
-## Fragen Anfragen [/question.php]
+## Fragen Anfragen [/question]
 ### Liste der zu einem Quiz zugehörigen Fragen [GET]
-
-+ Request
-
-	+ Header
-
-			action: getQuestion
-			quiz_id: 15
-
-+ Response 200 (application/json)
-
-		[
-			{
-				"id": 133,
-				"text": "Inhalt der Frage",
-				"quiz_id": 15
-			},
-			{
-				"id": 134,
-				"text": "Inhalt der Frage",
-				"quiz_id": 15
-			},
-			{
-				"id": 135,
-				"text": "Inhalt der Frage",
-				"quiz_id": 15
-			},
-			{
-				"id": 136,
-				"text": "Inhalt der Frage",
-				"quiz_id": 15
-			}
-		] 
-
-### Einzelne Frage anfordern [GET]
-
-+ Request
-
-	+ Header
-
-			action: getSingleQuestion
-			id: 17
+**URL ZUSATZ: /quiz/{id}**
 
 + Response 200 (application/json)
 
 		{
-			"id": 17,
-			"text": "Inhalt der Frage",
-			"quiz_id": 15
+			"1": {
+				"id": "1",
+				"text": "Sage P. Cote",
+				"Quiz_idQuiz": "1"
+			},
+			"2": {
+				"id": "2",
+				"text": "Kiona M. Foster",
+				"Quiz_idQuiz": "1"
+			},
+			"3": {
+				"id": "3",
+				"text": "Britanney W. Keith",
+				"Quiz_idQuiz": "1"
+			},
+			"4": {
+				"id": "4",
+				"text": "Ingrid F. Hogan",
+				"Quiz_idQuiz": "1"
+			},
+			"5": {
+				"id": "5",
+				"text": "Noah S. Glass",
+				"Quiz_idQuiz": "1"
+			},
+			"6": {
+				"id": "6",
+				"text": "DAS IST GEÄNDERTE ERSTELLTE FRAGE",
+				"Quiz_idQuiz": "1"
+			},
+			"8": {
+				"id": "8",
+				"text": "DAS IST EINE ERSTELLTE FRAGE",
+				"Quiz_idQuiz": "1"
+			}
+		} 
+
+### Einzelne Frage anfordern [GET]
+**URL ZUSATZ: /{id}**
+
++ Response 200 (application/json)
+
+		{
+			"id": "1",
+			"text": "Sage P. Cote",
+			"Quiz_idQuiz": "1"
 		}
 
 ### Frage erstellen [POST]
@@ -319,21 +312,20 @@ Alle Fragebezogenen Anfragen sind in dieser Gruppe
 	
 	+ Header
 
-			action: addQuestion
 			token: sessionToken
 
 	+ Body
 
 			{
 				"text": "Inhalt der Frage",
-				"quiz_id": 15
+				"quiz_idquiz": 15
 			}
 
 + Response 200 (application/json)
 
 		{
 			"status":"ok",
-			"question_id": 178
+			"id": 178
 		}
 
 + Response 400 (application/json)
@@ -343,20 +335,19 @@ Alle Fragebezogenen Anfragen sind in dieser Gruppe
 		}
 
 ### Frage ändern [PUT]
+**URL ZUSATZ: /{id}**
 
 + Request
 	
 	+ Header
 
-			action: updateQuestion
-			id: 198
 			token: sessionToken
 
 	+ Body
 
 			{
 				"text": "Inhalt der Frage",
-				"quiz_id": 15
+				"quiz_idquiz": 15
 			}
 
 + Response 200 (application/json)
@@ -372,6 +363,7 @@ Alle Fragebezogenen Anfragen sind in dieser Gruppe
 		}
 
 ### Frage löschen [DELETE]
+**URL ZUSATZ: /{id}**
 
 Eine Frage darf nur dann gelöscht werden, wenn keine Antworten anhängend sind.
 
@@ -379,8 +371,6 @@ Eine Frage darf nur dann gelöscht werden, wenn keine Antworten anhängend sind.
 	
 	+ Header
 
-			action: deleteQuestion
-			id: 166
 			token: sessionToken
 
 + Response 200 (application/json)
@@ -400,61 +390,61 @@ Eine Frage darf nur dann gelöscht werden, wenn keine Antworten anhängend sind.
 ***DB Tabelle: Answer***<br>
 Fasst Schnittstelle für Antworten zusammen
 
-## Antworten Anfragen [/answer.php]
+## Antworten Anfragen [/answer]
 ### Liste von Antworten nach Frage ID [GET]
-
-+ Request
-	
-	+ Header
-
-			action: getAnswer
-			question_id: 12
-
-+ Response 200 (application/json)
-		
-		[
-			{
-			"id": 146,
-			"text": "Der Inhalt des Antwort Text",
-			"question_id": 12,
-			"isCorrect": false
-			},
-			{
-			"id": 147,
-			"text": "Der Inhalt des Antwort Text",
-			"question_id": 12,
-			"isCorrect": false
-			},
-			{
-			"id": 148,
-			"text": "Der Inhalt des Antwort Text",
-			"question_id": 12,
-			"isCorrect": true
-			},
-			{
-			"id": 149,
-			"text": "Der Inhalt des Antwort Text",
-			"question_id": 12,
-			"isCorrect": false
-			}
-		]
-
-### Einzelne Antwort nach ID [GET]
-
-+ Request
-
-	+ Header
-
-			action: getSingleAnswer
-			id: 146
+**URL ZUSATZ: /question/{id}**
 
 + Response 200 (application/json)
 		
 		{
-			"id": 146,
-			"text": "Der Inhalt des Antwort Text",
-			"question_id": 12,
-			"isCorrect": false
+			"1": {
+				"id": "1",
+				"text": "Duffel",
+				"Question_idQuestion": "1",
+				"is_correct": "0"
+			},
+			"6": {
+				"id": "6",
+				"text": "Łódź",
+				"Question_idQuestion": "1",
+				"is_correct": "1"
+			},
+			"11": {
+				"id": "11",
+				"text": "Westmalle",
+				"Question_idQuestion": "1",
+				"is_correct": "0"
+			},
+			"16": {
+				"id": "16",
+				"text": "Bostaniçi",
+				"Question_idQuestion": "1",
+				"is_correct": "1"
+			},
+			"21": {
+				"id": "21",
+				"text": "Tiltil",
+				"Question_idQuestion": "1",
+				"is_correct": "1"
+			},
+			"26": {
+				"id": "26",
+				"text": "das ist ANDERE eine Antwort",
+				"Question_idQuestion": "1",
+				"is_correct": "0"
+			}
+		}
+
+### Einzelne Antwort nach ID [GET]
+**URL ZUSATZ: /{id}**
+
++ Response 200 (application/json)
+		
+		{
+			"id": "1",
+			"text": "Duffel",
+			"Question_idQuestion": "1",
+			"is_correct": "0"
 		}
 
 ### Antwort erstellen [POST]
@@ -463,22 +453,21 @@ Fasst Schnittstelle für Antworten zusammen
 
 	+ Header
 
-			action: createAnswer
 			token: sessionToken
 
 	+ Body
 
 			{
 				"text": "Der Inhalt der Antwort",
-				"question_id": 7,
-				"isCorrect": true
+				"question_idquestion": 7,
+				"is_correct": 0
 			}
 
 + Response 200 (application/json)
 		
 		{
 			"status": "ok",
-			"answer_id": 546
+			"id": 546
 		}
 
 + Response 400 (application/json)
@@ -488,21 +477,20 @@ Fasst Schnittstelle für Antworten zusammen
 		}
 		
 ### Antwort anpassen [PUT]
+**URL ZUSATZ: /{id}**
 
 + Request
 	
 	+ Header
 
-			action: updateAnswer
-			id: 148
 			token: sessionToken
 
 	+ Body
 
 			{
 				"text": "Der Inhalt der Antwort",
-				"question_id": 9,
-				"isCorrect": true
+				"question_idquestion": 9,
+				"is_correct": 0
 			}
 
 + Response 200 (application/json)
@@ -518,13 +506,12 @@ Fasst Schnittstelle für Antworten zusammen
 		}
 
 ### Antwort löschen [DELETE]
+**URL ZUSATZ: /{id}**
 
 + Request
 	
 	+ Header
 
-			action: deleteAnswer
-			id: 144
 			token: sessionToken
 
 + Response 200 (application/json)
@@ -544,33 +531,27 @@ Fasst Schnittstelle für Antworten zusammen
 ***DB Tabelle user***<br>
 Nutzerbezogene Aktionen werden damit durchgeführt
 
-## Nutzer Anfragen [/user.php]
+## Nutzer Anfragen [/user]
 ### Nutzer by ID [GET]
-
-+ Request
-	
-	+ Header
-
-			action: getUserByID
-			id: 45
+**URL ZUSATZ: /{id}**
 
 + Response 200 (application/json)
 		
 		{
-			"id": 45,
-			"username": "Nutzername",
-			"description": "Beschreibung des Nutzers"
+			"id": "7",
+			"uname": "Gary",
+			"description": "aliquet libero. Integer"
 		}
 
 ### Nutzer LOGIN [GET]
+**URL ANDERS: /login**
 
 + Request
 
 	+ Header
 
-			action: getLogin
 			uname: username
-			pwd: encryptedPWD
+			pwd: PWD
 
 + Response 200 (application/json)
 		
@@ -586,36 +567,26 @@ Nutzerbezogene Aktionen werden damit durchgeführt
 		}
 
 ### Get User by Name [GET]
-
-+ Request
-	
-	+ Header
-
-			action: getUserByName
-			name: Nutzername
+**URL ZUSATZ: /{name}**
 
 + Response 200 (application/json)
 		
 		{
-			"id": 45,
-			"username": "Nutzername",
-			"description": "Beschreibung des Nutzers"
+			"id": "7",
+			"uname": "Gary",
+			"description": "aliquet libero. Integer"
 		}
 
 ### Nutzer erstellen [POST]
 
 + Request
 
-	+ Header
-
-			action: createUser
-
 	+ Body
 
 			{
-				"username": "Nutzername",
-				"pwd": "encryptedPasswordHash",
-				"description": "Beschreibung des Nutzers"
+			"uname": "TestInsert2",
+			"pwd": "asdf",
+			"description": "User inserted to Test database fct."
 			}
 
 + Response 200 (application/json)
@@ -632,6 +603,7 @@ Nutzerbezogene Aktionen werden damit durchgeführt
 		}
 
 ### Nutzer ändern [PUT]
+**URL ZUSATZ: /{id}**
 
 Für Änderungen beim Nutzer muss stets das Passwort neu eingetippt werden.
 
@@ -639,16 +611,14 @@ Für Änderungen beim Nutzer muss stets das Passwort neu eingetippt werden.
 	
 	+ Header
 
-			action: updateUser
-			id: 12
-			pwd: encryptedHash
+			pwd: PWD
 			token: sessionToken
 
 	+ Body
 
 			{
-				"pwd": "encryptedPasswordHash",
-				"description": "Beschreibung des Nutzers"
+			"pwd": "asdf",
+			"description": "AAAAAAAAAAAAAAAAAAAAAAA"
 			}
 
 + Response 200 (application/json)
@@ -658,6 +628,7 @@ Für Änderungen beim Nutzer muss stets das Passwort neu eingetippt werden.
 		}
 
 ### Nutzer löschen [DELETE]
+**URL ZUSATZ: /{id}**
 
 Ein Nutzer darf nur dann gelöscht werden, wenn er kein Quiz mehr besitzt.
 
@@ -665,9 +636,7 @@ Ein Nutzer darf nur dann gelöscht werden, wenn er kein Quiz mehr besitzt.
 	
 	+ Header
 
-			action: deleteUser
-			id: 145
-			pwd: encryptedHash
+			pwd: pwd
 			token: sessionToken
 
 + Response 200 (application/json)
@@ -687,14 +656,8 @@ Ein Nutzer darf nur dann gelöscht werden, wenn er kein Quiz mehr besitzt.
 ***DB Tabelle category***<br>
 Kategorienbezogene Anfragen befinden sich hier
 
-## Anfragen Kategorien [/category.php]
+## Anfragen Kategorien [/category]
 ### Liste der Kategorien [GET]
-
-+ Request
-		
-	+ Header
-	
-			action: getAllCategories
 
 + Response 200 (application/json)
 
@@ -720,13 +683,7 @@ Kategorienbezogene Anfragen befinden sich hier
 		}
 
 ### Einzelne Kategorie by ID [GET]
-
-+ Request 
-	
-	+ Header
-
-			action: getCategory
-			id: 27
+**URL ZUSATZ: /{id}**
 
 + Response 200 (application/json)
 		
@@ -747,7 +704,6 @@ Kategorienbezogene Anfragen befinden sich hier
 	
 	+ Header
 
-			action: addCategory
 			token: sessionToken
 
 	+ Body
@@ -770,13 +726,12 @@ Kategorienbezogene Anfragen befinden sich hier
 		}
 
 ### Kategorie ändern [PUT]
+**URL ZUSATZ: /{id}**
 
 + Request
 		
 	+ Header
 
-			action: updateCategory
-			id: 15
 			token: sessionToken
 
 	+ Body
@@ -798,6 +753,7 @@ Kategorienbezogene Anfragen befinden sich hier
 		}
 
 ### Kategorie löschen [DELETE]
+**URL ZUSATZ: /{id}**
 
 Entfernt die Kategorie. Soll nur dann gehen, wenn die Kategorie nicht benutzt wird.<br>
 
@@ -805,8 +761,6 @@ Entfernt die Kategorie. Soll nur dann gehen, wenn die Kategorie nicht benutzt wi
 		
 	+ Header
 
-			action: deleteCategory
-			id: 146
 			token: sessionToken
 
 + Response 200 (application/json)
@@ -822,7 +776,7 @@ Entfernt die Kategorie. Soll nur dann gehen, wenn die Kategorie nicht benutzt wi
 		}
 
 # Group Sessions
-## Anfragen zu Nutzersessions [/sessions.php]
+## Anfragen zu Nutzersessions [/sessions]
 ### Ausloggen aus der aktuellen Session [DELETE]
 
 Beendet die aktuelle Session und entfernt den Token aus der Datenbank
@@ -831,7 +785,6 @@ Beendet die aktuelle Session und entfernt den Token aus der Datenbank
 	
 	+ Header
 
-			action: endSession
 			token: sessionToken
 
 + Response 200 (application/json)

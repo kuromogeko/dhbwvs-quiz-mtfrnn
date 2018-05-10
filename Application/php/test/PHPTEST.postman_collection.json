@@ -1,0 +1,791 @@
+{
+	"info": {
+		"_postman_id": "ed1ce863-f212-5adf-054e-b85663a3bb33",
+		"name": "SEM_WEBPRG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Categories",
+			"description": "",
+			"item": [
+				{
+					"name": "DELETE Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/category/102",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AAAAAAA\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/category/104",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"104"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Category BY ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "97020600-4bdd-4b50-9ed3-2762a545f3ed",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Test GET BY ID\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(/[.0-9]{0,}/.test(jsonData.id)).to.equal(true);",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/category/104",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"104"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST CATEGORY",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AAAAAAA\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba572d4b-d6f7-40cc-a0cf-c4d082a28519",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Login",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "uname",
+								"value": "Gary"
+							},
+							{
+								"key": "pwd",
+								"value": "asdf"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/user/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/user/name/Gary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"name",
+								"Gary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uname\": \"TestInsert2\",\n  \"pwd\": \"asdf\",\n  \"description\": \"User inserted to Test database fct.\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "pwd",
+								"value": "asdf"
+							},
+							{
+								"key": "token",
+								"value": "asdf"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pwd\": \"asdf\",\n  \"description\": \"AAAAAAAAAAAAAAAAAAAAAAA\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/101",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"101"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE USER",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "pwd",
+								"value": "asdf"
+							},
+							{
+								"key": "token",
+								"value": "asdf"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/101",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "quiz",
+			"description": null,
+			"item": [
+				{
+					"name": "GET Quiz a:list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "action",
+								"value": "list"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "127.0.0.1/Sem4/php/quiz.php",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Sem4",
+								"php",
+								"quiz.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Quiz full",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "action",
+								"value": "fullQuiz"
+							},
+							{
+								"key": "id",
+								"value": "1"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "127.0.0.1/Sem4/php/quiz.php",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Sem4",
+								"php",
+								"quiz.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Quiz",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "action",
+								"value": "addQuiz"
+							},
+							{
+								"key": "token",
+								"value": "asd"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Name des Quiz\",\r\n  \"description\": \"Beschreibung des Quiz\",\r\n  \"user_iduser\": 1,\r\n  \"category_idcategory\": 1\r\n}"
+						},
+						"url": {
+							"raw": "127.0.0.1/Sem4/php/quiz.php",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Sem4",
+								"php",
+								"quiz.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Quiz",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "action",
+								"value": "updateQuiz"
+							},
+							{
+								"key": "token",
+								"value": "asd"
+							},
+							{
+								"key": "id",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"neuer Name des Quiz\",\r\n  \"description\": \"Beschreibung des Quiz\",\r\n  \"user_iduser\": 1,\r\n  \"category_idcategory\": 1\r\n}"
+						},
+						"url": {
+							"raw": "127.0.0.1/Sem4/php/quiz.php",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Sem4",
+								"php",
+								"quiz.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "questions",
+			"description": null,
+			"item": [
+				{
+					"name": "GET QUESTIONS BY QUIZID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/question/quiz/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"question",
+								"quiz",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET QUESTIONS BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/question/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"question",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST NEW QUESTION",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\":\"DAS IST EINE ERSTELLTE FRAGE\",\n\t\"quiz_idquiz\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/question",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT QUESTION BY ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\":\"DAS IST GEÄNDERTE ERSTELLTE FRAGE\",\n\t\"quiz_idquiz\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/question/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"question",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE QUESTION BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/question/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"question",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "answers",
+			"description": "",
+			"item": [
+				{
+					"name": "GET ANSWERS BY QUESTION ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/answer/question/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"answer",
+								"question",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ANSWERS BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/answer/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"answer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST ANSWER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"das ist eine Antwort\",\n\t\"question_idquestion\": \"1\",\n\t\"is_correct\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/answer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"answer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT ANSWER BY ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"das ist ANDERE eine Antwort\",\n\t\"question_idquestion\": \"1\",\n\t\"is_correct\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/answer/26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"answer",
+								"26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ANSWER BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "asdf"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/answer/27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"answer",
+								"27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

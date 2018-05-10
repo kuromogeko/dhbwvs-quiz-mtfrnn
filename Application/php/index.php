@@ -438,4 +438,5 @@ $app->delete('/quiz/{id}', function(Request $request, Response $response, array 
 
 //execute
 $app->run();
+
 ?>
