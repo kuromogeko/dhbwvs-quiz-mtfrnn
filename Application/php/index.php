@@ -4,19 +4,12 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once 'conn/connection.php';
 require './vendor/autoload.php';
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: *');
-
-
 $configuration = [
     'settings' => [
         'displayErrorDetails' => true,
     ],
 ];
 $c = new \Slim\Container($configuration);
-
 $app = new \Slim\App($c);
 //ENDOF Necessities
 function sendError($response){
@@ -24,7 +17,6 @@ function sendError($response){
     $response->withStatus(400);
     return $response->getBody()->write(json_encode(array("status"=>"failed")));
 }
-
 function sendResponse($response, $dat){
     header('Content-Type: application/json');
     $response->withStatus(200);
@@ -34,63 +26,58 @@ function sendResponse($response, $dat){
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     $response->getBody()->write("Hello, $name");
-
     return $response;
 });
 //ENDOF TRYOUT
 //CATEGORY RELATED REQUEST HANDLING
-
 //GET ALL CATEGORIES
 $app->get('/category', function(Request $request, Response $response, array $args){
     $cats=R::findAll('category', 'order by NAME ASC');
-        if(!empty($cats)|| !is_null($cats)){
-            return sendResponse($response, $cats);
-        }else{
-            return sendError($response);
-        }
+    if(!empty($cats)|| !is_null($cats)){
+        return sendResponse($response, $cats);
+    }else{
+        return sendError($response);
+    }
 });
 //GET CATEGORY BY ID
 $app->get('/category/{id}',function(Request $request, Response $response, array $args){
-    $catID=$args['id']; 
+    $catID=$args['id'];
     $cat = R::findOne('category', 'ID = ?',[$catID]);
     if(!empty($cat)|| !is_null($cat)){
-        sendResponse($response, $cat); 
-    }else{
-    sendError($response);
-}
-});
-
-//POST NEW CATEGORY
-$app->post('/category', function(Request $request, Response $response, array $args){
-    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
-       $req = $request->getParsedBody();
-       $newCategory = R::dispense('category');
-       $newCategory->name = $req['name'];
-       $newID = R::store($newCategory);
-       sendResponse($response, array('status'=>'ok','id'=>$newID));
+        sendResponse($response, $cat);
     }else{
         sendError($response);
     }
 });
-
+//POST NEW CATEGORY
+$app->post('/category', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $req = $request->getParsedBody();
+        $newCategory = R::dispense('category');
+        $newCategory->name = $req['name'];
+        $newID = R::store($newCategory);
+        sendResponse($response, array('status'=>'ok','id'=>$newID));
+    }else{
+        sendError($response);
+    }
+});
 //CHANGE CATEGORY PICK BY ID
 $app->put('/category/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $req = $request->getParsedBody();
-            //add id to object
+        //add id to object
         $req['id'] = $args['id'];
-            //find Object to update
+        //find Object to update
         $upObj = R::findOne('category','id = ?',[$req['id']]);
-            //change property 
+        //change property
         $upObj->name = $req['name'];
-            //commit change 
+        //commit change
         R::store($upObj);
-            sendResponse($response, array('status'=>'ok'));
+        sendResponse($response, array('status'=>'ok'));
     }else{
-    sendError($response);
+        sendError($response);
     }
 });
-
 //DELETE CATEGORY BY ID
 $app->delete('/category/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
@@ -105,11 +92,10 @@ $app->delete('/category/{id}', function(Request $request, Response $response, ar
             sendError($response);
         }
     }else{
-    sendError($response);
+        sendError($response);
     }
 });
 //ENDOF CATEGORY RELATED REQUEST HANDLING
-
 //USER RELATED CATEGORIES
 $app->get('/login', function(Request $request, Response $response, array $args){
     $uname = $request->getHeader('uname')[0];
@@ -129,7 +115,6 @@ $app->get('/login', function(Request $request, Response $response, array $args){
         sendError($response);
     }
 });
-
 //GET USER BY ID
 $app->get('/user/{id}', function(Request $request, Response $response, array $args){
     $uid= $args['id'];
@@ -138,22 +123,19 @@ $app->get('/user/{id}', function(Request $request, Response $response, array $ar
         sendResponse($response, array("id"=>$uid,"uname"=>$res->uname,"description"=>$res->description));
     }else{
         sendError($response);
-    }  
+    }
 });
-
 //GET USER BY NAME
 $app->get('/user/name/{name}', function(Request $request, Response $response, array $args){
     $uname = $args['name'];
     $res = R::findOne('user', 'uname=?', [$uname]);
     if(!empty($res)|| !is_null($res)){
-
         sendResponse($response, array("id"=>$res->id,"uname"=>$res->uname,"description"=>$res->description));
-        }else{
+    }else{
         sendError($response);
-        }
-    });
-
-    //Create NEW USER
+    }
+});
+//Create NEW USER
 $app->post('/user', function(Request $request, Response $response, array $args){
     $input = $request->getParsedBody();
     $newUser = R::dispense('user');
@@ -162,14 +144,12 @@ $app->post('/user', function(Request $request, Response $response, array $args){
     $newUser->description=$input['description'];
     $res= R::store($newUser);
     R::exec("UPDATE user set pwd = Password(?) WHERE ID = ?", [$input['pwd'],$res]);
-
     if(!empty($res)||!is_null($res)){
         sendResponse($response,array("status"=>"ok", 'id'=>$res));
     }else{
         sendError($response);
     }
 });
-
 //CHANGE USER BY ID PUT
 $app->put('/user/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && $request->hasHeader('token') && checkSession($request->getHeader('token')[0]) && !empty(R::findOne('sessions', 'user_iduser = ? and token = ?',[$args['id'],$request->getHeader('token')[0]]))){
@@ -181,13 +161,11 @@ $app->put('/user/{id}', function(Request $request, Response $response, array $ar
         $input = $request->getParsedBody();
         $user->description = $input['description'];
         $user->pwd = $input['pwd'];
-
         R::store($user);
         R::exec("UPDATE user set pwd = Password(?) WHERE ID = ?", [$input['pwd'],$uid]);
         sendResponse($response, array("status"=>"ok"));
     }
 });
-
 //DELETE USER BY ID
 $app->delete('/user/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && $request->hasHeader('token') && checkSession($request->getHeader('token')[0]) && !empty(R::findOne('sessions', 'user_iduser = ? and token = ?',[$args['id'],$request->getHeader('token')[0]]))){
@@ -215,22 +193,17 @@ $app->delete('/user/{id}', function(Request $request, Response $response, array 
 $app->get('/question/quiz/{id}', function(Request $request, Response $response, array $args){
     $qid = $args['id'];
     $res = R::findAll('question', 'quiz_idquiz = ? ', [$qid]);
-
     if(!empty($res)||!is_null($res)){
         sendResponse($response, $res);
     }else{
         sendError($response);
     }
 });
-
 //GET QUESTION BY ID
 $app->get('/question/{id}', function(Request $request, Response $response, array $args){
-
     $quid = $args['id'];
     $res = R::findOne('question', 'id = ?', [$quid]);
-
     if(!empty($res)|| !is_null($res)){
-
         sendResponse($response, $res);
     }else{
         sendError($response);
@@ -262,55 +235,48 @@ $app->put('/question/{id}', function(Request $request, Response $response, array
         R::store($pq);
         sendResponse($response, array("status"=>"ok"));
     }else{
-    sendError($response);
+        sendError($response);
     }
 });
 
 //TODO: EXTENDED PERMISSION CHECK
 //DELETE QUESTION BY ID
 $app->delete('/question/{id}', function(Request $request, Response $response, array $args){
-if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
-    $qid = $args['id'];
-    $search = R::findOne ('answer', 'question_idquestion = ?', [$qid]);
-    if(!empty($search) || !is_null($search)){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $qid = $args['id'];
+        $search = R::findOne ('answer', 'question_idquestion = ?', [$qid]);
+        if(!empty($search) || !is_null($search)){
+            sendError($response);
+            return;
+        }
+        $question = R::findOne('question', 'id=?', [$qid]);
+        R::trash($question);
+        sendResponse($response, array("status"=>"ok"));
+    }else{
         sendError($response);
-        return;
     }
-    $question = R::findOne('question', 'id=?', [$qid]);
-    R::trash($question);
-    sendResponse($response, array("status"=>"ok"));
-}else{
-    sendError($response);
-}
 });
-
 //ANSWER RELATED REQUESTS
 //GET ANSWERS RELATED TO QUESTION
 $app->get('/answer/question/{id}', function(Request $request, Response $response, array $args){
-
     $qid = $args['id'];
     $res = R::findAll('answer', 'question_idquestion = ?', [$qid]);
     if(!empty($res) || !is_null($res)){
-
         sendResponse($response, $res);
     }else{
         sendError($response);
     }
 });
-
 //GET SINGLE ANSWER
 $app->get('/answer/{id}', function(Request $request, Response $response, array $args){
-
     $aid = $args['id'];
     $res = R::findOne('answer', 'id = ?', [$aid]);
     if(!empty($res)|| !is_null($res)){
-
-    sendResponse($response, $res);
+        sendResponse($response, $res);
     }else{
-    sendError($response);
+        sendError($response);
     }
 });
-
 //POST NEW ANSWER
 $app->post('/answer', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
@@ -322,14 +288,12 @@ $app->post('/answer', function(Request $request, Response $response, array $args
         $newID = R::store($newAnswer);
         sendResponse($response, array("status"=>"ok", "id"=>$newID));
     }else{
-    sendError($response);
+        sendError($response);
     }
 });
-
 //TODO: ENHANCE SECURITY
 //CHANGE ANSWER BASED ON ID / PUT
 $app->put('/answer/{id}', function(Request $request, Response $response, array $args){
-
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $aid = $args['id'];
         $body = $request->getParsedBody();
@@ -343,18 +307,133 @@ $app->put('/answer/{id}', function(Request $request, Response $response, array $
         sendError($response);
     }
 });
-
 //TODO: ENHANCE SECURITY
 //DELETE ANSWER BASED ON ID
 $app->delete('/answer/{id}', function(Request $request, Response $response, array $args){
-if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
-    $aid= $args['id'];
-    $dAnswer = R::findOne('answer','id=?', [$aid]);
-    R::trash($dAnswer);
-    sendResponse($response, array("status"=>"ok"));
-}else{
-    sendError($response);
-}
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $aid= $args['id'];
+        $dAnswer = R::findOne('answer','id=?', [$aid]);
+        R::trash($dAnswer);
+        sendResponse($response, array("status"=>"ok"));
+    }else{
+        sendError($response);
+    }
+});
+
+//QUIZ RELATED REQUEST HANDLING
+//GET LIST OF ALL QUIZZES
+$app->get('/quiz', function(Request $request, Response $response, array $args) {
+    $quiz = R::findAll('Quiz', 'order by NAME ASC');
+
+    if(!empty($quiz)|| !is_null($quiz)){
+        sendResponse($response, $quiz);
+    } else{
+        sendError($response);
+    }
+});
+
+//GET A SINGLE QUIZ BY ID
+$app->get('/quiz/{id}', function(Request $request, Response $response, array $args) {
+    $qid = $args['id'];
+    $quiz = R::findOne('Quiz', 'id = ?', [$qid]);
+
+    if(!empty($quiz)|| !is_null($quiz)){
+        return sendResponse($response, $quiz);
+    } else{
+        return sendError($response);
+    }
+});
+
+//GET LIST OF ALL QUIZZES WITH AFFILIATED QUESTIONS AND ALL AFFILIATED ANSWERS
+$app->get('/quiz', function(Request $request, Response $response, array $args) {
+    $result = 0;
+    $quizEntries = R::findAll('Quiz');
+
+    if(!empty($quizEntries) || !is_null($quizEntries)) {
+        foreach ($quizEntries as $quizEntry) {
+            $result = $result + R::findOne('Quiz', 'id = ?', [$quizEntry['id']]);
+
+            $questionEntries = R::findAll('Question', 'quiz_idquiz = ?', [$quizEntry['id']]);
+            foreach ($questionEntries as $questionEntry) {
+                $questionTemp = R::findOne('Question', 'id = ?', [$questionEntry['id']]);
+                $answerTemp = R::findAll('Answer', 'question_idquestion = ?', [$quizEntry['id']]);
+                $result = $result + $questionTemp + $answerTemp;
+            }
+        }
+
+        return sendResponse($response,$result);
+    }
+    else {
+        return sendError($response);
+    }
+});
+
+//POST A NEW QUIZ
+$app->post('/quiz', function(Request $request, Response $response, array $args) {
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $req = $request->getParsedBody();
+        $quiz = R::dispense('Quiz');
+
+        $quiz->name = $req['name'];
+        $quiz->description = $req['description'];
+        $quiz->user_id = $req['user_id']; //REVIEW: POTENTIAL FALSE NAME, MAY BE "user_iduser"
+        $quiz->category_idcategory = $req['category_idcategory'];
+
+        $newID = R::store($quiz);
+        sendResponse($response, array('status'=>'ok','id'=>$newID));
+    }
+    else {
+        sendError($response);
+    }
+});
+
+//CHANGE QUIZ ELEMENTS BY ID PUT
+$app->put('/quiz/{id}', function(Request $request, Response $response, array $args){
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $qid = $args['id'];
+        $quiz = R::findOne('Quiz', 'id = ?', [$qid]);
+
+        if(empty($quiz) || is_null($quiz)) {
+            return sendError($response);
+        }
+
+        $input = $request->getParsedBody();
+        $quiz->name = $input['name'];
+        $quiz->description = $input['description'];
+        $quiz->user_id = $input['user_id']; //REVIEW: POTENTIAL FALSE NAME, MAY BE "user_iduser"
+        $quiz->category_idcategory = $input['category_idcategory'];
+
+        R::store($quiz);
+        R::exec("UPDATE Quiz set name = ?, description = ?, user_id = ?, category_idcategory = ? WHERE id = ?"
+            ,[$input['name'], $input['description'], $input['user_id'], $input['category_idcategory']]);
+
+        return sendResponse($response, array("status"=>"ok"));
+    } else {
+        return sendError();
+    }
+});
+
+//DELETE A QUIZ IF ALL QUESTIONS WITH AFFILIATED QUIZ ID ARE EMPTY or DELETE A QUIZ AND ALL ASSOCIATED QUESTIONS AND ANSWERS FOR THAT QUIZ
+$app->delete('/quiz/{id}', function(Request $request, Response $response, array $args) {
+    if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
+        $dID = $args['id'];
+        $quiz = R::findOne('Quiz', 'id = ?', [$dID]);
+        $remainingQuestions = R::findAll('Question', 'quiz_idquiz = ?', [$dID]);
+
+        if(!empty($remainingQuestions) || !is_null($remainingQuestions)) {
+            if(!empty($quiz) || !is_null($quiz)) {
+                R::trash($quiz);
+                return sendResponse($response, array("status"=>"ok"));
+            }
+            else {
+                return sendError($response);
+            }
+        }
+        return sendError($response);
+    }
+    else {
+        return sendError($response);
+    }
 });
 
 //execute
