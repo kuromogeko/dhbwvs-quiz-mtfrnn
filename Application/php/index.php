@@ -372,11 +372,11 @@ $app->get('/quizFull', function(Request $request, Response $response, array $arg
 $app->post('/quiz', function(Request $request, Response $response, array $args) {
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $req = $request->getParsedBody();
-        $quiz = R::dispense('Quiz');
+        $quiz = R::dispense('quiz');
 
         $quiz->name = $req['name'];
         $quiz->description = $req['description'];
-        $quiz->user_id = $req['user_id']; //REVIEW: POTENTIAL FALSE NAME, MAY BE "user_iduser"
+        $quiz->user_iduser = $req['user_iduser'];
         $quiz->category_idcategory = $req['category_idcategory'];
 
         $newID = R::store($quiz);
@@ -400,12 +400,12 @@ $app->put('/quiz/{id}', function(Request $request, Response $response, array $ar
         $input = $request->getParsedBody();
         $quiz->name = $input['name'];
         $quiz->description = $input['description'];
-        $quiz->user_id = $input['user_id']; //REVIEW: POTENTIAL FALSE NAME, MAY BE "user_iduser"
+        $quiz->user_iduser = $input['user_iduser']; //REVIEW: POTENTIAL FALSE NAME, MAY BE "user_iduser"
         $quiz->category_idcategory = $input['category_idcategory'];
 
         R::store($quiz);
-        R::exec("UPDATE Quiz set name = ?, description = ?, user_id = ?, category_idcategory = ? WHERE id = ?"
-            ,[$input['name'], $input['description'], $input['user_id'], $input['category_idcategory']]);
+        //R::exec("UPDATE Quiz set name = ?, description = ?, user_iduser = ?, category_idcategory = ? WHERE id = ?"
+        //    ,[$input['name'], $input['description'], $input['user_iduser'], $input['category_idcategory'], $qid]);
 
         return sendResponse($response, array("status"=>"ok"));
     } else {
