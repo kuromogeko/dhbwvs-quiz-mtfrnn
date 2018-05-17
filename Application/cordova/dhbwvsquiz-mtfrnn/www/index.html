@@ -23,7 +23,9 @@
     <script src="js/material.min.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/rest.js"></script>
     <script src="js/custom.js"></script>
+
     <link rel="stylesheet" href="css/icon.css?family=Material+Icons">
     <title>Hello World</title>
 </head>
@@ -122,12 +124,18 @@
                         <button id="appbutton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                             Button
                         </button>
-
+                        <button id="snack" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                            Button
+                        </button>
                     </div>
                 </div>
 
                 <div class="mdl-grid" id="mainGrid">
 
+                </div>
+                <div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+                    <div class="mdl-snackbar__text"></div>
+                    <button type="button" class="mdl-snackbar__action"></button>
                 </div>
             </div>
         </main>

@@ -20,7 +20,13 @@ function sendError($response){
 function sendResponse($response, $dat){
     header('Content-Type: application/json');
     $response->withStatus(200);
-    return $response->getBody()->write(json_encode($dat));
+    $array= array();
+    $i=0;
+    foreach($dat as $row){
+        $array[$i]= $row;
+        $i++;
+    };
+    return $response->getBody()->write(json_encode($array));
 }
 //TRYOUT
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
@@ -164,6 +170,8 @@ $app->put('/user/{id}', function(Request $request, Response $response, array $ar
         R::store($user);
         R::exec("UPDATE user set pwd = Password(?) WHERE ID = ?", [$input['pwd'],$uid]);
         sendResponse($response, array("status"=>"ok"));
+    }else{
+        return sendError($response);
     }
 });
 //DELETE USER BY ID
