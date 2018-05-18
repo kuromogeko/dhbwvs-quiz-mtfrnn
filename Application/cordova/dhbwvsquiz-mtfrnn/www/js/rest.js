@@ -5,6 +5,7 @@ var allCategory= function(callback){
     $.ajax({
         type: 'GET',
         url: baseurl+"/category",
+        dataType : "json",
         headers: {
             
         }

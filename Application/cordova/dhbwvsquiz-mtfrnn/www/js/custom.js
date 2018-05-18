@@ -26,7 +26,11 @@ var getRandomColor = function () {
 }
 
 var displayQuizzes = function (data) {
-    var result = JSON.parse(data);
+    //var result = JSON.parse(data);
+    if(typeof(data)=="string"){
+        data = JSON.parse(data);
+    }
+    var result = data;
     for(var i=0; i<result.length;i++){
         //console.log("looping for"+thing.name);
         var obj = result[i];
@@ -40,6 +44,9 @@ $(function () { // JQUERY RDY
     //OH MY GOD THIS IS SUCH A COOL HACK
 
     //INITIAL OVERVIEW ON PAGELOAD
+    getFullQuizzes(displayQuizzes);
+
+
     
     //SNACKBAR
     $('#snack').click(function(){
@@ -54,21 +61,37 @@ $(function () { // JQUERY RDY
 
     });
     
-
+    $("#login").dialog({
+        autoOpen : false, modal : true, closeOnEscape : true, draggable: false, resizable: false, width: "auto",
+        buttons: [
+            {
+              text: "Anmelden",
+              click: function() {
+                $( this ).dialog( "close" );
+              }
+            },
+            {
+                text: "Registrieren",
+                click: function() {
+                  $( this ).dialog( "close" );
+                }
+              }
+          ]
+      });
+    
+      // next add the onclick handler
+      $('[name="goToLogin"]').click(function() {
+        $("#login").dialog("open");
+        return false;
+      });
     //VIEW
     
-    $("#appbutton").click(function(){
-        getFullQuizzes(displayQuizzes);
-    });
-    
-    //SHOW LOGIN FORM
-    $('[name="goToLogin"]').click(function(){
-        $('#login').show();
-        $('#Oview').hide();
-    });
 
+
+    
+    //SHOW OVERVIEW
     $('[name="Overview"]').click(function(){
-        $('#login').hide();
+        //$('#login').hide();
         $('#Oview').show();
     });
 

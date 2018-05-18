@@ -17,21 +17,25 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/material.min.css">
-    <link rel="stylesheet" href="css/custom.css">
-    <script src="js/material.min.js"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery.tmpl.min.js"></script>
-    <script src="js/rest.js"></script>
-    <script src="js/custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./css/material.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="./css/jquery-ui.theme.min.css">
+    <script src="./js/material.min.js"></script>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./js/jquery-ui.min.js"></script>
+    <script src="./js/jquery.tmpl.min.js"></script>
+    <script src="./js/rest.js"></script>
+    <script src="./js/custom.js"></script>
 
-    <link rel="stylesheet" href="css/icon.css?family=Material+Icons">
+    <link rel="stylesheet" href="./css/icon.css?family=Material+Icons">
     <title>Hello World</title>
 </head>
 
 <body>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
     <!--<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">-->
     <div class="mdl-layout mdl-js-layout mdl-layout mdl-layout--fixed-header">
         <!--NAVIGATION-->
@@ -41,6 +45,12 @@
                 <span class="mdl-layout-title" name="Overview">Quiz</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
+                        <br>
+                        <a class="mdl-navigation__link">
+                            <button id="snack" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                Snackbar
+                            </button>
+                        </a>
                     <a class="mdl-navigation__link">
                         <div id="barSearchInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display:none">
                             <form action="javascript:void(0)">
@@ -82,52 +92,32 @@
         <!--ENDOF NAVIGATION-->
         <!--PAGE CONTENT-->
         <main class="mdl-layout__content" id="inner">
-            <div class="mdl-grid" id="login" style="display:none">
-                <div class="mdl-layout-spacer"></div>
-                <div class=" mdl-card mdl-shadow--2dp">
-                    <div class="mdl-card__title mdl-card--expand">
-                        <p class="mdl-card__title-text">Login</p>
+            <div class="ui-widget-overlay" style="display:none" id="login">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title ">
+                            <p class="mdl-card__title-text">Login</p>
+                        </div>  
+    
+                        <form action="javascript:void(0);">
+                            <div class="mdl-card__supporting-text mdl-card--expand">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="uname" name="uname">
+                                    <label class="mdl-textfield__label" for="uname">Nutzername</label>
+                                </div>
+                                <br>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="password" id="pass" name="pass">
+                                    <label class="mdl-textfield__label" for="pass">Passwort</label>
+                                </div>
+                                <br>
+                            </div>
+                    
+                        </form>
                     </div>
-
-
-                    <form action="javascript:void(0);">
-                        <div class="mdl-card__supporting-text">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="uname" name="uname">
-                                <label class="mdl-textfield__label" for="uname">Nutzername</label>
-                            </div>
-                            <br>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="password" id="pass" name="pass">
-                                <label class="mdl-textfield__label" for="pass">Passwort</label>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <button class="mdl-button mdl-js-button mdl-button--raised" id="loginButton">
-                                Anmelden
-                            </button>
-
-                            <button class="mdl-button mdl-js-button mdl-button--raised" id="registerButton">
-                                Registrieren
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="mdl-layout-spacer"></div>
             </div>
             <div id="Oview">
                 <div class="mdl-grid">
-                    <br>
-                    <div class="mdl-cell mdl-cell--stretch">
 
-                        <button id="appbutton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                            Button
-                        </button>
-                        <button id="snack" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                            Button
-                        </button>
-                    </div>
                 </div>
 
                 <div class="mdl-grid" id="mainGrid">
