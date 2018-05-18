@@ -39,9 +39,7 @@ var displayQuizzes = function (data) {
     }
 }
 
-$(function () { // JQUERY RDY
-    //ADD QUIZ BY TEMPLATE. GIVE RANDOM COLOR
-    //OH MY GOD THIS IS SUCH A COOL HACK
+$(function () { 
 
     //INITIAL OVERVIEW ON PAGELOAD
     getFullQuizzes(displayQuizzes);
@@ -53,7 +51,7 @@ $(function () { // JQUERY RDY
         var notification = document.querySelector('.mdl-js-snackbar');
         var data = {
         message: 'Message Sent',
-        actionHandler: function(event) {},
+        actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
         actionText: 'Undo',
         timeout: 10000
         };
@@ -61,6 +59,7 @@ $(function () { // JQUERY RDY
 
     });
     
+    //Login Dialog setup   
     $("#login").dialog({
         autoOpen : false, modal : true, closeOnEscape : true, draggable: false, resizable: false, width: "auto",
         buttons: [
@@ -79,7 +78,7 @@ $(function () { // JQUERY RDY
           ]
       });
     
-      // next add the onclick handler
+      // OPEN DIALOG
       $('[name="goToLogin"]').click(function() {
         $("#login").dialog("open");
         return false;
@@ -95,12 +94,14 @@ $(function () { // JQUERY RDY
         $('#Oview').show();
     });
 
+    //Searchbar functionality
     $('#barSearch').click(function(){
 
         $('#barSearchInput >form :input').val("");
         $('#barSearchInput').fadeIn(500);
     })
 
+    //search bar submit
     $('#barSearchInput').submit(function(){
         $(this).fadeOut(500);
     });

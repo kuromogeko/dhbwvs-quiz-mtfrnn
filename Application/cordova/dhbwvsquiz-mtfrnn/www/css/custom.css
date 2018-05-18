@@ -15,10 +15,13 @@
   }
 
 .cyan-bg {
-    background-color: #00ffff52;
-    
+    background: linear-gradient(0deg,#39b1b1,#3d51b5);
 }
 
+[name="barInput"]::placeholder{color: #FFFFFF;}
+[name="barInput"]{
+    border-bottom: white solid 1px; 
+}
 
 .ui-widget-overlay
 {
