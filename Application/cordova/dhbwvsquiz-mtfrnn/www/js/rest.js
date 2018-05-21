@@ -152,4 +152,13 @@ var getFullQuizzes = function(callback){
     });
 }
 
+var getFullQuizById = function(id, callback){
+    $.ajax({
+        type: 'GET',
+        url: baseurl+"/quiz/"+id
+    }).done(function(data){
+        callback(data);
+    });
+}
+
 //});

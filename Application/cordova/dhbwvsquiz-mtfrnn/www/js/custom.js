@@ -4,17 +4,45 @@ var listElementTmpl = "\
         <h2 class=\"mdl-card__title-text\">${name}</h2>\
     </div>\
     <div class=\"mdl-card__supporting-text mdl-card--expand\">\
+    Kennungs-Nummer: ${id}\
+    <hr>\
         ${description}\
     </div>\
     <div class=\"mdl-card__actions mdl-card--border\">\
-        <a class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" data-playID=\"${id}\">\
+        <button class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" onclick=\"playAQuiz(${id})\">\
             Play\
-        </a>\
+        </button>\
     </div>\
 </div>\
 ";
 
+var globalQuizLoad;
+var globalSet = false;
 
+
+function toArr(Obj){
+    var array = $.map(Obj, function(value, index) {
+        return [value];
+    });
+    return array;
+}
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    while (0 !== currentIndex) {
+
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+  
 
 var getRandomColor = function () {
     var letters = '0123456789ABCDEF';
@@ -24,6 +52,23 @@ var getRandomColor = function () {
     }
     return color;
 }
+var cancelQuiz = function(){
+    $('#mainGrid').show();
+    $('[name=QuizPlay]').remove();
+    $('#questionGrid').hide();
+}
+var playAQuiz = function(id){
+    getFullQuizById(id,function(data){
+        $('#mainGrid').hide();
+        $('#questionGrid').show();
+        if(typeof(data)=="string"){
+            data = JSON.parse(data);
+        }
+        var questions = toArr(data[5]);
+        questions = shuffle(questions);
+        
+    });
+};
 
 var displayQuizzes = function (data) {
     //var result = JSON.parse(data);
@@ -31,6 +76,9 @@ var displayQuizzes = function (data) {
         data = JSON.parse(data);
     }
     var result = data;
+    globalQuizLoad = data;
+    globalSet = true;
+
     for(var i=0; i<result.length;i++){
         //console.log("looping for"+thing.name);
         var obj = result[i];
@@ -109,3 +157,5 @@ $(function () {
 
 
 }); //ENDOF JQUERY RDY
+
+

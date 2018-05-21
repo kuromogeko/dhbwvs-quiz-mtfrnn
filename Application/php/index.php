@@ -346,6 +346,12 @@ $app->get('/quiz/{id}', function(Request $request, Response $response, array $ar
     $quiz = R::findOne('Quiz', 'id = ?', [$qid]);
 
     if(!empty($quiz)|| !is_null($quiz)){
+        $rQuestions = R::findAll('question', 'Quiz_idQuiz = ?', [$quiz->id]);
+        $quiz->questions = $rQuestions;
+        foreach($quiz->questions as $rQ){
+            $rAnswers = R::findAll('answer', 'Question_idQuestion = ?',[$rQ->id]);
+            $rQ->answers = $rAnswers;
+        }
         return sendResponse($response, $quiz);
     } else{
         return sendError($response);

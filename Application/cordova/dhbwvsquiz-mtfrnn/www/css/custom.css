@@ -46,3 +46,12 @@
   #inner{
       padding-top: 4em;
   }
+
+  .quizSide{
+      margin-left: 2em;
+      border-left: solid 1px black;
+  }
+
+ .cancelButton{
+     margin: 1em 1em;
+ }
