@@ -47,6 +47,9 @@
                 <nav class="mdl-navigation">
                         <br>
                         <a class="mdl-navigation__link">
+                                <button id="cancelQuiz"  onclick="cancelQuiz()" style="display:none" class="cancelButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                        Quiz Abbrechen
+                            </button>
                             <button id="snack" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                 Snackbar
                             </button>
@@ -124,12 +127,7 @@
                 </div>
 
                 <div class="mdl-grid" id="questionGrid" style= "display:none">
-                    <div class="mdl-cell mdl-card mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--6-col-phone mdl-shadow--2dp  graybox">
-                        <button id="cancelQuiz" onclick="cancelQuiz()" class="cancelButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                                    Quiz Abbrechen
-                        </button>
-                    </div>
-
+                    
                 </div>
 
                 <div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">

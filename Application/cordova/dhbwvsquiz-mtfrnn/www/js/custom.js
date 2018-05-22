@@ -16,9 +16,37 @@ var listElementTmpl = "\
 </div>\
 ";
 
+var questionElemTmpl = "\
+<div name=\"QuizPlay\" class=\"mdl-cell mdl-card mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp  graybox\">\
+                            <div name=\"QuizPlay\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,#FFFFFF44,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398\">\
+                                <h2 class=\"mdl-card__title-text\">Frage:</h2>\
+                            </div>\
+                            <div class=\"mdl-card__supporting-text mdl-card--expand\">\
+                            ${text}\
+                            <hr>\
+                            <div id=\"Frage${id}\" data-questionid=${id}>{{each answers }}\
+                            <label>\
+                                    <input name=\"quizBox\" data-answerid=\"${id}\" type=\"checkbox\"><span>${text}</span>\
+                            </label><br>\
+                            {{/each}}\
+                            </div>\
+                            </div>\
+                            <div class=\"mdl-card__actions mdl-card--border\">\
+                                <button id=\"lock${id}\" class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" onclick=\"LockQuestion('${id}'); \">\
+                                    Einlocken\
+                                </button>\
+                            </div>\
+                    </div>\
+";
+
 var globalQuizLoad;
 var globalSet = false;
 
+function LockQuestion(q){
+    $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
+    $('#Frage'+q).attr("style","background: #00000022");
+    $('#lock'+q).attr("disabled", true);
+}
 
 function toArr(Obj){
     var array = $.map(Obj, function(value, index) {
@@ -53,20 +81,27 @@ var getRandomColor = function () {
     return color;
 }
 var cancelQuiz = function(){
-    $('#mainGrid').show();
+    $('#questionGrid').fadeOut(500);
+    $('#mainGrid').fadeIn(1000);
     $('[name=QuizPlay]').remove();
-    $('#questionGrid').hide();
+    $('#cancelQuiz').hide();
+    
 }
 var playAQuiz = function(id){
     getFullQuizById(id,function(data){
         $('#mainGrid').hide();
         $('#questionGrid').show();
+        $('#cancelQuiz').show();
         if(typeof(data)=="string"){
             data = JSON.parse(data);
         }
         var questions = toArr(data[5]);
         questions = shuffle(questions);
-        
+        //console.log(questions);
+        for(var i=0; i<questions.length; i++){
+            //console.log(questions[i]);
+            $.tmpl(questionElemTmpl, questions[i]).appendTo('#questionGrid');
+        }
     });
 };
 
