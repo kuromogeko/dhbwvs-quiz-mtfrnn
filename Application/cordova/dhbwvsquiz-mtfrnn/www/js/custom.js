@@ -150,8 +150,8 @@ var submitQuiz = function(){
     if(quizActive==true){
         //TODO: Lock in Check
         var qsLocked = 0;
-        for(var i=0; i<quests.length; i++){
-            if($('#Frage'+quests[i].id).children().children('input[type=checkbox]').is(":disabled")){
+        for(var k=0; k<quests.length; k++){
+            if($('#Frage'+quests[k].id).children().children('input[type=checkbox]').is(":disabled")){
                 qsLocked++;
             }
         }
@@ -165,16 +165,16 @@ var submitQuiz = function(){
                     //console.log(quests[i].answers.length);
                     var allCorrect = true;
                     for(var j=0;j<quests[i].answers.length;j++){
-                        //console.log(quests[i].answers[j].text);
+                        console.log(quests[i].answers[j].text);
                         if($('[data-answerid='+quests[i].answers[j].id+']').is(":checked")==true){
-                            if(quests[i].answers[i].is_correct==1){
+                            if(quests[i].answers[j].is_correct==1){
                                 //console.log("yay");
                             }else{
                                 allCorrect = false;
                             }
                         }else{
-                            //console.log("Is Correct? "+ quests[i].answers[i].is_correct);
-                            if(quests[i].answers[i].is_correct==0){
+                            console.log("Is Correct? "+ quests[i].answers[j].is_correct);
+                            if(quests[i].answers[j].is_correct==0){
                                 //console.log("yay");
                             }else{
                                 allCorrect = false;
@@ -182,6 +182,7 @@ var submitQuiz = function(){
                         }
                     }
                     if(allCorrect==true){
+                        console.log("+1!");
                         corrs++;
                     }
                 }else{
