@@ -39,8 +39,28 @@ var questionElemTmpl = "\
                     </div>\
 ";
 
+var quizSubmissionTempl = "<div name=\"QuizPlay\" class=\"mdl-cell mdl-card mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp  graybox\">\
+<div name=\"QuizPlay\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,#FFFFFF44,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398\">\
+    <h2 class=\"mdl-card__title-text\">Abgabe</h2>\
+</div>\
+<div class=\"mdl-card__supporting-text mdl-card--expand\">\
+    Hier kann das Quiz abgegeben werden. Dazu m&uuml;ssen alle Antworten eingelockt sein.\
+    Alternativ kann das Quiz abgebrochen werden. \
+</div>\
+<div class=\"mdl-card__actions mdl-card--border\">\
+    <button id=\"enterQuiz\" class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" onclick=\"submitQuiz(); \">\
+        Abgeben\
+    </button>\
+    <button id=\"cancelQuizBottom\"  onclick=\"cancelQuiz()\" class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\">\
+        Quiz Abbrechen\
+    </button>\
+</div>\
+</div>";
+
 var globalQuizLoad;
 var globalSet = false;
+var quizActive=false;
+var quests;
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
@@ -85,23 +105,27 @@ var cancelQuiz = function(){
     $('#mainGrid').fadeIn(1000);
     $('[name=QuizPlay]').remove();
     $('#cancelQuiz').hide();
-    
+    quizActive=false;
 }
 var playAQuiz = function(id){
     getFullQuizById(id,function(data){
         $('#mainGrid').hide();
         $('#questionGrid').show();
         $('#cancelQuiz').show();
+        quizActive= true;
         if(typeof(data)=="string"){
             data = JSON.parse(data);
         }
         var questions = toArr(data[5]);
         questions = shuffle(questions);
+        quests = questions;
+
         //console.log(questions);
         for(var i=0; i<questions.length; i++){
             //console.log(questions[i]);
             $.tmpl(questionElemTmpl, questions[i]).appendTo('#questionGrid');
         }
+        $.tmpl(quizSubmissionTempl, {}).appendTo('#questionGrid');
     });
 };
 
@@ -119,6 +143,58 @@ var displayQuizzes = function (data) {
         var obj = result[i];
         obj.Color = getRandomColor();
         $.tmpl(listElementTmpl, obj).appendTo("#mainGrid");
+    }
+}
+
+var submitQuiz = function(){
+    if(quizActive==true){
+        //TODO: Lock in Check
+        var qsLocked = 0;
+        for(var i=0; i<quests.length; i++){
+            if($('#Frage'+quests[i].id).children().children('input[type=checkbox]').is(":disabled")){
+                qsLocked++;
+            }
+        }
+        if(qsLocked >=quests.length){
+            var corrs = 0;
+
+            for(var i = 0; i<quests.length; i++){
+                //console.log(quests[i]);
+                if($('#Frage'+quests[i].id).children().children('input[type=checkbox]').is(":disabled")){
+                    //TODO: Durch antworten gehen
+                    //console.log(quests[i].answers.length);
+                    var allCorrect = true;
+                    for(var j=0;j<quests[i].answers.length;j++){
+                        //console.log(quests[i].answers[j].text);
+                        if($('[data-answerid='+quests[i].answers[j].id+']').is(":checked")==true){
+                            if(quests[i].answers[i].is_correct==1){
+                                //console.log("yay");
+                            }else{
+                                allCorrect = false;
+                            }
+                        }else{
+                            //console.log("Is Correct? "+ quests[i].answers[i].is_correct);
+                            if(quests[i].answers[i].is_correct==0){
+                                //console.log("yay");
+                            }else{
+                                allCorrect = false;
+                            }
+                        }
+                    }
+                    if(allCorrect==true){
+                        corrs++;
+                    }
+                }else{
+                    //console.log("NOPE!");
+                }
+            }
+            console.log("Fragen richtig: "+corrs+ " von "+quests.length);
+        }else{
+            console.log("Nicht alle Fragen gelockt!");
+            //TODO: Message
+        }
+    }else{
+        //TODO: Error Handling (Snackbar ask for reload)
     }
 }
 

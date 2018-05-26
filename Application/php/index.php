@@ -35,7 +35,7 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
     return $response;
 });
 //ENDOF TRYOUT
-//CATEGORY RELATED REQUEST HANDLING
+//CATEGORY RELATED REqUEST HANDLING
 //GET ALL CATEGORIES
 $app->get('/category', function(Request $request, Response $response, array $args){
     $cats=R::findAll('category', 'order by NAME ASC');
@@ -101,7 +101,7 @@ $app->delete('/category/{id}', function(Request $request, Response $response, ar
         sendError($response);
     }
 });
-//ENDOF CATEGORY RELATED REQUEST HANDLING
+//ENDOF CATEGORY RELATED REqUEST HANDLING
 //USER RELATED CATEGORIES
 $app->get('/login', function(Request $request, Response $response, array $args){
     $uname = $request->getHeader('uname')[0];
@@ -195,9 +195,9 @@ $app->delete('/user/{id}', function(Request $request, Response $response, array 
     }
 });
 
-//QUESTION RELATED CATEGORIES
+//qUESTION RELATED CATEGORIES
 
-//GET QUESTIONS FOR QUIZ
+//GET qUESTIONS FOR qUIZ
 $app->get('/question/quiz/{id}', function(Request $request, Response $response, array $args){
     $qid = $args['id'];
     $res = R::findAll('question', 'quiz_idquiz = ? ', [$qid]);
@@ -207,7 +207,7 @@ $app->get('/question/quiz/{id}', function(Request $request, Response $response, 
         sendError($response);
     }
 });
-//GET QUESTION BY ID
+//GET qUESTION BY ID
 $app->get('/question/{id}', function(Request $request, Response $response, array $args){
     $quid = $args['id'];
     $res = R::findOne('question', 'id = ?', [$quid]);
@@ -218,21 +218,21 @@ $app->get('/question/{id}', function(Request $request, Response $response, array
     }
 });
 
-//POST QUESTION / CREATE
+//POST qUESTION / CREATE
 $app->post('/question', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $body = $request->getParsedBody();
-        $newQuestion = R::dispense('question');
-        $newQuestion->text = $body['text'];
-        $newQuestion->quiz_idquiz = $body['quiz_idquiz'];
-        $nQId = R::store($newQuestion);
-        sendResponse($response,array("status"=>"ok", "id"=>$nQId));
+        $newquestion = R::dispense('question');
+        $newquestion->text = $body['text'];
+        $newquestion->quiz_idquiz = $body['quiz_idquiz'];
+        $nqId = R::store($newquestion);
+        sendResponse($response,array("status"=>"ok", "id"=>$nqId));
     }else{
         sendError($response);
     }
 });
 
-//CHANGE QUESTION / PUT
+//CHANGE qUESTION / PUT
 $app->put('/question/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $qid = $args['id'];
@@ -248,7 +248,7 @@ $app->put('/question/{id}', function(Request $request, Response $response, array
 });
 
 //TODO: EXTENDED PERMISSION CHECK
-//DELETE QUESTION BY ID
+//DELETE qUESTION BY ID
 $app->delete('/question/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $qid = $args['id'];
@@ -264,8 +264,8 @@ $app->delete('/question/{id}', function(Request $request, Response $response, ar
         sendError($response);
     }
 });
-//ANSWER RELATED REQUESTS
-//GET ANSWERS RELATED TO QUESTION
+//ANSWER RELATED REqUESTS
+//GET ANSWERS RELATED TO qUESTION
 $app->get('/answer/question/{id}', function(Request $request, Response $response, array $args){
     $qid = $args['id'];
     $res = R::findAll('answer', 'question_idquestion = ?', [$qid]);
@@ -289,11 +289,11 @@ $app->get('/answer/{id}', function(Request $request, Response $response, array $
 $app->post('/answer', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $body = $request->getParsedBody();
-        $newAnswer = R::dispense('answer');
-        $newAnswer->text = $body['text'];
-        $newAnswer->question_idquestion = $body['question_idquestion'];
-        $newAnswer->is_correct = $body['is_correct'];
-        $newID = R::store($newAnswer);
+        $newanswer = R::dispense('answer');
+        $newanswer->text = $body['text'];
+        $newanswer->question_idquestion = $body['question_idquestion'];
+        $newanswer->is_correct = $body['is_correct'];
+        $newID = R::store($newanswer);
         sendResponse($response, array("status"=>"ok", "id"=>$newID));
     }else{
         sendError($response);
@@ -320,18 +320,18 @@ $app->put('/answer/{id}', function(Request $request, Response $response, array $
 $app->delete('/answer/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $aid= $args['id'];
-        $dAnswer = R::findOne('answer','id=?', [$aid]);
-        R::trash($dAnswer);
+        $danswer = R::findOne('answer','id=?', [$aid]);
+        R::trash($danswer);
         sendResponse($response, array("status"=>"ok"));
     }else{
         sendError($response);
     }
 });
 
-//QUIZ RELATED REQUEST HANDLING
-//GET LIST OF ALL QUIZZES
+//qUIZ RELATED REqUEST HANDLING
+//GET LIST OF ALL qUIZZES
 $app->get('/quiz', function(Request $request, Response $response, array $args) {
-    $quiz = R::findAll('Quiz', 'order by NAME ASC');
+    $quiz = R::findAll('quiz', 'order by NAME ASC');
 
     if(!empty($quiz)|| !is_null($quiz)){
         sendResponse($response, $quiz);
@@ -340,17 +340,17 @@ $app->get('/quiz', function(Request $request, Response $response, array $args) {
     }
 });
 
-//GET A SINGLE QUIZ BY ID
+//GET A SINGLE qUIZ BY ID
 $app->get('/quiz/{id}', function(Request $request, Response $response, array $args) {
     $qid = $args['id'];
-    $quiz = R::findOne('Quiz', 'id = ?', [$qid]);
+    $quiz = R::findOne('quiz', 'id = ?', [$qid]);
 
     if(!empty($quiz)|| !is_null($quiz)){
-        $rQuestions = R::findAll('question', 'Quiz_idQuiz = ?', [$quiz->id]);
-        $quiz->questions = $rQuestions;
-        foreach($quiz->questions as $rQ){
-            $rAnswers = R::findAll('answer', 'Question_idQuestion = ?',[$rQ->id]);
-            $rQ->answers = $rAnswers;
+        $rquestions = R::findAll('question', 'quiz_idquiz = ?', [$quiz->id]);
+        $quiz->questions = $rquestions;
+        foreach($quiz->questions as $rq){
+            $ranswers = R::findAll('answer', 'question_idquestion = ?',[$rq->id]);
+            $rq->answers = $ranswers;
         }
         return sendResponse($response, $quiz);
     } else{
@@ -358,19 +358,19 @@ $app->get('/quiz/{id}', function(Request $request, Response $response, array $ar
     }
 });
 
-//GET LIST OF ALL QUIZZES WITH AFFILIATED QUESTIONS AND ALL AFFILIATED ANSWERS
+//GET LIST OF ALL qUIZZES WITH AFFILIATED qUESTIONS AND ALL AFFILIATED ANSWERS
 $app->get('/quizFull', function(Request $request, Response $response, array $args) {
     $result = 0;
-    $quizEntries = R::findAll('Quiz');
+    $quizEntries = R::findAll('quiz');
 
     if(!empty($quizEntries) || !is_null($quizEntries)) {
         foreach ($quizEntries as $quizEntry) {
-            //$result = $result + R::findOne('Quiz', 'id = ?', [$quizEntry['id']]);
+            //$result = $result + R::findOne('quiz', 'id = ?', [$quizEntry['id']]);
 
-            $quizEntry->questions = R::findAll('Question', 'quiz_idquiz = ?', [$quizEntry['id']]);
+            $quizEntry->questions = R::findAll('question', 'quiz_idquiz = ?', [$quizEntry['id']]);
             foreach ($quizEntry->questions as $questionEntry) {
-                //$questionTemp = R::findOne('Question', 'id = ?', [$questionEntry['id']]);
-                $questionEntry->answers = R::findAll('Answer', 'question_idquestion = ?', [$quizEntry['id']]);
+                //$questionTemp = R::findOne('question', 'id = ?', [$questionEntry['id']]);
+                $questionEntry->answers = R::findAll('answer', 'question_idquestion = ?', [$quizEntry['id']]);
                 //$result = $result + $questionTemp + $answerTemp;
             }
         }
@@ -382,7 +382,7 @@ $app->get('/quizFull', function(Request $request, Response $response, array $arg
     }
 });
 
-//POST A NEW QUIZ
+//POST A NEW qUIZ
 $app->post('/quiz', function(Request $request, Response $response, array $args) {
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $req = $request->getParsedBody();
@@ -401,11 +401,11 @@ $app->post('/quiz', function(Request $request, Response $response, array $args) 
     }
 });
 
-//CHANGE QUIZ ELEMENTS BY ID PUT
+//CHANGE qUIZ ELEMENTS BY ID PUT
 $app->put('/quiz/{id}', function(Request $request, Response $response, array $args){
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $qid = $args['id'];
-        $quiz = R::findOne('Quiz', 'id = ?', [$qid]);
+        $quiz = R::findOne('quiz', 'id = ?', [$qid]);
 
         if(empty($quiz) || is_null($quiz)) {
             return sendError($response);
@@ -418,7 +418,7 @@ $app->put('/quiz/{id}', function(Request $request, Response $response, array $ar
         $quiz->category_idcategory = $input['category_idcategory'];
 
         R::store($quiz);
-        //R::exec("UPDATE Quiz set name = ?, description = ?, user_iduser = ?, category_idcategory = ? WHERE id = ?"
+        //R::exec("UPDATE quiz set name = ?, description = ?, user_iduser = ?, category_idcategory = ? WHERE id = ?"
         //    ,[$input['name'], $input['description'], $input['user_iduser'], $input['category_idcategory'], $qid]);
 
         return sendResponse($response, array("status"=>"ok"));
@@ -427,14 +427,14 @@ $app->put('/quiz/{id}', function(Request $request, Response $response, array $ar
     }
 });
 
-//DELETE A QUIZ IF ALL QUESTIONS WITH AFFILIATED QUIZ ID ARE EMPTY or DELETE A QUIZ AND ALL ASSOCIATED QUESTIONS AND ANSWERS FOR THAT QUIZ
+//DELETE A qUIZ IF ALL qUESTIONS WITH AFFILIATED qUIZ ID ARE EMPTY or DELETE A qUIZ AND ALL ASSOCIATED qUESTIONS AND ANSWERS FOR THAT qUIZ
 $app->delete('/quiz/{id}', function(Request $request, Response $response, array $args) {
     if($request->hasHeader('token') && checkSession($request->getHeader('token')[0])){
         $dID = $args['id'];
-        $quiz = R::findOne('Quiz', 'id = ?', [$dID]);
-        $remainingQuestions = R::findAll('Question', 'quiz_idquiz = ?', [$dID]);
+        $quiz = R::findOne('quiz', 'id = ?', [$dID]);
+        $remainingquestions = R::findAll('question', 'quiz_idquiz = ?', [$dID]);
 
-        if(!empty($remainingQuestions) || !is_null($remainingQuestions)) {
+        if(!empty($remainingquestions) || !is_null($remainingquestions)) {
             if(!empty($quiz) || !is_null($quiz)) {
                 R::trash($quiz);
                 return sendResponse($response, array("status"=>"ok"));
