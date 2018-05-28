@@ -161,4 +161,17 @@ var getFullQuizById = function(id, callback){
     });
 }
 
+var loginUser = function(username, password, callback){
+    $.ajax({
+        type: 'GET',
+        headers: {
+            "uname": username,
+            "pwd": password
+        },
+        url: baseurl+"/login"
+    }).done(function(data){
+        callback(data);
+    });
+}
+
 //});

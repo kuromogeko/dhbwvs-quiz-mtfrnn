@@ -61,6 +61,8 @@ var globalQuizLoad;
 var globalSet = false;
 var quizActive=false;
 var quests;
+var loggedIn = false;
+var logToken;
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
@@ -191,11 +193,25 @@ var submitQuiz = function(){
             }
             console.log("Fragen richtig: "+corrs+ " von "+quests.length);
         }else{
-            console.log("Nicht alle Fragen gelockt!");
-            //TODO: Message
+            //console.log("Nicht alle Fragen gelockt!");
+            var notification = document.querySelector('.mdl-js-snackbar');
+            var data = {
+            message: 'Nicht alle Fragen eingelockt!',
+            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+            actionText: 'Ok',
+            timeout: 5000
+            };
+            notification.MaterialSnackbar.showSnackbar(data);
         }
     }else{
-        //TODO: Error Handling (Snackbar ask for reload)
+        var notification = document.querySelector('.mdl-js-snackbar');
+            var data = {
+            message: 'Unbekannter Fehler, bitte Quiz neu starten.',
+            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+            actionText: 'Ups!',
+            timeout: 5000
+            };
+            notification.MaterialSnackbar.showSnackbar(data);
     }
 }
 
@@ -226,12 +242,71 @@ $(function () {
             {
               text: "Anmelden",
               click: function() {
+                loginUser($('#uname').val(),$('#pass').val(),function(data){
+                    if(typeof(data)=="string"){
+                        data = JSON.parse(data);
+                    }
+                    if(data[0]=="ok"){
+                        var notification = document.querySelector('.mdl-js-snackbar');
+                        var data = {
+                        message: 'Nutzer erfolgreich angemeldet!',
+                        actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+                        actionText: 'Ok',
+                        timeout: 5000
+                        };
+                        notification.MaterialSnackbar.showSnackbar(data);
+                        var loggedIn =true;
+                        var logToken = data[1];
+                    }
+                });
                 $( this ).dialog( "close" );
               }
             },
             {
                 text: "Registrieren",
                 click: function() {
+                    console.log("Register click");
+                    getUserByName($('#uname').val(),function(data){
+                        if(typeof(data)=="string"){
+                            data = JSON.parse(data);
+                        }
+                        if(data.status == "failed" ){
+                           addUser($('#uname').val(),$('#pass').val(),"A new user", function(data){
+                            if(typeof(data)=="string"){
+                                data = JSON.parse(data);
+                            }
+                            console.log(data);
+                            if(data[0] == "ok"){
+                                var notification = document.querySelector('.mdl-js-snackbar');
+                                var data = {
+                                message: 'Nutzer erfolgreich angelegt! Bitte anmelden.',
+                                actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+                                actionText: 'Ok',
+                                timeout: 5000
+                                };
+                                notification.MaterialSnackbar.showSnackbar(data);   
+                            }else{
+                                var notification = document.querySelector('.mdl-js-snackbar');
+                                var data = {
+                                message: 'Unbekannter Fehler bei Registrierung!',
+                                actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+                                actionText: 'Ok',
+                                timeout: 5000
+                                };
+                                notification.MaterialSnackbar.showSnackbar(data);
+                            }
+                           });
+                        }else{
+                            var notification = document.querySelector('.mdl-js-snackbar');
+                            var data = {
+                            message: 'Nutzername existiert bereits!',
+                            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+                            actionText: 'Ok',
+                            timeout: 5000
+                            };
+                            notification.MaterialSnackbar.showSnackbar(data);
+                        }
+                    });
                   $( this ).dialog( "close" );
                 }
               }
