@@ -3,6 +3,7 @@
 <html>
 
 <head>
+        <meta charset="UTF-8"> 
     <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
@@ -16,6 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./css/material.min.css">
@@ -63,7 +65,8 @@
                         </div>
                         <i class="material-icons" id="barSearch">search</i>
                     </a>
-                    <a class="mdl-navigation__link" name="goToLogin">Anmelden / Registrieren </a>
+                    <a class="mdl-navigation__link" name="goToLogin" data-login="false">Anmelden / Registrieren </a>
+                    <a style="display:none" id="LogoutButton" class="mdl-navigation__link" name="Logout" data-login="true">Abmelden</a>
                 </nav>
             </div>
         </header>
@@ -75,7 +78,7 @@
                 <a class="mdl-navigation__link" name="Overview">
                     Quiz Übersicht
                 </a>
-                <a class="mdl-navigation__link">
+                <a class="mdl-navigation__link" data-login="true" style="display:none">
                     Quiz erstellen
                 </a>
                 <a class="mdl-navigation__link">
@@ -85,8 +88,11 @@
                 <a class="mdl-navigation__link" name="CategoryOverview">
                     Quizze nach Kategorien
                 </a>
-                <a class="mdl-navigation__link">
+                <a class="mdl-navigation__link" data-login="true" style="display:none">
                     Meine Quizze
+                </a>
+                <a class="mdl-navigation__link" data-login="true" style="display:none">
+                    Nutzer-Einstellungen
                 </a>
             </nav>
         </div>

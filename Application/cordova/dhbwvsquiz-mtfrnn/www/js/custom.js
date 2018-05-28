@@ -94,6 +94,17 @@ function shuffle(array) {
   }
   
 
+var loggedInView = function(usaa){
+    $('[data-login="true"]').show();
+    $('[data-login="false"]').hide();
+    $('#LogoutButton').html(usaa + " abmelden");
+};
+
+var loggedOutView = function(){
+    $('[data-login="false"]').show();
+    $('[data-login="true"]').hide();
+}
+
 var getRandomColor = function () {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -247,6 +258,8 @@ $(function () {
                         data = JSON.parse(data);
                     }
                     if(data[0]=="ok"){
+                        console.log("Name: "+$('#uname').val());
+                        loggedInView($('#uname').val());
                         var notification = document.querySelector('.mdl-js-snackbar');
                         var data = {
                         message: 'Nutzer erfolgreich angemeldet!',
