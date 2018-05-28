@@ -174,4 +174,16 @@ var loginUser = function(username, password, callback){
     });
 }
 
+var logoutUser = function(token, callback){
+    $.ajax({
+        type: 'GET',
+        headers: {
+            "token": token
+        },
+        url: baseurl+"/logout"
+    }).done(function(data){
+        callback(data);
+    });
+}
+
 //});

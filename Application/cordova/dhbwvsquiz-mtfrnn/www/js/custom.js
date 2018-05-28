@@ -62,7 +62,7 @@ var globalSet = false;
 var quizActive=false;
 var quests;
 var loggedIn = false;
-var logToken;
+var logToken ="";
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
@@ -258,9 +258,12 @@ $(function () {
                         data = JSON.parse(data);
                     }
                     if(data[0]=="ok"){
-                        console.log("Name: "+$('#uname').val());
-                        loggedInView($('#uname').val());
+                        //console.log("Name: "+$('#uname').val());
+                        loggedInView($('#uname').val()); 
+                        loggedIn =true;
+                        logToken = data[1];
                         var notification = document.querySelector('.mdl-js-snackbar');
+                       
                         var data = {
                         message: 'Nutzer erfolgreich angemeldet!',
                         actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
@@ -268,8 +271,7 @@ $(function () {
                         timeout: 5000
                         };
                         notification.MaterialSnackbar.showSnackbar(data);
-                        var loggedIn =true;
-                        var logToken = data[1];
+                        
                     }
                 });
                 $( this ).dialog( "close" );
@@ -326,10 +328,45 @@ $(function () {
           ]
       });
     
+
       // OPEN DIALOG
       $('[name="goToLogin"]').click(function() {
         $("#login").dialog("open");
         return false;
+      });
+
+      $('#LogoutButton').click(function(){
+          //console.log(logToken);
+        logoutUser(logToken, function(data){
+            if(typeof(data)=="string"){
+                data = JSON.parse(data);
+            }
+            //console.log(data);
+            if(data[0]=="ok"){
+                loggedOutView();
+                loggedIn = false;
+                logToken  = "";
+                var notification = document.querySelector('.mdl-js-snackbar');
+                            var data = {
+                            message: 'Erfolreich abgemeldet',
+                            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+                            actionText: 'Ok',
+                            timeout: 5000
+                            };
+                            notification.MaterialSnackbar.showSnackbar(data);
+            }else{
+                var notification = document.querySelector('.mdl-js-snackbar');
+                            var data = {
+                            message: 'Fehler! Neu laden zum abmelden.',
+                            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+                            actionText: 'Ok',
+                            timeout: 5000
+                            };
+                            notification.MaterialSnackbar.showSnackbar(data);
+            }
+            
+        });      
+
       });
     //VIEW
     

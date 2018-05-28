@@ -121,6 +121,18 @@ $app->get('/login', function(Request $request, Response $response, array $args){
         sendError($response);
     }
 });
+
+$app->get('/logout', function(Request $request, Response $response, array $args){
+    $token = $request->getHeader('token')[0];
+    $session = R::findOne('sessions', 'token = ?', [$token]);
+    if(!empty($session)|| !is_null($session)){
+        R::trash($session);
+        sendResponse($response, array('status'=>'ok'));
+    }else{
+        sendError($response);
+    }
+});
+
 //GET USER BY ID
 $app->get('/user/{id}', function(Request $request, Response $response, array $args){
     $uid= $args['id'];
