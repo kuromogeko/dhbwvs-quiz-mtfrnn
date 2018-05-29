@@ -158,6 +158,20 @@ var displayQuizzes = function (data) {
         $.tmpl(listElementTmpl, obj).appendTo("#mainGrid");
     }
 }
+var searchDisplayQuizzes = function (data) {
+    //var result = JSON.parse(data);
+    if(typeof(data)=="string"){
+        data = JSON.parse(data);
+    }
+    var result = data;
+
+    for(var i=0; i<result.length;i++){
+        //console.log("looping for"+thing.name);
+        var obj = result[i];
+        obj.Color = getRandomColor();
+        $.tmpl(listElementTmpl, obj).appendTo("#mainGrid");
+    }
+}
 
 var submitQuiz = function(){
     if(quizActive==true){
@@ -203,6 +217,15 @@ var submitQuiz = function(){
                 }
             }
             console.log("Fragen richtig: "+corrs+ " von "+quests.length);
+            var notification = document.querySelector('.mdl-js-snackbar');
+            var data = {
+            message: corrs+' Fragen von '+quests.length+' korrekt beantwortet',
+            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+            actionText: 'Ok',
+            timeout: 5000
+            };
+            notification.MaterialSnackbar.showSnackbar(data);
+            cancelQuiz();
         }else{
             //console.log("Nicht alle Fragen gelockt!");
             var notification = document.querySelector('.mdl-js-snackbar');
@@ -234,7 +257,7 @@ $(function () {
 
     
     //SNACKBAR
-    $('#snack').click(function(){
+    /*$('#snack').click(function(){
         var notification = document.querySelector('.mdl-js-snackbar');
         var data = {
         message: 'Message Sent',
@@ -244,7 +267,7 @@ $(function () {
         };
         notification.MaterialSnackbar.showSnackbar(data);
 
-    });
+    });*/
     
     //Login Dialog setup   
     $("#login").dialog({
@@ -388,6 +411,21 @@ $(function () {
 
     //search bar submit
     $('#barSearchInput').submit(function(){
+        var searchTerm = $('#barInputLine').val();
+        if(searchTerm.trim() == "" ){
+           
+            $('#mainGrid').html('');
+            searchDisplayQuizzes(globalQuizLoad);
+        }else{
+            var newResult= globalQuizLoad.filter(function(el){
+                return el.name.includes(searchTerm) || el.id.includes(searchTerm);
+            });
+           $('#mainGrid').html('');
+           searchDisplayQuizzes(newResult); 
+           if(newResult.length==0){
+               $('#mainGrid').text("Kein Ergebnis gefunden");
+           }
+        }
         $(this).fadeOut(500);
     });
 
