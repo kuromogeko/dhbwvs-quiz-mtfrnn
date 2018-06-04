@@ -1,3 +1,53 @@
+var newQuestionTemplate = "<div class=\"mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp  graybox \" name=\"newQuestion\">\
+                        <div class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,#00000044,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398\">\
+                            <h2 class=\"mdl-card__title-text\">Frage Nummer: ${rid}</h2>\
+                        </div>\
+                        <div class=\"mdl-card__supporting-text mdl-card--expand\">\
+                            <form action=\"javascript:void(0);\">\
+                                    <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
+                                        <input class=\"mdl-textfield__input\" type=\"text\" id=\"questionRunid${rid}\">\
+                                        <label class=\"mdl-textfield__label\" for=\"newQuestion\">Fragetext</label>\
+                                    </div> <hr>\
+                                          \
+                                <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
+                                  <input class=\"mdl-textfield__input\" type=\"text\" id=\"moneRunid${rid}\">\
+                                  <label class=\"mdl-textfield__label\" for=\"newQuestion\">M&ouml;glichkeit 1</label>\
+                                </div>\
+                                <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"moneswitchRunid${rid}\">\
+                                    <input type=\"checkbox\" id=\"moneswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <span class=\"mdl-switch__label\">Antwort stimmt</span>\
+                                </label>\
+                                      \
+                                <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
+                                    <input class=\"mdl-textfield__input\" type=\"text\" id=\"mtwoRunid${rid}\">\
+                                    <label class=\"mdl-textfield__label\" for=\"mtwoRunid${rid}\">M&ouml;glichkeit 2</label>\
+                                </div>\
+                                <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"mtwoswitchRunid${rid}\">\
+                                    <input type=\"checkbox\" id=\"mtwoswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <span class=\"mdl-switch__label\">Antwort stimmt</span>\
+                                </label>\
+\
+                                <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
+                                    <input class=\"mdl-textfield__input\" type=\"text\" id=\"mthreeRunid${rid}\">\
+                                    <label class=\"mdl-textfield__label\" for=\"mthreeRunid${rid}\">M&ouml;glichkeit 3</label>\
+                                </div>\
+                                <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"mthreeswitchRunid${rid}\">\
+                                    <input type=\"checkbox\" id=\"mthreeswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <span class=\"mdl-switch__label\">Antwort stimmt</span>\
+                                </label>\
+\
+                                <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
+                                    <input class=\"mdl-textfield__input\" type=\"text\" id=\"mfourRunid${rid}\">\
+                                    <label class=\"mdl-textfield__label\" for=\"mfourRunid${rid}\">M&ouml;glichkeit 4</label>\
+                                </div>\
+                                <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"mfourswitchRunid${rid}\">\
+                                    <input type=\"checkbox\" id=\"mfourswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <span class=\"mdl-switch__label\">Antwort stimmt</span>\
+                                </label>\
+                          </form>\
+                        </div>\
+                    </div>";
+
 var listElementTmpl = "\
 <div class=\"mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--6-col-phone mdl-card mdl-shadow--2dp  graybox \">\
     <div name=\"QuizTitle\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,${Color}44,${Color}77),url(img/quiz.jpg)bottom right 15% no-repeat #2fa398\">\
@@ -5,6 +55,8 @@ var listElementTmpl = "\
     </div>\
     <div class=\"mdl-card__supporting-text mdl-card--expand\">\
     Kennungs-Nummer: ${id}\
+    <hr>Von: ${creator}\
+    <hr>Kategorie: ${category}\
     <hr>\
         ${description}\
     </div>\
@@ -63,6 +115,7 @@ var quizActive=false;
 var quests;
 var loggedIn = false;
 var logToken ="";
+var creationRunningId = 1;
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
@@ -249,6 +302,79 @@ var submitQuiz = function(){
     }
 }
 
+function addQuestion(){
+    $.tmpl(newQuestionTemplate, {rid: creationRunningId}).appendTo('#createInsert');
+    creationRunningId++;
+}
+
+function cancelCreateQuiz(){
+    creationRunningId= 1;
+    $('[name="newQuestion"]').remove();
+    $('#CreateView').hide();
+    $('#mainGrid').html('');
+    $('#mainGrid').show();
+    searchDisplayQuizzes(globalQuizLoad);
+    $('#Oview').show();
+}
+
+function hideCreateQuiz(){
+    creationRunningId= 1;
+    $('[name="newQuestion"]').remove();
+    $('#CreateView').hide();
+    $('#mainGrid').show();
+};
+
+var callCreateQuiz= function(){
+    console.log("I HATE JS!");
+  
+  cancelQuiz();
+  $('#mainGrid').hide();
+  $('#CreateView').show();
+  addQuestion();
+};
+
+function saveQuiz(){
+    //add the quiz, retrieve its id
+    addQuiz($('#newTitle').val(),$('#newDesc').val(),$('#newCategory').val(),logToken, function(data){
+        if(typeof(data)=="string"){
+            data = JSON.parse(data);
+        }
+        if(data.status=="failed"){
+            console.log("Could not create quiz");
+        }else{
+            var newid = data.id;
+            for(var i = 1;i<= creationRunningId; i++){
+                addQuestion($('#questionRunid'+i).val(),newid, logToken, function(data){
+                    if(typeof(data)=="string"){
+                        data = JSON.parse(data);
+                    }
+                    if(data.status == "failed"){
+                        console.log("could not create Question");
+                    }else{
+                        var aqid = data.id;
+                       var a = $('#moneRunid'+i).val();
+                       var a2 = $('#moneswitchRunid'+i).val();
+
+                       var b= $('#mtwoRunid'+i).val();
+                        var b2= $('#mtwoswitchRunid'+i);
+
+                        var c =$('#mthreeRunid'+i).val();
+                        var c2 = $('#mthreeswitchRunid'+i).val();
+
+                        var d = $('#mfourRunid'+i).val();
+                        var d2 = $('#mfourswitchRunid'+i).val();
+
+                        console.log(a+a2+b+b2+c+c2+d+d2);
+
+                        //add answer one to four
+                    }
+                })
+            }
+        }
+    });
+
+};
+
 $(function () { 
 
     //INITIAL OVERVIEW ON PAGELOAD
@@ -269,6 +395,8 @@ $(function () {
 
     });*/
     
+    
+
     //Login Dialog setup   
     $("#login").dialog({
         autoOpen : false, modal : true, closeOnEscape : true, draggable: false, resizable: false, width: "auto",
@@ -347,6 +475,12 @@ $(function () {
                     });
                   $( this ).dialog( "close" );
                 }
+              },
+              {
+                  text: "Abbrechen",
+                  click:function(){
+                      $(this).dialog("close");
+                  }
               }
           ]
       });
@@ -358,6 +492,8 @@ $(function () {
         return false;
       });
 
+      
+
       $('#LogoutButton').click(function(){
           //console.log(logToken);
         logoutUser(logToken, function(data){
@@ -367,6 +503,8 @@ $(function () {
             //console.log(data);
             if(data[0]=="ok"){
                 loggedOutView();
+                cancelQuiz();
+                cancelCreateQuiz();
                 loggedIn = false;
                 logToken  = "";
                 var notification = document.querySelector('.mdl-js-snackbar');
@@ -399,7 +537,11 @@ $(function () {
     //SHOW OVERVIEW
     $('[name="Overview"]').click(function(){
         //$('#login').hide();
+        cancelQuiz();
+        $('#mainGrid').html('');
+        searchDisplayQuizzes(globalQuizLoad);
         $('#Oview').show();
+        hideCreateQuiz();
     });
 
     //Searchbar functionality
@@ -411,6 +553,8 @@ $(function () {
 
     //search bar submit
     $('#barSearchInput').submit(function(){
+        cancelQuiz();
+        cancelCreateQuiz();
         var searchTerm = $('#barInputLine').val();
         if(searchTerm.trim() == "" ){
            
@@ -418,18 +562,16 @@ $(function () {
             searchDisplayQuizzes(globalQuizLoad);
         }else{
             var newResult= globalQuizLoad.filter(function(el){
-                return el.name.includes(searchTerm) || el.id.includes(searchTerm);
+                return el.name.includes(searchTerm) || el.id.includes(searchTerm) || el.category.includes(searchTerm) || el.category.includes(searchTerm);
             });
            $('#mainGrid').html('');
            searchDisplayQuizzes(newResult); 
            if(newResult.length==0){
-               $('#mainGrid').text("Kein Ergebnis gefunden");
+               $('#mainGrid').text("Kein Ergebnis gefunden :(");
            }
         }
         $(this).fadeOut(500);
     });
-
-
 
 }); //ENDOF JQUERY RDY
 

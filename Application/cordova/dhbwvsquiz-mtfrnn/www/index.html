@@ -60,7 +60,7 @@
                         <div id="barSearchInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display:none">
                             <form action="javascript:void(0)">
 
-                                <input placeholder="Suchen (Enter)" class="cyan-bg mdl-textfield__input" type="text" id="barInputLine" name="barInput">
+                                <input placeholder="Durch alle Suchen (Enter)" class="cyan-bg mdl-textfield__input" type="text" id="barInputLine" name="barInput">
                             </form>
                         </div>
                         <i class="material-icons" id="barSearch">search</i>
@@ -78,14 +78,10 @@
                 <a class="mdl-navigation__link" name="Overview">
                     Quiz Übersicht
                 </a>
-                <a class="mdl-navigation__link" data-login="true" style="display:none">
+                <a class="mdl-navigation__link" data-login="true" href="javascript:(function(){callCreateQuiz();})()" style="display:none">
                     Quiz erstellen
                 </a>
-                <a class="mdl-navigation__link">
-                    Quiz suchen
-                    <i class="material-icons" id="">search</i>
-                </a>
-                <a class="mdl-navigation__link" name="CategoryOverview">
+                <a class="mdl-navigation__link" name="CategoryView">
                     Quizze nach Kategorien
                 </a>
                 <a class="mdl-navigation__link" data-login="true" style="display:none">
@@ -124,10 +120,73 @@
                     </div>
             </div>
             <div id="Oview">
-                <div class="mdl-grid">
+                <div name="CreateView" id="CreateView" style="display:none">
+                <div class="mdl-grid" id="createInsert">
+
+                      
+
+                    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp  graybox " >
+                        <div class="mdl-card__title max-height " style="background: linear-gradient(0deg,#00000044,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398">
+                            <h2 class="mdl-card__title-text">Quiz Erstellen</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text mdl-card--expand">
+                            <form action="javascript:void(0);">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                  <input class="mdl-textfield__input" type="text" id="newTitle">
+                                  <label class="mdl-textfield__label" for="newTitle">Titel</label>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="newCategory">
+                                    <label class="mdl-textfield__label" for="newCategory">Kategorie</label>
+                                  </div>
+                                  <hr>
+                            <div class="mdl-textfield mdl-js-textfield">
+                              <textarea class="mdl-textfield__input" type="text" rows= "3" id="newDesc" ></textarea>
+                              <label class="mdl-textfield__label" for="newDesc">Beschreibung...</label>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                    
 
                 </div>
+                <div class="mdl-grid">
 
+                        <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp  graybox ">
+                                <div class="mdl-card__title max-height " style="background: linear-gradient(0deg,#00000044,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398">
+                                    <h2 class="mdl-card__title-text">Erweitern</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text mdl-card--expand">
+                                    Hier können neue Fragen angelegt werden.
+                                </div>
+                                <div class="mdl-card__actions mdl-card--border">
+                                        <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="addQuestion()">
+                                            Neue Frage hinzufügen
+                                        </button>
+                                </div>
+                                
+                        </div>
+
+                    <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp  graybox ">
+                        <div class="mdl-card__title max-height " style="background: linear-gradient(0deg,#00000044,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398">
+                            <h2 class="mdl-card__title-text">Finalisierung</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text mdl-card--expand">
+                            Mit einem Klick auf Speichern wird das Quiz in die Datenbank geschrieben und kann gespielt werden. Bei Abbrechen werden alle Eintragungen verworfen.
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="saveQuiz()">
+                                Speichern
+                            </button>
+                            <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="cancelCreateQuiz()">
+                                Erstellung abbrechen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                
                 <div class="mdl-grid" id="mainGrid">
 
                 </div>

@@ -377,6 +377,8 @@ $app->get('/quizFull', function(Request $request, Response $response, array $arg
 
     if(!empty($quizEntries) || !is_null($quizEntries)) {
         foreach ($quizEntries as $quizEntry) {
+            $quizEntry->category = R::findOne('category', 'id = ?', [$quizEntry->category_idcategory])->name;
+            $quizEntry->creator = R::findOne('user', 'id = ?', [$quizEntry->user_iduser])->uname;
             //$result = $result + R::findOne('quiz', 'id = ?', [$quizEntry['id']]);
 
             $quizEntry->questions = R::findAll('question', 'quiz_idquiz = ?', [$quizEntry['id']]);
@@ -402,8 +404,17 @@ $app->post('/quiz', function(Request $request, Response $response, array $args) 
 
         $quiz->name = $req['name'];
         $quiz->description = $req['description'];
-        $quiz->user_iduser = $req['user_iduser'];
-        $quiz->category_idcategory = $req['category_idcategory'];
+        $quiz->user_iduser = R::findOne('sessions', 'token = ?', [$request->getHeader('token')[0]])->user_iduser;
+        $fc = R::findOne('category', 'name = ?', [$req['category']]);
+
+        if(empty($fc) || is_null($fc)) {
+            $cat = R::dispense('category');
+            $cat->name = $req['category'];
+            $id = R::store($cat);
+        }else{
+            $id = $fc->id;
+        }
+        $quiz->category_idcategory = $id;
 
         $newID = R::store($quiz);
         sendResponse($response, array('status'=>'ok','id'=>$newID));

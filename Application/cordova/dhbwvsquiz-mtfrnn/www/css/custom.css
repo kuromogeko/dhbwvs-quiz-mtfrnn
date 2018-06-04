@@ -1,3 +1,7 @@
+*{
+    text-transform: none !important;
+}
+
 .bordered-thin{
     border-style: solid;
     border-width: 1px;

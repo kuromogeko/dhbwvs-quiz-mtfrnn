@@ -184,6 +184,59 @@ var logoutUser = function(token, callback){
     }).done(function(data){
         callback(data);
     });
+};
+
+var addQuiz = function(title, description, category, token, callback){
+    $.ajax({
+        type: 'POST',
+        headers: {
+            "token": token,
+            "content-type": "application/json"
+        },
+        data: JSON.stringify({
+            "name": title,
+            "description": description,
+            "category": category
+        }),
+        url: baseurl + "/quiz"
+    }).done(function(data){
+        callback(data);
+    });
+};
+
+var addQuestion = function(text, quizid, token, callback){
+    $.ajax({
+        type: 'POST',
+        headers: {
+            "token": token,
+            "content-type": "application/json"
+        },
+        data: JSON.stringify({
+            "text": text,
+            "quiz_idquiz": quizid
+        }),
+        url: baseurl + "/question"
+    }).done(function(data){
+        callback(data);
+    });
+};  
+
+var addAnswer = function (text, is_correct, questionid, token, callback){
+    $.ajax({
+        type: 'POST',
+        headers: {
+            "token": token,
+            "content-type": "application/json"
+        },
+        data: JSON.stringify({
+            "text": text,
+            "is_correct": is_correct,
+            "question_idquestion": questionid
+        }),
+        url: baseurl + "/answer"
+    }).done(function(data){
+        callback(data);
+    });
 }
 
 //});
