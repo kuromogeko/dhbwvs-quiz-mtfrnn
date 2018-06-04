@@ -115,7 +115,7 @@ var quizActive=false;
 var quests;
 var loggedIn = false;
 var logToken ="";
-var creationRunningId = 1;
+var creationRunningId = 0;
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
@@ -305,10 +305,11 @@ var submitQuiz = function(){
 function addQuestion(){
     $.tmpl(newQuestionTemplate, {rid: creationRunningId}).appendTo('#createInsert');
     creationRunningId++;
+    console.log(creationRunningId);
 }
 
 function cancelCreateQuiz(){
-    creationRunningId= 1;
+    creationRunningId= 0;
     $('[name="newQuestion"]').remove();
     $('#CreateView').hide();
     $('#mainGrid').html('');
@@ -318,14 +319,14 @@ function cancelCreateQuiz(){
 }
 
 function hideCreateQuiz(){
-    creationRunningId= 1;
+    creationRunningId= 0;
     $('[name="newQuestion"]').remove();
     $('#CreateView').hide();
     $('#mainGrid').show();
 };
 
 var callCreateQuiz= function(){
-    console.log("I HATE JS!");
+  //  console.log("I HATE JS!");
   
   cancelQuiz();
   $('#mainGrid').hide();
@@ -335,44 +336,90 @@ var callCreateQuiz= function(){
 
 function saveQuiz(){
     //add the quiz, retrieve its id
+    //alle Bed für zufügen?
+    if(true){
     addQuiz($('#newTitle').val(),$('#newDesc').val(),$('#newCategory').val(),logToken, function(data){
         if(typeof(data)=="string"){
             data = JSON.parse(data);
         }
-        if(data.status=="failed"){
+        if(data[0]=="failed"){
             console.log("Could not create quiz");
         }else{
-            var newid = data.id;
-            for(var i = 1;i<= creationRunningId; i++){
-                addQuestion($('#questionRunid'+i).val(),newid, logToken, function(data){
+            var newid = data[1];
+          //  console.log("data");
+           // console.log(data);
+            for(var i = 0;i< creationRunningId && i<=10;i++){
+                addRemoteQuestion($('#questionRunid'+i).val(),newid, logToken, function(data, i){
                     if(typeof(data)=="string"){
                         data = JSON.parse(data);
                     }
-                    if(data.status == "failed"){
-                        console.log("could not create Question");
+                    if(data[0] == "failed"){
                     }else{
-                        var aqid = data.id;
+                     //   console.log("added a question"+ "Indicator is: "+i);
+                       var aqid = data[1];
+
                        var a = $('#moneRunid'+i).val();
-                       var a2 = $('#moneswitchRunid'+i).val();
+                       var a2 = $('#moneswitchRunid'+i).prop("checked");
 
                        var b= $('#mtwoRunid'+i).val();
-                        var b2= $('#mtwoswitchRunid'+i);
+                        var b2= $('#mtwoswitchRunid'+i).prop("checked");
 
                         var c =$('#mthreeRunid'+i).val();
-                        var c2 = $('#mthreeswitchRunid'+i).val();
+                        var c2 = $('#mthreeswitchRunid'+i).prop("checked");
 
                         var d = $('#mfourRunid'+i).val();
-                        var d2 = $('#mfourswitchRunid'+i).val();
+                        var d2 = $('#mfourswitchRunid'+i).prop("checked");
 
-                        console.log(a+a2+b+b2+c+c2+d+d2);
+                        //console.log( "" +a + a2 + b +b2+ c +c2 +d +d2);
+                        addAnswer(a,a2,aqid,logToken,function(data){
+                            console.log("aw 1 callback");
+                            if(typeof(data)=="string"){
+                                data = JSON.parse(data);
+                            }
+                            if(data[0] == "failed"){
+                                console.log("Erstellung von AW 1 fehlgeschlagen");
+                            }
+                            
+                        });
 
-                        //add answer one to four
+                        addAnswer(b,b2,aqid,logToken,function(data){
+                            console.log("aw 2 callback");
+                            if(typeof(data)=="string"){
+                                data = JSON.parse(data);
+                            }
+                            if(data[0] == "failed"){
+                                console.log("Erstellung von AW 2 fehlgeschlagen");
+                            }
+                            
+                        });
+
+                        addAnswer(c,c2,aqid,logToken,function(data){
+                            console.log("aw 3 callback");
+                            if(typeof(data)=="string"){
+                                data = JSON.parse(data);
+                            }
+                            if(data[0] == "failed"){
+                                console.log("Erstellung von AW 3 fehlgeschlagen");
+                            }
+                            
+                        });
+
+                        addAnswer(d,d2,aqid,logToken,function(data){
+                            console.log("aw 4 callback");
+                            if(typeof(data)=="string"){
+                                data = JSON.parse(data);
+                            }
+                            if(data[0] == "failed"){
+                                console.log("Erstellung von AW 4 fehlgeschlagen");
+                            }
+                            
+                        });
                     }
-                })
+                },i);
             }
         }
     });
-
+    }
 };
 
 $(function () { 
@@ -436,7 +483,7 @@ $(function () {
                         if(typeof(data)=="string"){
                             data = JSON.parse(data);
                         }
-                        if(data.status == "failed" ){
+                        if(data[0] == "failed" ){
                            addUser($('#uname').val(),$('#pass').val(),"A new user", function(data){
                             if(typeof(data)=="string"){
                                 data = JSON.parse(data);

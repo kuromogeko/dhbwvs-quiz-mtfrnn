@@ -204,7 +204,7 @@ var addQuiz = function(title, description, category, token, callback){
     });
 };
 
-var addQuestion = function(text, quizid, token, callback){
+var addRemoteQuestion = function(text, quizid, token, callback, i){
     $.ajax({
         type: 'POST',
         headers: {
@@ -217,11 +217,12 @@ var addQuestion = function(text, quizid, token, callback){
         }),
         url: baseurl + "/question"
     }).done(function(data){
-        callback(data);
+        callback(data, i);
     });
 };  
 
 var addAnswer = function (text, is_correct, questionid, token, callback){
+    console.log("addanswer called");
     $.ajax({
         type: 'POST',
         headers: {
@@ -237,6 +238,6 @@ var addAnswer = function (text, is_correct, questionid, token, callback){
     }).done(function(data){
         callback(data);
     });
-}
+};
 
 //});
