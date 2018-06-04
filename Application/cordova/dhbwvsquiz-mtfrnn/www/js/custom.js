@@ -327,7 +327,7 @@ function hideCreateQuiz(){
 
 var callCreateQuiz= function(){
   //  console.log("I HATE JS!");
-  
+  cancelCreateQuiz();
   cancelQuiz();
   $('#mainGrid').hide();
   $('#CreateView').show();
@@ -337,7 +337,35 @@ var callCreateQuiz= function(){
 function saveQuiz(){
     //add the quiz, retrieve its id
     //alle Bed für zufügen?
-    if(true){
+    var alright = true;
+    if($('#newTitle').val().trim() == "" || $('#newCategory').val().trim()==""){
+        alright=false;
+    }
+    for(var k = 0;k< creationRunningId ;k++){
+        var a = $('#moneRunid'+k).val();
+        var a2 = $('#moneswitchRunid'+k).prop("checked");
+
+        var b= $('#mtwoRunid'+k).val();
+        var b2= $('#mtwoswitchRunid'+k).prop("checked");
+
+        var c =$('#mthreeRunid'+k).val();
+        var c2 = $('#mthreeswitchRunid'+k).prop("checked");
+
+        var d = $('#mfourRunid'+k).val();
+        var d2 = $('#mfourswitchRunid'+k).prop("checked");
+        var q = $('#questionRunid'+k).val();
+        if(a.trim() == "" || b.trim() == "" || c.trim() == "" || d.trim() == "" ){
+            alright =false;
+        }
+        if(q.trim()==""){
+            alright =false;
+        }
+        if(!a2 && !b2 && !c2 &&!d2){
+            alright = false;
+        }
+    }
+
+    if(alright==true){
     addQuiz($('#newTitle').val(),$('#newDesc').val(),$('#newCategory').val(),logToken, function(data){
         if(typeof(data)=="string"){
             data = JSON.parse(data);
@@ -348,7 +376,7 @@ function saveQuiz(){
             var newid = data[1];
           //  console.log("data");
            // console.log(data);
-            for(var i = 0;i< creationRunningId && i<=10;i++){
+            for(var i = 0;i< creationRunningId ;i++){
                 addRemoteQuestion($('#questionRunid'+i).val(),newid, logToken, function(data, i){
                     if(typeof(data)=="string"){
                         data = JSON.parse(data);
@@ -419,6 +447,27 @@ function saveQuiz(){
             }
         }
     });
+    $('#CreateView').hide();
+    $('#mainGrid').html('');
+    $('#mainGrid').show();
+    getFullQuizzes(displayQuizzes);
+    var notification = document.querySelector('.mdl-js-snackbar');
+            var data = {
+            message: 'Quiz gespeichert!',
+            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+            actionText: 'Ok',
+            timeout: 5000
+            };
+            notification.MaterialSnackbar.showSnackbar(data);
+    }else{
+        var notification = document.querySelector('.mdl-js-snackbar');
+        var data = {
+        message: 'Titel des Quiz darf nicht leer sein, Kategorie darf nicht leer sein, Pro Frage mindestens eine korrekte Antwort, Alle Antwortmöglichkeiten müssen ausgefüllt sein',
+        actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+        actionText: 'ok',
+        timeout: 10000
+        };
+        notification.MaterialSnackbar.showSnackbar(data);
     }
 };
 
