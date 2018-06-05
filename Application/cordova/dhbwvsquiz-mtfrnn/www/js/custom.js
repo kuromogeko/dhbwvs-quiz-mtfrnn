@@ -68,6 +68,19 @@ var listElementTmpl = "\
 </div>\
 ";
 
+var catElementTmpl = "\
+<div class=\"mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--6-col-phone mdl-card mdl-shadow--2dp  graybox \">\
+    <div name=\"QuizCategory\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,${Color}44,${Color}77),url(img/quiz.jpg)bottom right 15% no-repeat #2fa398\">\
+        <h2 class=\"mdl-card__title-text\">${name}</h2>\
+    </div>\
+    <div class=\"mdl-card__actions mdl-card--border\">\
+        <button class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" onclick=\"sortCategory(${id})\">\
+            Kategorie Anzeigen\
+        </button>\
+    </div>\
+</div>\
+";
+
 var questionElemTmpl = "\
 <div name=\"QuizPlay\" class=\"mdl-cell mdl-card mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp  graybox\">\
                             <div name=\"QuizPlay\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,#FFFFFF44,#FFFFFF77),url(img/quiz.jpg)bottom right 15% repeat #2fa398\">\
@@ -472,6 +485,27 @@ function saveQuiz(){
     }
 };
 
+function sortCategory(cid){
+    cancelQuiz();
+        cancelCreateQuiz();
+        var searchTerm = cid;
+        console.log("cid: " + cid);
+        if(searchTerm == "" ){
+           
+            $('#mainGrid').html('');
+            searchDisplayQuizzes(globalQuizLoad);
+        }else{
+            var newResult= globalQuizLoad.filter(function(el){
+                return el.category_idcategory.includes(searchTerm);
+            });
+           $('#mainGrid').html('');
+           searchDisplayQuizzes(newResult); 
+           if(newResult.length==0){
+               $('#mainGrid').text("Kein Ergebnis gefunden :(");
+           }
+        }
+}
+
 $(function () { 
 
     //INITIAL OVERVIEW ON PAGELOAD
@@ -689,7 +723,23 @@ $(function () {
                $('#mainGrid').text("Kein Ergebnis gefunden :(");
            }
         }
-        $(this).fadeOut(500);
+        //$(this).fadeOut(500);
+    });
+
+    $('#categoryView').click(function(){
+        console.log("click");
+        allCategory(function(data){
+            console.log(data);
+            if(typeof(data)=="string"){
+                data = JSON.parse(data);
+            }
+            $('#mainGrid').html('');
+            for(var n =0; n<data.length;n++){
+                console.log(data[n]);
+                data[n].Color = getRandomColor();
+                $.tmpl(catElementTmpl, data[n]).appendTo('#mainGrid');
+            }
+        });
     });
 }); //ENDOF JQUERY RDY
 
