@@ -116,6 +116,7 @@ var quests;
 var loggedIn = false;
 var logToken ="";
 var creationRunningId = 0;
+var logID;
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
@@ -509,6 +510,7 @@ $(function () {
                         loggedInView($('#uname').val()); 
                         loggedIn =true;
                         logToken = data[1];
+                        logID = data[2];
                         var notification = document.querySelector('.mdl-js-snackbar');
                        
                         var data = {
@@ -669,6 +671,26 @@ $(function () {
         $(this).fadeOut(500);
     });
 
+    $('#ownQuiz').click(function(){
+        cancelQuiz();
+        cancelCreateQuiz();
+        var searchTerm = logID;
+        if(searchTerm.trim() == "" ){
+           
+            $('#mainGrid').html('');
+            searchDisplayQuizzes(globalQuizLoad);
+        }else{
+            var newResult= globalQuizLoad.filter(function(el){
+                return el.user_iduser.includes(searchTerm);
+            });
+           $('#mainGrid').html('');
+           searchDisplayQuizzes(newResult); 
+           if(newResult.length==0){
+               $('#mainGrid').text("Kein Ergebnis gefunden :(");
+           }
+        }
+        $(this).fadeOut(500);
+    });
 }); //ENDOF JQUERY RDY
 
 

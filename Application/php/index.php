@@ -113,7 +113,7 @@ $app->get('/login', function(Request $request, Response $response, array $args){
         $newSession->token = hash("sha256", (time().$user->id));
         $commit = R::store($newSession);
         if(!empty($commit) || !is_null($commit)){
-            sendResponse($response, array('status'=>'ok','token'=>$newSession->token));
+            sendResponse($response, array('status'=>'ok','token'=>$newSession->token,"id"=>$user->id));
         }else{
             sendError($response);
         }
