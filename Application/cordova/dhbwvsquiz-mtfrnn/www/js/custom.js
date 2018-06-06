@@ -5,43 +5,43 @@ var newQuestionTemplate = "<div class=\"mdl-cell mdl-cell--12-col-desktop mdl-ce
                         <div class=\"mdl-card__supporting-text mdl-card--expand\">\
                             <form action=\"javascript:void(0);\">\
                                     <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
-                                        <input class=\"mdl-textfield__input\" type=\"text\" id=\"questionRunid${rid}\">\
-                                        <label class=\"mdl-textfield__label\" for=\"newQuestion\">Fragetext</label>\
+                                        <input class=\"mdl-textfield__input\" name=\"dirtyInput\" type=\"text\" id=\"questionRunid${rid}\">\
+                                        <label class=\"mdl-textfield__label\" for=\"questionRunid${rid}\">Fragetext</label>\
                                     </div> <hr>\
                                           \
                                 <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
-                                  <input class=\"mdl-textfield__input\" type=\"text\" id=\"moneRunid${rid}\">\
-                                  <label class=\"mdl-textfield__label\" for=\"newQuestion\">M&ouml;glichkeit 1</label>\
+                                  <input class=\"mdl-textfield__input is-dirty\" type=\"text\" name=\"dirtyInput\" id=\"moneRunid${rid}\">\
+                                  <label class=\"mdl-textfield__label\" for=\"monRunid${rid}\">M&ouml;glichkeit 1</label>\
                                 </div>\
                                 <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"moneswitchRunid${rid}\">\
-                                    <input type=\"checkbox\" id=\"moneswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <input type=\"checkbox\" name=\"dirtyInput\" id=\"moneswitchRunid${rid}\" class=\"mdl-switch__input\">\
                                     <span class=\"mdl-switch__label\">Antwort stimmt</span>\
                                 </label>\
                                       \
                                 <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
-                                    <input class=\"mdl-textfield__input\" type=\"text\" id=\"mtwoRunid${rid}\">\
+                                    <input class=\"mdl-textfield__input\" name=\"dirtyInput\" type=\"text\" id=\"mtwoRunid${rid}\">\
                                     <label class=\"mdl-textfield__label\" for=\"mtwoRunid${rid}\">M&ouml;glichkeit 2</label>\
                                 </div>\
                                 <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"mtwoswitchRunid${rid}\">\
-                                    <input type=\"checkbox\" id=\"mtwoswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <input type=\"checkbox\" name=\"dirtyInput\" id=\"mtwoswitchRunid${rid}\" class=\"mdl-switch__input\">\
                                     <span class=\"mdl-switch__label\">Antwort stimmt</span>\
                                 </label>\
 \
                                 <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
-                                    <input class=\"mdl-textfield__input\" type=\"text\" id=\"mthreeRunid${rid}\">\
+                                    <input class=\"mdl-textfield__input\" name=\"dirtyInput\" type=\"text\" id=\"mthreeRunid${rid}\">\
                                     <label class=\"mdl-textfield__label\" for=\"mthreeRunid${rid}\">M&ouml;glichkeit 3</label>\
                                 </div>\
                                 <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"mthreeswitchRunid${rid}\">\
-                                    <input type=\"checkbox\" id=\"mthreeswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <input type=\"checkbox\" name=\"dirtyInput\" id=\"mthreeswitchRunid${rid}\" class=\"mdl-switch__input\">\
                                     <span class=\"mdl-switch__label\">Antwort stimmt</span>\
                                 </label>\
 \
                                 <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">\
-                                    <input class=\"mdl-textfield__input\" type=\"text\" id=\"mfourRunid${rid}\">\
+                                    <input class=\"mdl-textfield__input\" name=\"dirtyInput\" type=\"text\" id=\"mfourRunid${rid}\">\
                                     <label class=\"mdl-textfield__label\" for=\"mfourRunid${rid}\">M&ouml;glichkeit 4</label>\
                                 </div>\
                                 <label class=\"mdl-switch mdl-js-switch mdl-js-ripple-effect\" for=\"mfourswitchRunid${rid}\">\
-                                    <input type=\"checkbox\" id=\"mfourswitchRunid${rid}\" class=\"mdl-switch__input\">\
+                                    <input type=\"checkbox\" name=\"dirtyInput\" id=\"mfourswitchRunid${rid}\" class=\"mdl-switch__input\">\
                                     <span class=\"mdl-switch__label\">Antwort stimmt</span>\
                                 </label>\
                           </form>\
@@ -319,7 +319,7 @@ var submitQuiz = function(){
 function addQuestion(){
     $.tmpl(newQuestionTemplate, {rid: creationRunningId}).appendTo('#createInsert');
     creationRunningId++;
-    console.log(creationRunningId);
+    componentHandler.upgradeDom();
 }
 
 function cancelCreateQuiz(){
@@ -741,6 +741,7 @@ $(function () {
             }
         });
     });
+
+
+    
 }); //ENDOF JQUERY RDY
-
-
