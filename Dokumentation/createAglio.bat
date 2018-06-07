@@ -1,1 +1,0 @@
-aglio -i anforderungen_redBean.apib --theme-variables slate --theme-full-width -o schnittstellenDefinitionRedBean.html
