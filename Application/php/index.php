@@ -456,17 +456,14 @@ $app->delete('/quiz/{id}', function(Request $request, Response $response, array 
         $dID = $args['id'];
         $quiz = R::findOne('quiz', 'id = ?', [$dID]);
         $remainingquestions = R::findAll('question', 'quiz_idquiz = ?', [$dID]);
-
-        if(!empty($remainingquestions) || !is_null($remainingquestions)) {
-            if(!empty($quiz) || !is_null($quiz)) {
+        foreach( $remainingquestions as $question ){
+            $answers = R::findAll('answer', 'question_idquestion = ?', [$question->id]);
+            R::trashAll($answers);
+           
+        }
+            R::trashAll($remainingquestions);
                 R::trash($quiz);
                 return sendResponse($response, array("status"=>"ok"));
-            }
-            else {
-                return sendError($response);
-            }
-        }
-        return sendError($response);
     }
     else {
         return sendError($response);

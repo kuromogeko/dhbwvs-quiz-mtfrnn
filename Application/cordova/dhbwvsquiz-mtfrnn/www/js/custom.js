@@ -68,6 +68,29 @@ var listElementTmpl = "\
 </div>\
 ";
 
+var ownElementTmpl = "\
+<div class=\"mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--6-col-phone mdl-card mdl-shadow--2dp  graybox \">\
+    <div name=\"QuizTitle\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,${Color}44,${Color}77),url(img/quiz.jpg)bottom right 15% no-repeat #2fa398\">\
+        <h2 class=\"mdl-card__title-text\">${name}</h2>\
+    </div>\
+    <div class=\"mdl-card__supporting-text mdl-card--expand\">\
+    Kennungs-Nummer: ${id}\
+    <hr>Von: ${creator}\
+    <hr>Kategorie: ${category}\
+    <hr>\
+        ${description}\
+    </div>\
+    <div class=\"mdl-card__actions mdl-card--border\">\
+        <button class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" onclick=\"playAQuiz(${id})\">\
+            Play\
+        </button>\
+        <button class=\"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect\" onclick=\"deleteAQuiz(${id},this)\">\
+            L&ouml;schen\
+        </button>\
+    </div>\
+</div>\
+";
+
 var catElementTmpl = "\
 <div class=\"mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--6-col-phone mdl-card mdl-shadow--2dp  graybox \">\
     <div name=\"QuizCategory\" class=\"mdl-card__title max-height \" style=\"background: linear-gradient(0deg,${Color}44,${Color}77),url(img/quiz.jpg)bottom right 15% no-repeat #2fa398\">\
@@ -130,11 +153,23 @@ var loggedIn = false;
 var logToken ="";
 var creationRunningId = 0;
 var logID;
+var progressQuiz = 0;
 
 function LockQuestion(q){
     $('#Frage'+q).children().children('input[type=checkbox]').attr("disabled",true);
     $('#Frage'+q).attr("style","background: #00000022");
     $('#lock'+q).attr("disabled", true);
+    progressQuiz++;
+    var notification = document.querySelector('.mdl-js-snackbar');
+        var data = {
+        message: 'Fortschritt: '+progressQuiz + ' von '+quests.length+' Fragen',
+        actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+        actionText: 'Ok',
+        timeout: 2000
+        };
+        notification.MaterialSnackbar.showSnackbar(data);
+
+
 }
 
 function toArr(Obj){
@@ -199,7 +234,7 @@ var playAQuiz = function(id){
         var questions = toArr(data[5]);
         questions = shuffle(questions);
         quests = questions;
-
+        progressQuiz = 0;
         //console.log(questions);
         for(var i=0; i<questions.length; i++){
             //console.log(questions[i]);
@@ -237,6 +272,21 @@ var searchDisplayQuizzes = function (data) {
         var obj = result[i];
         obj.Color = getRandomColor();
         $.tmpl(listElementTmpl, obj).appendTo("#mainGrid");
+    }
+}
+
+var displayOwnQuizzes = function (data) {
+    //var result = JSON.parse(data);
+    if(typeof(data)=="string"){
+        data = JSON.parse(data);
+    }
+    var result = data;
+
+    for(var i=0; i<result.length;i++){
+        //console.log("looping for"+thing.name);
+        var obj = result[i];
+        obj.Color = getRandomColor();
+        $.tmpl(ownElementTmpl, obj).appendTo("#mainGrid");
     }
 }
 
@@ -506,6 +556,34 @@ function sortCategory(cid){
         }
 }
 
+function deleteAQuiz(qid, elem){
+    deleteQuiz(qid, logToken, function(data){
+        if(typeof(data) == "string"){
+            data = JSON.parse(data);
+        }
+        if(data[0]=="ok"){
+            var notification = document.querySelector('.mdl-js-snackbar');
+        var data = {
+        message: 'Quiz gelöscht',
+        actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+        actionText: 'Ok',
+        timeout: 2000
+        };
+        notification.MaterialSnackbar.showSnackbar(data);
+        }else{
+            var notification = document.querySelector('.mdl-js-snackbar');
+            var data = {
+            message: 'Unbekannter Fehler',
+            actionHandler: function(event) { notification.MaterialSnackbar.cleanup_()},
+            actionText: 'ok',
+            timeout: 2000
+            };
+            notification.MaterialSnackbar.showSnackbar(data);
+        }
+    });
+    $(elem).parent().parent().fadeOut(500);
+}
+
 $(function () { 
 
     //INITIAL OVERVIEW ON PAGELOAD
@@ -718,7 +796,7 @@ $(function () {
                 return el.user_iduser.includes(searchTerm);
             });
            $('#mainGrid').html('');
-           searchDisplayQuizzes(newResult); 
+           displayOwnQuizzes(newResult); 
            if(newResult.length==0){
                $('#mainGrid').text("Kein Ergebnis gefunden :(");
            }

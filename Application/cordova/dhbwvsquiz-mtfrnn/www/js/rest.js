@@ -222,7 +222,7 @@ var addRemoteQuestion = function(text, quizid, token, callback, i){
 };  
 
 var addAnswer = function (text, is_correct, questionid, token, callback){
-    console.log("addanswer called");
+    //console.log("addanswer called");
     $.ajax({
         type: 'POST',
         headers: {
@@ -239,5 +239,17 @@ var addAnswer = function (text, is_correct, questionid, token, callback){
         callback(data);
     });
 };
+
+var deleteQuiz = function(quizid, token, callback){
+    $.ajax({
+        type: 'DELETE',
+        headers: {
+            "token": token,
+        },
+        url: baseurl + "/quiz/"+quizid
+    }).done(function(data){
+        callback(data);
+    });
+}
 
 //});
