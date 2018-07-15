@@ -1,7 +1,7 @@
 # dhbwvs-quiz-mtfrnn
 Public collaboration for DHBW VS Quiz Group: mtfrnn
 
-##Installation
+## Installation
 Zur Installation bitte die Inhalte des Ordners Application unter htdocs kopieren.
 
 Der Aufruf erfolgt anschließend under http://localhost/cordova/dhbwvsquiz-mtfrnn/www/
@@ -9,7 +9,7 @@ Der Aufruf erfolgt anschließend under http://localhost/cordova/dhbwvsquiz-mtfrn
 Die Datenbankdatei liegt unter Dokumentation (db_quiz_vs.sql).
 Dort ist auch das Datenstruktur-Bild abgelegt.
 
-##Hinweise zu Fehlern
+## Hinweise zu Fehlern
 ### REST-Schnittstelle
 Bitte beachten, dass auch die .htaccess Dateien eingefügt werden, damit die Restschnitstelle korrekt funktioniert.
 
@@ -32,3 +32,6 @@ Die Highlights der Implementierung sind folgende:
 - Anzeige der eigenen Quizze
 - Vorbereitung auf spätere Cordova Builds
 - True single Page, alle Inhalte auf einer Seite
+- Sonderzeichen unterstützt
+- Abbruch Handling, keine halben Transaktionen
+ - Vermeidung von Grafikfehlern und ineinander gestapelten UI Elementen
