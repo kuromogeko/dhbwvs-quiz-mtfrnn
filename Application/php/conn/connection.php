@@ -1,6 +1,6 @@
 <?php
 require 'rb-mysql.php';
-R::setup('mysql:host=127.0.0.1;dbname=db_quiz_vs','root','root');
+R::setup('mysql:host=127.0.0.1;dbname=db_quiz_vs','root','');
 R::freeze(true);
 
 
