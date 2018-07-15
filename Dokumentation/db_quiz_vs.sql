@@ -2,8 +2,8 @@
 -- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 27. Apr 2018 um 08:25
+-- Host: localhost
+-- Erstellungszeit: 15. Jul 2018 um 17:17
 -- Server-Version: 10.1.31-MariaDB
 -- PHP-Version: 5.6.35
 
@@ -40,31 +40,54 @@ CREATE TABLE `answer` (
 --
 
 INSERT INTO `answer` (`id`, `text`, `Question_idQuestion`, `is_correct`) VALUES
-(1, 'Duffel', 1, 0),
-(2, 'Tavistock', 2, 0),
-(3, 'North Cowichan', 3, 1),
-(4, 'Crato', 4, 1),
-(5, 'Perpignan', 5, 0),
-(6, 'Łódź', 1, 1),
-(7, 'Meißen', 2, 0),
-(8, 'Carterton', 3, 0),
-(9, 'Varsenare', 4, 1),
-(10, 'Flawinne', 5, 0),
-(11, 'Westmalle', 1, 0),
-(12, 'Oostende', 2, 1),
-(13, 'Cellara', 3, 0),
-(14, 'Chillán', 4, 0),
-(15, 'Sète', 5, 1),
-(16, 'Bostaniçi', 1, 1),
-(17, 'Whitehaven', 2, 0),
-(18, 'Massarosa', 3, 0),
-(19, 'Termeno sulla strada del vino/Tramin an der Weinstrasse', 4, 1),
-(20, 'San Giovanni in Galdo', 5, 0),
-(21, 'Tiltil', 1, 1),
-(22, 'Pelago', 2, 0),
-(23, 'Rivire', 3, 0),
-(24, 'Starachowice', 4, 0),
-(25, 'Camponogara', 5, 0);
+(26, 'Netzteil', 6, 1),
+(27, 'Personal Computer', 7, 1),
+(28, 'Mainboard', 6, 0),
+(29, 'Private Computer', 7, 0),
+(30, 'Computercase', 6, 0),
+(31, 'Prozessor', 6, 0),
+(32, 'Praktischer Computer', 7, 0),
+(33, 'RAM', 8, 1),
+(34, 'Mainboard', 8, 1),
+(35, 'GPU', 8, 1),
+(36, 'Pest und Cholera', 7, 0),
+(37, 'Prozessor', 8, 1),
+(38, 'Physiker haben mitentwickelt', 9, 0),
+(39, 'Nichts', 9, 0),
+(40, 'Quantencomputer sind anfälliger gegen Wasserschäden', 9, 0),
+(41, 'Dualismus der Bitzustände gilt für den Quantencomputer nicht', 9, 1),
+(42, 'Battle-Unit', 12, 1),
+(43, 'Beta', 12, 0),
+(44, 'Brutal', 12, 0),
+(45, 'Es handelt sich um eine laufene Nummer', 12, 0),
+(46, 'Eine Waffe', 10, 1),
+(47, 'Der fahrende Händler', 10, 1),
+(48, 'Der erste Boss', 10, 0),
+(49, 'Emil kommt in dem Spiel nicht vor', 10, 0),
+(50, 'Nur einen', 11, 0),
+(51, 'zwei', 11, 0),
+(52, 'drei', 11, 1),
+(53, 'Bis zu vier', 11, 0),
+(54, '2B', 13, 0),
+(55, '9S', 13, 0),
+(56, 'A2', 13, 1),
+(57, '2E', 13, 0),
+(58, 'Gaia', 14, 0),
+(59, 'Kronos', 14, 1),
+(60, 'Hyperion', 14, 0),
+(61, 'Herkules', 14, 0),
+(62, 'Überall', 16, 0),
+(63, 'Mal hier mal dort', 16, 0),
+(64, 'Auf dem Berg Olymp', 16, 1),
+(65, 'Gaia', 15, 0),
+(66, 'Apollo', 15, 0),
+(67, 'Hephaistos', 15, 0),
+(68, 'In der Unterwelt von Griechenland', 16, 0),
+(69, 'Zeus', 17, 0),
+(70, 'Hermes', 15, 1),
+(71, 'Prometheus', 17, 1),
+(72, 'Janus', 17, 0),
+(73, 'Ares', 17, 0);
 
 -- --------------------------------------------------------
 
@@ -82,109 +105,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`) VALUES
-(1, 'Lorem'),
-(2, 'Lorem'),
-(3, 'Lorem'),
-(4, 'Lorem'),
-(5, 'Lorem'),
-(6, 'Lorem'),
-(7, 'Lorem'),
-(8, 'Lorem ipsum'),
-(9, 'Lorem'),
-(10, 'Lorem'),
-(11, 'Lorem'),
-(12, 'Lorem ipsum'),
-(13, 'Lorem ipsum'),
-(14, 'Lorem'),
-(15, 'Lorem ipsum'),
-(16, 'Lorem'),
-(17, 'Lorem ipsum'),
-(18, 'Lorem'),
-(19, 'Lorem ipsum'),
-(20, 'Lorem'),
-(21, 'Lorem ipsum'),
-(22, 'Lorem ipsum'),
-(23, 'Lorem ipsum'),
-(24, 'Lorem ipsum'),
-(25, 'Lorem'),
-(26, 'Lorem'),
-(27, 'Lorem'),
-(28, 'Lorem ipsum'),
-(29, 'Lorem'),
-(30, 'Lorem ipsum'),
-(31, 'Lorem'),
-(32, 'Lorem ipsum'),
-(33, 'Lorem'),
-(34, 'Lorem'),
-(35, 'Lorem'),
-(36, 'Lorem'),
-(37, 'Lorem ipsum'),
-(38, 'Lorem ipsum'),
-(39, 'Lorem ipsum'),
-(40, 'Lorem'),
-(41, 'Lorem ipsum'),
-(42, 'Lorem'),
-(43, 'Lorem'),
-(44, 'Lorem'),
-(45, 'Lorem ipsum'),
-(46, 'Lorem'),
-(47, 'Lorem'),
-(48, 'Lorem ipsum'),
-(49, 'Lorem'),
-(50, 'Lorem'),
-(51, 'Lorem'),
-(52, 'Lorem'),
-(53, 'Lorem'),
-(54, 'Lorem'),
-(55, 'Lorem ipsum'),
-(56, 'Lorem'),
-(57, 'Lorem'),
-(58, 'Lorem'),
-(59, 'Lorem'),
-(60, 'Lorem'),
-(61, 'Lorem'),
-(62, 'Lorem'),
-(63, 'Lorem'),
-(64, 'Lorem ipsum'),
-(65, 'Lorem ipsum'),
-(66, 'Lorem'),
-(67, 'Lorem'),
-(68, 'Lorem'),
-(69, 'Lorem'),
-(70, 'Lorem'),
-(71, 'Lorem'),
-(72, 'Lorem'),
-(73, 'Lorem ipsum'),
-(74, 'Lorem'),
-(75, 'Lorem ipsum'),
-(76, 'Lorem'),
-(77, 'Lorem ipsum'),
-(78, 'Lorem ipsum'),
-(79, 'Lorem'),
-(80, 'Lorem ipsum'),
-(81, 'Lorem ipsum'),
-(82, 'Lorem'),
-(83, 'Lorem'),
-(84, 'Lorem ipsum'),
-(85, 'Lorem'),
-(86, 'Lorem ipsum'),
-(87, 'Lorem ipsum'),
-(88, 'Lorem'),
-(89, 'Lorem ipsum'),
-(90, 'Lorem ipsum'),
-(91, 'Lorem ipsum'),
-(92, 'Lorem'),
-(93, 'Lorem'),
-(94, 'Lorem ipsum'),
-(95, 'Lorem'),
-(96, 'Lorem'),
-(97, 'Lorem ipsum'),
-(98, 'Lorem ipsum'),
-(99, 'Lorem'),
-(100, 'Lorem ipsum'),
-(101, NULL),
-(103, NULL),
-(104, 'AAAAAAA');
+(1, 'Computer'),
+(109, 'Nier'),
+(110, 'Griechische Mythologie');
 
 -- --------------------------------------------------------
 
@@ -195,19 +118,26 @@ INSERT INTO `category` (`id`, `name`) VALUES
 CREATE TABLE `question` (
   `id` int(11) NOT NULL COMMENT 'Id der Frage',
   `text` varchar(500) DEFAULT NULL COMMENT 'Fragentext.',
-  `Quiz_idQuiz` int(11) NOT NULL
+  `quiz_idquiz` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `question`
 --
 
-INSERT INTO `question` (`id`, `text`, `Quiz_idQuiz`) VALUES
-(1, 'Sage P. Cote', 1),
-(2, 'Kiona M. Foster', 1),
-(3, 'Britanney W. Keith', 1),
-(4, 'Ingrid F. Hogan', 1),
-(5, 'Noah S. Glass', 1);
+INSERT INTO `question` (`id`, `text`, `quiz_idquiz`) VALUES
+(6, 'Welche Komponente versogt den Computer mit Strom?', 8),
+(7, 'Wofür steht die Abkürzung PC?', 8),
+(8, 'Welche der folgenden sind PC Bestandteile?', 8),
+(9, 'Was unterscheidet den Quantencomputer vom Binäcomputer?', 8),
+(10, 'Wer oder was ist Emil?', 9),
+(11, 'Wie viele PODS kann man maximal haben?', 9),
+(12, 'Der Buchstabe B steht bei Androidenklassen für.....?', 9),
+(13, 'Wer tötet den Forest King?', 9),
+(14, 'Wer ist der Vater von Zeus?', 10),
+(15, 'Welcher der folgenden Götter ist der Gott der Diebe?', 10),
+(16, 'Wo hausen die Götter in Griechenland?', 10),
+(17, 'Welcher der folgenden Namen gehört zu einem Titan?', 10);
 
 -- --------------------------------------------------------
 
@@ -228,26 +158,9 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`id`, `name`, `description`, `user_iduser`, `category_idcategory`) VALUES
-(1, 'Eget Metus Institute', 'ante dictum cursus. Nunc mauris elit, dictum eu, eleifend nec, malesuada ut, sem. Nulla interdum. Curabitur dictum. Phasellus', 7, 1),
-(2, 'Fusce Mollis Foundation', 'nisi dictum augue malesuada malesuada. Integer id magna et ipsum cursus vestibulum. Mauris magna.', 7, 1),
-(3, 'Metus Vivamus Euismod Foundation', 'aliquet nec, imperdiet nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod', 7, 1),
-(4, 'Orci Incorporated', 'metus sit amet ante. Vivamus non lorem vitae odio sagittis semper. Nam tempor diam dictum', 7, 1),
-(5, 'Sapien Industries', 'elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,', 7, 1),
-(6, 'Duis Sit Amet Company', 'nunc sed libero. Proin sed turpis nec mauris blandit mattis. Cras eget nisi dictum augue', 7, 1),
-(7, 'Varius Nam PC', 'malesuada fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut', 7, 1),
-(8, 'Maecenas Iaculis Limited', 'venenatis vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras dolor dolor, tempus non, lacinia', 7, 1),
-(9, 'Aliquet Odio LLP', 'lacinia mattis. Integer eu lacus. Quisque imperdiet, erat nonummy ultricies ornare, elit elit fermentum risus, at fringilla', 7, 1),
-(10, 'Ac Company', 'urna convallis erat, eget tincidunt dui augue eu tellus. Phasellus elit pede, malesuada vel, venenatis vel,', 7, 1),
-(11, 'Dis Institute', 'amet massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices a,', 7, 1),
-(12, 'Eu Augue Foundation', 'arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut mi. Duis risus odio, auctor', 7, 1),
-(13, 'Magna Et Consulting', 'arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam velit', 7, 1),
-(14, 'Nulla Ltd', 'ligula elit, pretium et, rutrum non, hendrerit id, ante. Nunc mauris sapien, cursus in,', 7, 1),
-(15, 'Orci Consectetuer Euismod LLP', 'Integer id magna et ipsum cursus vestibulum. Mauris magna. Duis dignissim tempor arcu. Vestibulum ut eros non', 7, 1),
-(16, 'Non Leo Inc.', 'elit, pharetra ut, pharetra sed, hendrerit a, arcu. Sed et libero.', 7, 1),
-(17, 'Ut Industries', 'Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum metus. Aenean sed pede nec ante blandit viverra. Donec tempus,', 7, 1),
-(18, 'Semper LLP', 'a ultricies adipiscing, enim mi tempor lorem, eget mollis lectus pede et risus. Quisque', 7, 1),
-(19, 'Quam A Felis Institute', 'Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras', 7, 1),
-(20, 'Sed Pede Associates', 'eu metus. In lorem. Donec elementum, lorem ut aliquam iaculis, lacus pede sagittis augue, eu tempor erat neque', 7, 1);
+(8, 'Computer Quiz', 'Quiz über Computer', 7, 1),
+(9, 'Nier:Automata Quiz', 'Quiz über das Spiel Nier:Automata', 7, 109),
+(10, 'Mythologie Quiz', 'Titel sagt alles........', 7, 110);
 
 -- --------------------------------------------------------
 
@@ -266,7 +179,79 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `token`, `user_iduser`) VALUES
-(1, 'asdf', 7);
+(1, 'asdf', 7),
+(2, '4bf0e67d2a736eb7973055d9ec66c5f56a79c89dfccf71513c5d1fc7b0843359', 107),
+(3, 'e554160111b39a426e3dc78f5e1eebee4d55ad7c76f1e21b03981ea8e7dbeed1', 108),
+(4, 'aafe23c08f4792da6e286fb0125b8c9526882b35c607c5582fcf3848014a2867', 108),
+(5, 'ce887413e2119f1bb24c32d9d2badbcae30fead9f8ae07358f4b9fbe3e09b851', 108),
+(6, 'acbd56ecac0afd1821f8691d8235b5a6a62ee1e458b36ff84c00ab607dd9f59b', 108),
+(7, 'dca7360235a02254a6ef7e83eb38ad353c89afc4a8a6d0835526c4efb2648548', 108),
+(8, '89895a18044d343a2d3bb5ae0ce4f93c70f2668ee1f6838dbf05b6730daec9f1', 108),
+(9, '0a5d8444de5f3a2a605b9104ff30c4bd2a47a03682fabd2dceeaf085b10bac34', 108),
+(10, '33995e231de96209fef330626e894697d3d41ade24cf193a0e7eddf2d0754485', 108),
+(11, '6a2e95d404d32440f619918784f8593cffb061faf8a0bf29434e7bbecc7ece1e', 108),
+(12, 'ca6513aaee440b7f7736caf3f8ad35a7af06e1c58089edb955981d3552ef0e42', 108),
+(13, 'aa2af7edc6d82ed8adb6b0aec883af5d2ec5f30ed8d7d329d31e57dd0acb5438', 108),
+(14, 'ef25686474534d37eacc82afd6cc0cadc3503c8141c7e437cf3ca2fb1966ee48', 108),
+(15, '71b05a38243a15e0a27dad70d9ffc015e5fccbb9cbb751ec43d75f29aff37c82', 108),
+(16, 'a230411b98d1533a837b89d2f6e0df8b956eb8207ddb44bc622de6e5b91a7af3', 108),
+(17, '2a5e81279f6c8461cd220d08282f1a715e6b73ff656413d7e11a84add25726c5', 108),
+(18, 'b5fd1e75b85ee20b6e8ac9f9475ebf48e3448f590dfc9de0dc7e815ad875e691', 108),
+(19, 'e8bcd26d5b7f044fbe9ad1a89eed856cc02b45f7bc370bd433548035859c3974', 108),
+(20, 'bb8d0ed6909c2dc4bfb31fe5218103ab3600abd57eba30a928ecd4573e556d95', 108),
+(21, '8781157d315bd0bce98f8cc6a22f86fedf40f1ac6c32f8d50d2b697709a4f548', 108),
+(22, '6d7a0bc0afe26cd83ca77d780355bf6fa58ed9cdd222efa11c891d70b1e8c52a', 108),
+(23, '7a1701fed79472eda90c74a5f43aa4e269131d63c62029029766b3ba820dcc4b', 108),
+(24, '531dde8b4d77042a4353adaa9506b4aa27eff67b983f521b16b4e028085dd008', 108),
+(25, '1dfc9c66dc75faedb9329ae58c1dbd30658b629dcc9597f413132bac3635440a', 108),
+(26, '7f7e8ff414cee7b1809580dcdae0493f897e8b899dff8a7b6e541f15a47a0b85', 108),
+(27, '5fa2c3b974df719e8b90761f4baf9a6f3a1a74feb5c677346f28eed668886141', 108),
+(28, '666ce18d14e520b3b475e21081a89d958e2b6a14e10591e7984dfc47ef7bf5b5', 108),
+(29, '3b6058625f3567620dd8327c595274434cdd13e7c91451857df1c73e085bcb8a', 108),
+(30, '592ad35d083c023eb1f9e71212cd51d230473f590961c75d322c5b8a405f8f5b', 108),
+(31, '9c2ff71bdd8a5fada2eb6cc52902fc68454c341a18239fb5e6feb10795a23391', 108),
+(32, 'a34731b07ab958756d34c71ae5ad229d7794751f121157d49f2f7cfa8a0ec1db', 108),
+(33, 'e18e4c1a47c66c2f36a8b635ba5556b3c9c10842cfb6b8e16888b9edeaa14096', 108),
+(34, 'ed6e5406abc66b26d79c2cfdfcaf4f9ca11455df6f6082b1d66af9b1f818f5dd', 108),
+(35, '7a698ffbc7e528fadf9ec7e3db324a4cfa646235463fcc9444d3bc3a96e16dc5', 108),
+(36, 'abaaa64fdc051e91621d679110581c6c2bc9d82a67808c11700cca6f7ee294f6', 108),
+(37, '93e4c955ebb4ea570933bab8a2524ed93b75238168f1f8a0716337d76ad5de4a', 108),
+(38, '8c9aeb03a97c9a5ae8f98729b872372b3957841927a82421cf20f2be6b3563b3', 108),
+(39, 'c0c1e2d4f3bb243ad681fa9dd4fcc943dfc0e077adc074e9245c3015d46ed0e0', 108),
+(40, '2db4480d04579feeea14b5d373645bd282ed498a24fbe5f412210372c3edbfe9', 108),
+(41, '3b6f1b766d0ebe0e49aec12b159b1f0fb0601df869c18b85c3057e5a425e68b0', 108),
+(42, '000a51b12b44282c3725ecb7ce6c43c8a80b0e93237c815326f77ba0d648741f', 108),
+(43, '7fe43403b7d749cd6a61f0074a54c0cdf73e61fa8e8ab86bb6910dffede7b28b', 108),
+(44, '6e2948067ea66a70547129b51b21b4f563aed625bcb9bffd56c475a90b3f927b', 108),
+(45, '2914e721d6bb0e5f50c3ce6ae67818d5d96c99850aad3b5f16ab3778fec78b45', 108),
+(46, '007b707e0ff5c6d622991b3e35f57f3f26c4605e05d08ad8c090f3fdae064fd7', 108),
+(47, '890afd08432e507e169775b65da48b16331a00277c9798430499d186c01564d5', 108),
+(48, '7ed08e98c9fbcb7902a2e43527b2f4e0203fd26fd26a90090da109e4a20db0d5', 108),
+(49, '0f289b21edbce3ae6ac355f36e72741efdfd49fde312ef96150aa83eb8869943', 108),
+(50, '4729155ba59a4f8509ece904574bb7b3d22805edb9e9451316f36251b622e3d6', 108),
+(51, '77cc22c242f9083ffc68fde92d60c7c20dd7bd1518594ba909a68b17495a2ba6', 108),
+(52, 'b4ee82dc4384604e5815d5cdaee6b45a2f6d220dce1cf0c17fdf6577ba7d53ce', 108),
+(53, 'b166cf6301642844ff0b19edecf78559e92046bef5444ce8b193c193b96f31a7', 108),
+(54, 'c5e034f3f4684089944dfcfd4087628f53def653a2f79a02d896877a50943aaf', 108),
+(55, '1cc68a07ab5ab59b489b4acadfe8487484696788bfa8d9a5595fa97aacb7be19', 108),
+(56, 'e4841d6c0fdd66cf6dc3be0595e1b9d89b9046c06aa775075210deb1b9c08d0c', 108),
+(57, '12cb20ed1d7d6bf53438ca6c7bb7e2a5b6ab33f6ea924406236dba7ddb4ecb18', 108),
+(58, '984df2ba830f034662c7aa13a4522ef56a165a21abaac4ddf5024ec26a599c5f', 108),
+(60, '9059c90f1443be90432f7aaff9c15717e2152a0cf456eda4c0dfdf389b0e8e5d', 108),
+(61, 'cd11c628c7757d030aa41c56a33b71fc879b56ce7ec4ab5e077419e31a893de6', 108),
+(62, '0f2071310bfd3634b7e14766c50ce8f0aafbd309f82fbe776650508de77a023b', 108),
+(63, 'a0f5f435c6bf710b35035c1f93e034389387202a8e7e226f290df89d14c09436', 108),
+(64, '9155876fe527e063800bacf6afee8a621a2524e46e13ee82f8f920a6c67631d9', 108),
+(65, 'b66cc3316ddaf71a61781626acc96d6022dea4eb293b5e19f5f4a6d956864687', 108),
+(66, '3a736764de9278a046746bce3d0ac33c927e00596c4870ad06c763ff23a70add', 108),
+(67, '31e9af0123a021a94e136ed730cde07149b091f86ec940db1ef9e8df455ded4c', 108),
+(68, '095fa108e139454c7406176b3d08cb7ce8ec850e69ff1c6a4782fb8dae1f1752', 108),
+(69, 'a63c9a1c61fab9fa9a4c84b2bff5798318f576dab3da8fdc01e0b5d404fadfbe', 108),
+(70, '1c27b3f2d968fe928d92033dad51aa69442b0b07a5a7131c0014ddedcd1e0612', 108),
+(71, '0b739fc722e4d086f276d13a3e89a0145d2654cd9388d24860b617ad945205a5', 108),
+(75, 'a00d3a7090292747cbebef6e7253892d806eeb123f296dd6839dad24f3881afe', 7),
+(76, '12fd2f772c03dc32c68de995e1ecb5e61e0e9f42c73cde84eff8d46eee9294e3', 7),
+(77, 'a55a7ae377888eb04c3ea13875afc00cc9126318e160fb7ae41c9d969950a19c', 7);
 
 -- --------------------------------------------------------
 
@@ -373,7 +358,9 @@ INSERT INTO `user` (`id`, `uname`, `pwd`, `description`) VALUES
 (95, 'Wayne', '*7F0C90A004C46C64A0EB9DDDCE5DE0DC437A635C', 'eros nec tellus. Nunc lectus pede, ultrices a, auctor non,'),
 (96, 'Stephen', '*7F0C90A004C46C64A0EB9DDDCE5DE0DC437A635C', 'posuere, enim nisl elementum purus, accumsan interdum libero dui nec'),
 (97, 'Drew', '*7F0C90A004C46C64A0EB9DDDCE5DE0DC437A635C', 'velit. Pellentesque ultricies dignissim lacus. Aliquam rutrum lorem'),
-(98, 'Felix', '*7F0C90A004C46C64A0EB9DDDCE5DE0DC437A635C', 'neque sed dictum eleifend, nunc');
+(98, 'Felix', '*7F0C90A004C46C64A0EB9DDDCE5DE0DC437A635C', 'neque sed dictum eleifend, nunc'),
+(107, 'aaa', '*A02AA727CF2E8C5E6F07A382910C4028D65A053A', 'A new user'),
+(108, 'qwe', '', 'A new user');
 
 --
 -- Indizes der exportierten Tabellen
@@ -397,7 +384,7 @@ ALTER TABLE `category`
 --
 ALTER TABLE `question`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_Question_Quiz1_idx` (`Quiz_idQuiz`);
+  ADD KEY `fk_Question_Quiz1_idx` (`quiz_idquiz`);
 
 --
 -- Indizes für die Tabelle `quiz`
@@ -429,37 +416,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT für Tabelle `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT für Tabelle `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id der Frage', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id der Frage', AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT für Tabelle `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id des Quiz', AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id des Quiz', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT für Tabelle `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id des User', AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id des User', AUTO_INCREMENT=109;
 
 --
 -- Constraints der exportierten Tabellen

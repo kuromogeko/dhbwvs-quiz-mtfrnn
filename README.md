@@ -1,31 +1,34 @@
 # dhbwvs-quiz-mtfrnn
 Public collaboration for DHBW VS Quiz Group: mtfrnn
 
-## Single Page application
-### Architecture
-#### Tier 1: User Interface
-Following the workflow described in 'the job'.<br>
-The user interface is the users way of interacting with the application.
-#### Tier 2: Logic 
-Javascript logic on the client side.<br>
-The javascript logic is supposed to control the application in the background by feeding the model with data from the database and controlling database access/ communicating with TIER 3 compliant to the interface Definition. Asynchronous communication will be used to realize this layer.
-#### Tier 3: Database
-Database model will be attached in the files.
-Redbean to be used to set up a REST compliant interface.
+##Installation
+Zur Installation bitte die Inhalte des Ordners Application unter htdocs kopieren.
 
-#### Testing
-For REST Functions postman will be used.
-[Test Export](/Application/php/test/PHPTEST.postman_collection.json)
+Der Aufruf erfolgt anschließend under http://localhost/cordova/dhbwvsquiz-mtfrnn/www/
 
-#### Interface
- [Interface Definition](http://htmlpreview.github.com/?https://github.com/kuromogeko/dhbwvs-quiz-mtfrnn/blob/master/Dokumentation/schnittstellenDefinitionRedBean.html)<br>
-[Database Tables](https://github.com/kuromogeko/dhbwvs-quiz-mtfrnn/blob/master/Dokumentation/eer_quiz_vs.png)
-## Folder structure Explanation
+Die Datenbankdatei liegt unter Dokumentation (db_quiz_vs.sql).
+Dort ist auch das Datenstruktur-Bild abgelegt.
 
-The following folders are to be used with the following description:
+##Hinweise zu Fehlern
+### REST-Schnittstelle
+Bitte beachten, dass auch die .htaccess Dateien eingefügt werden, damit die Restschnitstelle korrekt funktioniert.
 
-- Dokumentation: holding all the documentations and interface descriptions
-- Application: holds the application divided by the parts
-  - cordova: contains the Apache Cordova web application structure. Entry point is {app-name}/www/index.html
-  - php: holds the php files which are used as REST Client
+### RB
+Die RedBean-Versionsdatei ist noch auf das alte PHP ausgelegt. Bei Verbindungsproblemen bitte aktualisieren!
 
+### Fehler im Ablauf der Website
+Die Seite setzt keine Cookies. Durch ein neu-laden wird die Usersession also beendet.
+Im seltenen Falle eines REST Schnittstellen-Fehlers (keine Quizze werden angezeigt) mit Strg+F5 neu laden.
+
+## Highlights und Screenshots
+Die Screenshots sind unter Dokumentation/Bilder abgelegt.
+Die Highlights der Implementierung sind folgende:
+- Eigenständiges Anlegen von Kategorien sofern noch nicht vorhanden
+- Einfaches löschen
+- Die Obere Leiste der Quizze hat zufällige Farben die abwechslungsreich durchwechseln
+- Das Backend ist rein mit PHP, das Frontent rein mit JS + HTML kodiert
+- Vollfunktionsfähige Suche für Titel
+- Anzeige nach Kategorie
+- Anzeige der eigenen Quizze
+- Vorbereitung auf spätere Cordova Builds
+- True single Page, alle Inhalte auf einer Seite
